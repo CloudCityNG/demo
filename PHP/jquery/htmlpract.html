@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.12.2.min.js">
+
+    </script>
+</head>
+<body>
+    Enter Name
+<input type="text" id="user" name="test1">
+<input type="button" name="submit" value="submit" id="test">
+
+<script>
+
+// $(document).ready(function(){
+//    $("#test").on('click',function(){
+//        alert("hello");
+//    });
+//});
+
+//
+//$(document).ready(function () {
+//
+//    $("#test").on('click',function(){
+//        $.ajax(   {
+//            url:"pract.php?user=arr",
+//
+//
+//            type :"GET",
+//
+//            success:function(res){
+//
+//                console.log(res);
+//
+//
+//            } ,
+//            error: $("#test").on('click',function(){
+//                console.log("wrong input");
+//            })
+//        })
+//    })
+//
+//});
+
+
+$(document).ready(function(){
+
+
+    $("#test").on('click',function(){
+        var x=$("#user").val();
+        $.ajax(
+                {
+                    url:"pract.php",
+
+                    type:"POST",
+
+                    data:   {
+                                name:x
+                            },
+                    success:function(res)
+                    {
+                        console.log(res);
+                    },
+                    error:function()
+                    {
+                        console.log("wrong input");
+                    }
+                }
+        )
+    })
+
+});
+
+//$("#test").on('click',function() {
+//var username=$("#user").val();
+//    $.get("pract.php",{name:username}, function (res) {
+//        console.log(res);
+//
+//
+
+
+//    })
+//});
+
+</script>
+</body>
+</html>
