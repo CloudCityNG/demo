@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+
+
+    <script>
+//        function countryall()
+//        {
+//            var myJson =
+//            {
+//                "country":
+//                        [
+//                            {
+//                                "name": "United States",
+//                                "id": "usa",
+//                                "states":
+//                                        [
+//                                            {
+//                                                "name": "State 1 USA",
+//                                                "id": "usaState1",
+//                                                "cities":
+//                                                        [
+//                                                            {
+//                                                                "name": "City 1",
+//                                                                "id": "usaState1City1",
+//                                                                "area": "12345 sqkm"
+//                                                            },
+//                                                            {
+//                                                                "name": "City 2",
+//                                                                "id": "usaState1City2",
+//                                                                "area": "12345 sqkm"
+//                                                            }
+//                                                        ]
+//                                            },
+//                                            {
+//                                                "name": "State 2 USA",
+//                                                "id": "usaState2",
+//                                                "cities":
+//                                                        [
+//                                                            {
+//                                                                "name": "City 3",
+//                                                                "id": "usaState2City3",
+//                                                                "area": "12345 sqkm"
+//                                                            },
+//                                                            {
+//                                                                "name": "City 4",
+//                                                                "id": "usaState2City4",
+//                                                                "area": "12345 sqkm"
+//                                                            }
+//                                                        ]
+//                                            }
+//                                        ]
+//                            },
+//                            {
+//                                "name": "Australia",
+//                                "id": "aus",
+//                                "states":
+//                                        [
+//                                            {
+//                                                "name": "State 1 Australia",
+//                                                "id": "ausState1",
+//                                                "cities":
+//                                                        [
+//                                                            {
+//                                                                "name": "City 5",
+//                                                                "id": "ausState1City5",
+//                                                                "area": "12345 sqkm"
+//                                                            },
+//                                                            {
+//                                                                "name": "City 6",
+//                                                                "id": "ausState1City6",
+//                                                                "area": "12345 sqkm"
+//                                                            }
+//                                                        ]
+//                                            },
+//                                            {
+//                                                "name": "State 2 Australia",
+//                                                "id": "ausState2",
+//                                                "cities":
+//                                                        [
+//                                                            {
+//                                                                "name": "City 7",
+//                                                                "id": "ausState2City7",
+//                                                                "area": "12345 sqkm"
+//                                                            },
+//                                                            {
+//                                                                "name": "City 8",
+//                                                                "id": "ausState2City8",
+//                                                                "area": "12345 sqkm"
+//                                                            }
+//                                                        ]
+//                                            }
+//                                        ]
+//                            }
+//                        ]
+//            }
+//
+
+            //var myObject = {'name':'Kasun', 'address':'columbo','age': '29'}
+//
+//        var count = Object.keys(myJson).length;
+////        alert(count);
+//    var divselect= document.getElementById('div1');
+//var selectlist=document.createElement('select');
+//selectlist.id='con';
+//divselect.appendChild(selectlist);
+//    //var len= myJson.length;
+//    for (var i = 0; i < count ;i++) {
+//        var option = document.createElement("option");
+//        option.value = myJson[i];
+//        option.text = myJson[i];
+//        selectList.appendChild(option);
+//    }
+
+
+//    alert(obj.country[0]);
+//
+//    var obj=JSON.parse(myJson);
+//
+//    document.getElementById('demo1').appendChild(obj.country[0].name+" ");
+//         //   innerHTML=obj.country[0].name+" "+obj.country[0].area;
+//
+//    if(obj.country[0])
+//    {
+//        document.getElementById('demo1').innerHTML=obj.country[0].name+" "+obj.country[0].area;
+//    }
+//    else if(obj.country[1])
+//    {
+//        document.getElementById('demo').innerHTML=obj.states[1];
+//    }
+
+//    obj = JSON.parse(myJson);
+//
+//
+//
+//
+//    for(var i=0;i<len;i++)
+//    {
+//
+//
+//
+//       alert( obj[i].cities+"");
+//    }
+
+ function myjson(){
+            var con=document.getElementById('con').value;
+            alert(con);
+
+         var sum= {
+             "city": [
+                 {
+                     "name": "City 5"
+
+                 },
+                 {
+                     "name": "City 6"
+
+                 }
+             ]
+         }
+            if(con=='USA')
+            {
+                alert("u r in");
+                 var count=Object.keys(sum).length;
+                alert(count);
+
+             //var obj = JSON.parse(sum);
+               var obj=JSON.parse(sum);
+                                     alert(obj);
+
+               var ex= obj.city[0];
+
+                alert(ex);
+
+
+                for(var i=0;i<count;i++)
+             var x=document.getElementById('demo1').appendChild(obj.city[0].name+"");
+                   alert(x);
+
+        }
+
+
+
+
+}
+    </script>
+
+
+
+</head>
+<body>
+
+<p id="demo1"></p>
+<ul>
+    <li class="fileds">
+        <div class="country_fileds selectbox" id="div1">
+            <label>Country</label>
+            <select name="con" class="select" id="con" onchange="myjson()">
+                <option value="0">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="India">India</option>
+                <option value="Australia">Australia</option>
+                <option value="1">Other</option>
+            </select>
+        </div>
+        <div class="state_fileds selectbox">
+            <label>State</label>
+            <select name="gender" class="select" id="demo" onchange="myjson()">
+                <option value="Select Country">Select State</option>
+                <option value="Albury">Albury</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="New York">New York</option>
+            </select>
+        </div>
+    </li>
+    <li class="fileds">
+        <div class="city_fileds selectbox">
+            <label>City</label>
+            <select name="gender" class="select">
+                <option value="Select Country">Select City</option>
+                <option value="Sydney">Sydney</option>
+                <option value="Dadar">Dadar</option>
+                <option value="DC">DC</option>
+            </select>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

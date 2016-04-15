@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="js/jquery-1.12.2.min.js">
+</script>
+    <script>
+
+        var myJson = {
+            "country": [
+                {
+                    "name": "United States",
+                    "id": "usa",
+                    "states": [
+                        {
+                            "name": "State 1 USA",
+                            "id": "usaState1",
+                            "cities": [
+                                {
+                                    "name": "City 1",
+                                    "id": "usaState1City1",
+                                    "area": "12345 sqkm"
+                                },
+                                {
+                                    "name": "City 2",
+                                    "id": "usaState1City2",
+                                    "area": "12345 sqkm"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "State 2 USA",
+                            "id": "usaState2",
+                            "cities": [
+                                {
+                                    "name": "City 3",
+                                    "id": "usaState2City3",
+                                    "area": "12345 sqkm"
+                                },
+                                {
+                                    "name": "City 4",
+                                    "id": "usaState2City4",
+                                    "area": "12345 sqkm"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Australia",
+                    "id": "aus",
+                    "states": [
+                        {
+                            "name": "State 1 Australia",
+                            "id": "ausState1",
+                            "cities": [
+                                {
+                                    "name": "City 5",
+                                    "id": "ausState1City5",
+                                    "area": "12345 sqkm"
+                                },
+                                {
+                                    "name": "City 6",
+                                    "id": "ausState1City6",
+                                    "area": "12345 sqkm"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "State 2 Australia",
+                            "id": "ausState2",
+                            "cities": [
+                                {
+                                    "name": "City 7",
+                                    "id": "ausState2City7",
+                                    "area": "12345 sqkm"
+                                },
+                                {
+                                    "name": "City 8",
+                                    "id": "ausState2City8",
+                                    "area": "12345 sqkm"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        } ;
+
+
+$(function(){
+
+    for(var i=0;i<myJson.country.length;i++)
+    {
+        $("#country").append('<option value="'+i+'">'+myJson.country[i].name+'</option>');
+
+
+    }
+
+      $("#country").on('change',function() {
+
+          var country_selected = $(this).val();
+
+
+          $('#state').html('<option value="-1">-Select State-</option>');
+          for (var j = 0; j < myJson.country[country_selected].states.length; j++) {
+              $("#state").append('<option value="' + j + '">' + myJson.country[country_selected].states[j].name + '</option>');
+
+
+          }
+
+
+      });
+
+
+     $('#state').on("change",function(){
+           var country_selected = $("#country").val();
+         var state_selected=$(this).val();
+           $('#city').html('<option value="-1">-Select city -</option>');
+           for (var j = 0; j < myJson.country[country_selected].states[state_selected].cities.length; j++) {
+            $("#city").append('<option value="' + j + '">' + myJson.country[country_selected].states[state_selected].cities[j].name + '</option>');
+           }
+
+     }) ;
+
+        });
+
+   </script>
+
+</head>
+<body>
+
+
+
+<form id="dropdowns" action="index.html">
+
+    <label>Country:</label>
+    <select id="country" name="country">
+        <!--onchange="myfunction(this.value)">-->
+        <option value="000">-Select Country-</option>
+    </select>
+
+    <br />
+
+    <label>State:</label>
+    <select id="state" name="network">
+        <option value="000">-Select State-</option>
+    </select>
+
+    <br />
+
+    <label>City:</label>
+    <select id="city" name="model">
+        <option value="000">-Select City-</option>
+    </select>
+
+    <br />
+
+
+
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

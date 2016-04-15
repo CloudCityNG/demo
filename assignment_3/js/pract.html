@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .error{
+            box-shadow: 0 1px 0 #F32323 inset, 0 -1px 0 #F32323 inset, 1px 0 0 #F32323 inset, -1px 0 0 #F32323 inset, 0 0 4px rgba(243, 35, 35, 0.5);
+        }
+    </style>
+    <script>
+
+        function validate()
+        {
+            console.log("validate");
+            var email_elem=document.getElementById("email");
+            var email_value=email_elem.value;
+
+            if(email_value==""){
+                console.log("empty");
+
+                email_elem.className="error";
+            }else{
+                console.log("succcess");
+
+                email_elem.className="";
+
+            }
+
+
+        }
+
+
+    </script>
+</head>
+<body>
+
+<input type="text" id="email">
+<input type="button" value="submit" id="btn" onclick="validate();">
+
+</body>
+</html>
