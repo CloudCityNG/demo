@@ -312,6 +312,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </a>
                 <ul class="sub-menu">
                     <li >
+                        <a  href="<?php echo site_url('welcome/news')?>">news</a>
+                        <a  href="<?php echo site_url('welcome/done')?>">done</a>
                         <a href="layout_horizontal_sidebar_menu.html">
                             Horzontal & Sidebar Menu</a>
                     </li>
@@ -861,7 +863,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 <div class="number">+89%</div>
                                 <div class="desc">Brand Popularity</div>
                             </div>
-                            <a class="more" href="<?php echo site_url('welcome/done')?>">
+                            <a class="more" href="<?php echo site_url('welcome/reply')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>

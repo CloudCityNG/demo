@@ -137,10 +137,7 @@ class Welcome extends CI_Controller {
 	{
 		$this->Admin_Insert->login();
 		$username=$this->input->post('admin_name');
-
 		$this->session->set_userdata('session',$username);
-
-
 		if($this->session->userdata('session')){
 		redirect('welcome/admin_dashboard');}
 		else{
@@ -551,6 +548,33 @@ class Welcome extends CI_Controller {
 		$data['image']=$this->Admin_Insert->img_detalis();
 		$this->load->view('img_details',$data);
 	}
+	public function view_product_details()
+	{
+		$id = $this->input->get('product_id', TRUE);
+		$data['details']=$this->Admin_Insert->product_details($id);
+		$this->load->view('product_details',$data);
+	}
+	public function reply()
+	{
+		$data['query']=$this->Admin_Insert->user_query();
+		$this->load->view('header');
+		$this->load->view('footer');
+		$this->load->view('user_query',$data);
+	}
+	public function replay_user()
+	{
+		$user_id = $this->input->get('contact_id', TRUE);
+		$data['view']=$this->Admin_Insert->view_query($user_id);
+		$this->load->view('header');
+		$this->load->view('footer');
+		$this->load->view('view_user_query',$data);
+	}
+	public function admin_replay()
+	{
+
+		$this->Admin_Insert->replay_admin();
+	}
+
 
 
 
@@ -586,16 +610,11 @@ class Welcome extends CI_Controller {
 //		}
 //	}
 
-	public function view_product_details()
-	{
-		$id = $this->input->get('product_id', TRUE);
-		$data['details']=$this->Admin_Insert->product_details($id);
-		$this->load->view('product_details',$data);
-	}
 
 
 
-	/*public function img()
+
+	public function img()
 	{
 		$path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
 
@@ -615,7 +634,7 @@ class Welcome extends CI_Controller {
 			echo "Error";
 		}
 
-	}*/
+	}
 
 
 
