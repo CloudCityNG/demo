@@ -85,8 +85,9 @@
                             <li><a href="<?php if(isset($this->session->userdata)){echo site_url('UserControl/account_user/'.$data);}else{echo site_url('UserControl/login');}?>"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="<?php echo site_url('UserControl/user_cart')?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                             <li><a href="<?php echo site_url('UserControl/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="<?php echo site_url('UserControl/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -108,7 +109,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html" class="active">Home</a></li>
+                            <li><a href="<?php echo base_url('UserControl')?>" class="active">Home</a></li>
                             <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>

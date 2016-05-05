@@ -794,7 +794,7 @@
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
-                            <a href="<?php echo site_url('welcome/back_dashbord')?>">Data Tables</a>
+                            <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Data Tables</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li><a href="#">Editable Tables</a></li>
@@ -819,13 +819,13 @@
                         </div>
                         <div class="portlet-body">
                             <!--                            <div class="clearfix">-->
-                            <div class="btn-group">
-                                <a href="<?php echo base_url('welcome/add_admin');?>" id="sample_editable_1_new" class="btn green">
-                                    Add New <i class="icon-plus"></i>
-                                </a>
-                            </div>
+<!--                            <div class="btn-group">-->
+<!--                                <a href="--><?php //echo base_url('admin/dashboard/add_admin');?><!--" id="sample_editable_1_new" class="btn green">-->
+<!--                                    Add New <i class="icon-plus"></i>-->
+<!--                                </a>-->
+<!--                            </div>-->
                             <div class="btn-group pull-right">
-                                <form style="height: 30px; " action="<?php echo site_url('welcome/search_admin')?>" method="post">
+                                <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_admin')?>" method="post">
                                     <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                     <input type="submit" class="btn" name="searchs">Search
                                     </input>
@@ -857,8 +857,8 @@
                                             <td><?php echo $value['user_name'];?></td>
                                             <td><?php echo $value['user_email'];?></td>
                                             <td><?php echo $value['message'];?></td>
-                                            <td><a href="<?php echo site_url('Welcome/replay_user?contact_id='.$value['contact_id']);?>">View/Replay </a></td>
-<!--                                            <td><a href="--><?php //echo site_url('welcome/delete_user?admin_id='.$value['admin_id']);?><!--">Delete</a></td>-->
+                                            <td><a href="<?php echo site_url('admin/dashboard/replay_user?contact_id='.$value['contact_id']);?>">View/Replay </a></td>
+<!--                                            <td><a href="--><?php //echo site_url('admin/dashboard/delete_user?admin_id='.$value['admin_id']);?><!--">Delete</a></td>-->
                                         </tr>
                                     <?php } } ?>
                             </table>

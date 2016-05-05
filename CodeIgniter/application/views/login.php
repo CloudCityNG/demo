@@ -35,7 +35,7 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
-    <form action="<?php echo site_url('welcome/admin_login')?>"method="post" >
+    <form action="<?php echo site_url('admin/login/admin_login')?>"method="post" >
         <h3 class="form-title">Login to your account</h3>
         <div class="alert alert-error hide">
             <button class="close" data-dismiss="alert"></button>
@@ -47,9 +47,9 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-user"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" name="admin_name" />
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" name="admin_name"  value="<?php echo set_value('admin_name')?>"/>
                 </div>
-                <div><?php if(isset($user))
+                <div  style="color: red"><?php if(isset($user))
                     {echo $user;}
                     else{echo "";}
                     ?></div>
@@ -62,7 +62,7 @@
                     <i class="icon-lock"></i>
                     <input class="m-wrap placeholder-no-fix" type="password" placeholder="Password" name="admin_password"value="" />
                 </div>
-                <div><?php if(isset($pass))
+                <div style="color: red"><?php if(isset($pass))
                     {echo $pass;}
                     else{echo "";}
                     ?></div>
@@ -79,14 +79,14 @@
         <div class="forget-password">
             <h4>Forgot your password ?</h4>
             <p>
-                no worries, click <a href="<?php echo site_url('Welcome/forget')?>" class="" id="forget-password">here</a>
+                no worries, click <a href="<?php echo site_url('admin/login/forget')?>" class="" id="forget-password">here</a>
                 to reset your password.
             </p>
         </div>
         <div class="create-account">
             <p>
                 Don't have an account yet ?&nbsp;
-                <a href="<?php echo site_url('Welcome/registration')?>" id="register-btn" class="">Create an account</a>
+                <a href="<?php echo site_url('admin/login/registration')?>" id="register-btn" class="">Create an account</a>
             </p>
         </div>
     </form>

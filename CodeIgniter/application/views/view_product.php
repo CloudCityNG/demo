@@ -799,7 +799,7 @@
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
-                            <a href="<?php echo site_url('welcome/back_dashbord')?>">Data Tables</a>
+                            <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Data Tables</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li><a href="#">Product Management </a></li>
@@ -826,12 +826,12 @@
                             <div class="clearfix">
                                 <div class="btn-group">
 <!--                                    <button id="sample_editable_1_new" class="btn green">-->
-                                        <a href="<?php echo site_url('welcome/add_product')?>" class="btn green">
+                                        <a href="<?php echo site_url('admin/product/add_product')?>" class="btn green">
                                         Add New <i class="icon-plus"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <form style="height: 30px; " action="<?php echo site_url('welcome/search_product')?>" method="post">
+                                    <form style="height: 30px; " action="<?php echo site_url('admin/product/search_product')?>" method="post">
                                         <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                         <input type="submit" class="btn" name="searchs">Search
                                         </input>
@@ -843,10 +843,10 @@
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Product Name</th>
-                                    <th>Quntity</th>
-                                    <th>Price</th>
+                                    <th>Product  </th>
+                                    <th>Product Name  <a href='<?php echo site_url('admin/product/sort_product?sortby=name');?>' class='sort_icon'>  </a></th>
+                                    <th>Quntity  <a href='<?php echo site_url('admin/product/sort_product?sortby=quntity');?>' class='sort_icon'>   </a></th>
+                                    <th>Price  <a href='<?php echo site_url('admin/product/sort_product?sortby=price');?>' class='sort_icon'>  </a></th>
                                     <th>Edit</th>
                                     <th>View</th>
                                     <th>Delete</th>
@@ -874,9 +874,9 @@
                                             <td><?php echo $value['name'];?></td>
                                             <td><?php echo $value['quntity'];?></td>
                                             <td><?php echo $value['price'];?></td>
-                                            <td><a href="<?php echo site_url('welcome/edit_product?product_id='.$value['product_id'])?>">Edit </a></td>
-                                            <td><a href="<?php echo site_url('welcome/delete_product?product_id='.$value['product_id'])?>">Delete</a></td>
-                                            <td><a href="<?php echo site_url('welcome/view_product_details?product_id='.$value['product_id'])?>">View</a></td>
+                                            <td><a href="<?php echo site_url('admin/product/edit_product?product_id='.$value['product_id'])?>">Edit </a></td>
+                                            <td><a href="<?php echo site_url('admin/product/delete_product?product_id='.$value['product_id'])?>">Delete</a></td>
+                                            <td><a href="<?php echo site_url('admin/product/view_product_details?product_id='.$value['product_id'])?>">View</a></td>
                                         </tr>
 
                                     <?php } }?>

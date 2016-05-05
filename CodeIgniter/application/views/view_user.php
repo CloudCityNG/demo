@@ -794,7 +794,7 @@
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
-                            <a href="<?php echo site_url('welcome/back_dashbord')?>">Data Tables</a>
+                            <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Data Tables</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li><a href="#">Editable Tables</a></li>
@@ -820,12 +820,12 @@
                         <div class="portlet-body">
 <!--                            <div class="clearfix">-->
                                 <div class="btn-group">
-                                            <a href="<?php echo base_url('welcome/add_admin');?>" id="sample_editable_1_new" class="btn green">
+                                            <a href="<?php echo base_url('admin/dashboard/add_admin');?>" id="sample_editable_1_new" class="btn green">
                                         Add New <i class="icon-plus"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <form style="height: 30px; " action="<?php echo site_url('welcome/search_admin')?>" method="post">
+                                    <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_admin')?>" method="post">
                                         <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                         <input type="submit" class="btn" name="searchs">Search
                                         </input>
@@ -836,9 +836,9 @@
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                <thead>
                                 <tr>
-                                    <th>Username</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
+                                    <th>Username   <a href='<?php echo site_url('admin/dashboard/sort?sortby=admin_name');?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Last Name  <a href='<?php echo site_url('admin/dashboard/sort?sortby=admin_lastname');?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Email      <a href='<?php echo site_url('admin/dashboard/sort?sortby=admin_email');?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -857,8 +857,8 @@
                                 <td><?php echo $value['admin_name'];?></td>
                                 <td><?php echo $value['admin_lastname'];?></td>
                                 <td><?php echo $value['admin_email'];?></td>
-                                <td><a href="<?php echo site_url('Welcome/edit_user?admin_id='.$value['admin_id']);?>">Edit </a></td>
-                                <td><a href="<?php echo site_url('welcome/delete_user?admin_id='.$value['admin_id']);?>">Delete</a></td>
+                                <td><a href="<?php echo site_url('admin/dashboard/edit_user?admin_id='.$value['admin_id']);?>">Edit </a></td>
+                                <td><a href="<?php echo site_url('admin/dashboard/delete_user?admin_id='.$value['admin_id']);?>">Delete</a></td>
                                 </tr>
                                 <?php } } ?>
                             </table>

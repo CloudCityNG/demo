@@ -31,7 +31,7 @@ class Admin_insert extends CI_Model
         }
         else
         {
-            redirect('welcome/error');
+            redirect('admin/login/error');
         }
     }
     function verify()                               //verify e-mail
@@ -45,10 +45,10 @@ class Admin_insert extends CI_Model
         if($verify->num_rows()==1)
         {
 
-            redirect('welcome/sendMail');
+            redirect('admin/login/sendMail');
         }
         else{
-            redirect('welcome/email_error');
+            redirect('admin/login/email_error');
         }
     }
     public function list_user()                         //admin_list
@@ -83,6 +83,42 @@ class Admin_insert extends CI_Model
         $query_result=$query->result();
         return $query_result;
     }
+    function sort_data($var)                            //sort admin
+    {
+        $this->db->from('e-commers');
+        $this->db->order_by($var,"decs");
+        $query=$this->db->get();
+        $q=$query->result_array();
+        return $q;
+    }
+    public function fetch()
+    {
+        $data['admin_name']=$this->input->post('admin_name');
+        $data['admin_lastname']=$this->input->post('admin_name');
+        $data['admin_password']=$this->input->post('admin_name');
+        $data['admin_compass']=$this->input->post('admin_compass');
+        $data['admin_email']=$this->input->post('admin_name');
+        return $data;
+    }
+    public function add_fetch()
+    {
+        $data['admin_name']=$this->input->post('admin_name');
+        $data['admin_lastname']=$this->input->post('admin_name');
+        $data['admin_password']=$this->input->post('admin_name');
+        $data['admin_compass']=$this->input->post('admin_compass');
+        $data['admin_email']=$this->input->post('admin_name');
+        return $data;
+    }
+//    function sort_prod($var)                            //sort product
+//    {
+//        $this->db->select('*');
+//        $this->db->from('product');
+//        $this->db->join('product_images','product_images.product_id=product.product_id');
+//        $this->db->order_by($var,"decs");
+//        $query=$this->db->get();
+//        $q=$query->result_array();
+//        return $q;
+//    }
     public function product_count()                     //count product
     {
         return $this->db->count_all("product");
@@ -93,6 +129,7 @@ class Admin_insert extends CI_Model
     }
     public function fetch_data($limit, $page)           //pagignation admin
     {
+       // echo "hello".$page;
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
         $query = $this->db->get("e-commers");
@@ -109,12 +146,14 @@ class Admin_insert extends CI_Model
     }
     public function record_count_product()                  //product_count
     {
+
         return $this->db->count_all("product");
     }
     public function fetch_product_data($limit, $page)       //pagignation admin
     {
 
-        echo $limit,$page;
+       // echo $limit,$page;
+       // echo $limit,$page;
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
 

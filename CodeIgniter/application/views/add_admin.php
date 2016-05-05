@@ -44,10 +44,13 @@
     else
     {
         $value="";
-    }?>
+    }
+
+    ?>
+
     <!-- BEGIN REGISTRATION FORM -->
-    <form action="<?php echo site_url('admin/dashboard/update?admin_id='.$value['admin_id']);?>" method="post">
-        <h3 class="">Sign Up</h3>
+    <form action="<?php if(isset($add)){echo site_url('admin/dashboard/add');}else{echo site_url('admin/dashboard/add');}?>" method="post">
+        <h3 class="">Add New Admin</h3>
         <p>Enter your account details below:</p>
 
         <div class="control-group">
@@ -55,7 +58,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-user"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Firstname" name="admin_name" value="<?php if(isset($edit_userdata)){echo $value['admin_name'];}else echo "";?>"/>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Firstname" name="admin_name" vvalue="<?php echo set_value('admin_name')?>"/>
                 </div>
                 <div style="display:inline; color: red" >
                     <?php echo form_error('admin_name'); ?>
@@ -67,7 +70,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-user"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Lastname" name="admin_lastname" value="<?php if(isset($edit_userdata)){echo $value['admin_lastname'];}else echo "";?>"/>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo set_value('admin_lastname')?>";}?>
                 </div>
                 <div style="display:inline; color: red" >
                     <?php echo form_error('admin_lastname'); ?>
@@ -79,7 +82,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-lock"></i>
-                    <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo "";?>" name="admin_password"/>
+                    <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" name=admin_password value="<?php echo set_value('admin_password')?>"/>
                 </div>
                 <div style="display:inline;color: red ">
                     <?php echo form_error('admin_password'); ?>
@@ -91,7 +94,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-ok"></i>
-                    <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="admin_compass" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo "";?> "/>
+                    <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="admin_compass" value="<?php echo set_value('admin_compass')?>"/>
                 </div>
                 <div style="display:inline;color: red">
                     <?php echo form_error('admin_compass'); ?>
@@ -104,7 +107,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-envelope"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php if(isset($edit_userdata)){echo $value['admin_email'];}else echo "";?>"/>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
                 </div>
                 <div style="display:inline;color: red">
                     <?php echo form_error('admin_email'); ?>
@@ -120,16 +123,16 @@
                 </div>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <label class="checkbox">
-                    <input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                </label>
-                <div style="display:inline;color: red">
-                    <?php echo form_error('tnc'); ?>
-                </div>
-            </div>
-        </div>
+<!--        <div class="control-group">-->
+<!--            <div class="controls">-->
+<!--                <label class="checkbox">-->
+<!--                    <input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>-->
+<!--                </label>-->
+<!--                <div style="display:inline;color: red">-->
+<!--                    --><?php //echo form_error('tnc'); ?>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="form-actions">
             <a  href="<?php echo site_url('admin/dashboard/view_user')?>" type="button" class="btn">
                 <i class="m-icon-swapleft"></i>  Back

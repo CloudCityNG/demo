@@ -111,7 +111,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html" class="active">Home</a></li>
+                            <li><a href="<?php echo base_url('UserControl')?>" class="active">Home</a></li>
                             <li ><a href="<?php echo site_url('UserControl/address_update/'.$data)?>">Address Book</a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>

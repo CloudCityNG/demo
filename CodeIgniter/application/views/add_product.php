@@ -851,7 +851,7 @@
                     <div class="control-group">
                         <label class="control-label">Product Name</label>
                         <div class="controls">
-                            <input type="text" class="span6 m-wrap" style="width:905px" name="name"/>
+                            <input type="text" class="span6 m-wrap" style="width:905px" name="name" value="<?php echo set_value('name')?>">
                             <span class="help-inline"></span>
                             <div style="display:inline; color: red">
                                 <?php echo form_error('name'); ?>
@@ -862,7 +862,7 @@
                     <div class="control-group">
                         <label class="control-label">SKU</label>
                         <div class="controls">
-                            <input type="text" class="span6 m-wrap" style="width:905px" name="sku"/>
+                            <input type="text" class="span6 m-wrap" style="width:905px" name="sku"value="<?php echo set_value('sku')?>"/>
                             <span class="help-inline"></span>
                             <div style="display:inline; color: red" >
                                 <?php echo form_error('sku'); ?>
@@ -873,7 +873,7 @@
                     <div class="control-group">
                         <label class="control-label" >Description</label>
                         <div class="controls">
-                            <textarea class="span6 m-wrap" style="width:905px"rows="3" name="short_description"></textarea>
+                            <textarea class="span6 m-wrap" style="width:905px"rows="3" name="short_description" value="<?php echo set_value('short_description')?>"></textarea>
                         </div>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('short_description'); ?>
@@ -882,7 +882,7 @@
                     <div class="control-group">
                         <label class="control-label">CKEditor</label>
                         <div class="controls">
-                            <textarea class="span6 m-wrap" style="width:905px"rows="3" name="long_description"></textarea>
+                            <textarea class="span6 m-wrap" style="width:905px"rows="3" name="long_description" value="<?php echo set_value('long_description')?>"></textarea>
 
 <!--                            <textarea class="span12 ckeditor m-wrap" name="long_description" rows="6"></textarea>-->
                         </div>
@@ -894,7 +894,7 @@
                         <label class="control-label">Price</label>
                         <div class="controls"style="display:inline;">
                             <div class="input-prepend input-append"style="display:inline;">
-                                <span class="add-on">$</span><input  class="m-wrap " type="text" name="price"/><span class="add-on">.00</span>
+                                <span class="add-on">$</span><input  class="m-wrap " type="text" name="price"value="<?php echo set_value('price')?>"/><span class="add-on">.00</span>
                             </div>
                         </div>
                         <div style="display:inline; color: red" >
@@ -905,7 +905,7 @@
                         <label class="control-label">Special Price</label>
                         <div class="controls">
                             <div class="input-prepend input-append">
-                                <span class="add-on">$</span><input  class="m-wrap " type="text" name="special_price"/><span class="add-on">.00</span>
+                                <span class="add-on">$</span><input  class="m-wrap " type="text" name="special_price"value="<?php echo set_value('special_price')?>"/><span class="add-on">.00</span>
                             </div>
                         </div>
 
@@ -955,7 +955,7 @@
                     <div class="control-group">
                         <label class="control-label">Quntity</label>
                         <div class="controls">
-                            <input type="text" style="width:905px"class="span6 m-wrap" name="quntity"/>
+                            <input type="text" style="width:905px"class="span6 m-wrap" name="quntity"value="<?php echo set_value('quntity')?>"/>
                             <span class="help-inline"></span>
                         </div>
                         <div style="display:inline; color: red" >
@@ -965,7 +965,7 @@
                     <div class="control-group">
                         <label class="control-label">Meta Title</label>
                         <div class="controls">
-                            <input type="text" style="width:905px"class="span6 m-wrap" name="meta_title"/>
+                            <input type="text" style="width:905px"class="span6 m-wrap" name="meta_title"value="<?php echo set_value('meta_title')?>"/>
                             <span class="help-inline"></span>
                         </div>
                         <div style="display:inline; color: red" >
@@ -975,7 +975,7 @@
                     <div class="control-group">
                         <label class="control-label">Meta-Description</label>
                         <div class="controls">
-                            <textarea class="span6 m-wrap" rows="3"style="width:905px"name="meta_description"></textarea>
+                            <textarea class="span6 m-wrap" rows="3"style="width:905px"name="meta_description"value="<?php echo set_value('meta_description')?>"/></textarea>
                         </div>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('meta_description'); ?>
@@ -984,7 +984,7 @@
                     <div class="control-group">
                         <label class="control-label">Meta-Keywords</label>
                         <div class="controls">
-                            <textarea class="span6 m-wrap" rows="3"style="width:905px"name="meta_keywords"></textarea>
+                            <textarea class="span6 m-wrap" rows="3"style="width:905px"name="meta_keywords"value="<?php echo set_value('meta_keywords')?>"/></textarea>
                         </div>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('meta_keywords'); ?>

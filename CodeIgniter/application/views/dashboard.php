@@ -312,8 +312,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                 </a>
                 <ul class="sub-menu">
                     <li >
-                        <a  href="<?php echo site_url('welcome/news')?>">news</a>
-                        <a  href="<?php echo site_url('welcome/done')?>">done</a>
+                        <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
+                        <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
                         <a href="layout_horizontal_sidebar_menu.html">
                             Horzontal & Sidebar Menu</a>
                     </li>
@@ -342,7 +342,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                             Sidebar Closed Page</a>
                     </li>
                     <li >
-                        <a href="<?php echo site_url('welcome/setting')?>">
+                        <a href="<?php echo site_url('admin/dashboard/setting')?>">
                             Blank Page</a>
                     </li>
                     <li >
@@ -835,7 +835,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                     Total Admin
                                 </div>
                             </div>
-                            <a class="more" href="<?php echo base_url('welcome/view_user')?>">
+                            <a class="more" href="<?php echo base_url('admin/dashboard/view_user')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>
@@ -849,7 +849,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 <div class="number"><?php echo $product_count;?></div>
                                 <div class="desc">Total Products</div>
                             </div>
-                            <a class="more" href="<?php echo base_url('welcome/view_product')?>">
+                            <a class="more" href="<?php echo base_url('admin/product/view_product')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>
@@ -863,7 +863,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 <div class="number">+89%</div>
                                 <div class="desc">Brand Popularity</div>
                             </div>
-                            <a class="more" href="<?php echo site_url('welcome/reply')?>">
+                            <a class="more" href="<?php echo site_url('admin/dashboard/reply')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>
@@ -877,7 +877,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                 <div class="number">12,5M$</div>
                                 <div class="desc">Total Profit</div>
                             </div>
-                            <a class="more" href="<?php echo site_url('welcome/banner')?>">
+                            <a class="more" href="<?php echo site_url('admin/dashboard/banner')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>

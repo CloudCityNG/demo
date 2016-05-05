@@ -11,7 +11,9 @@ class UserControl extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('email');
         $this->load->library('upload');
+        $this->load->library('cart');
         $this->load->helper(array('form', 'url'));
+        $this->load->helper('form');
         //$this->load->helper('form');
         //$this->load->library('session');
     }
@@ -135,10 +137,16 @@ class UserControl extends CI_Controller
 
     public function account_user()            //user account
     {
-        $user_id=$this->uri->segment(3);
+        if($this->session->userdata('user_session'))
+        {$user_id=$this->uri->segment(3);
         $data['user_data'] = $this->User->user_account($user_id);
         $this->load->view('user/account_user', $data);
-        $this->load->view('user/footer_user');
+        $this->load->view('user/footer_user');}
+        else{
+            $this->load->view('user/headeruser');
+            $this->load->view('user/login_user');
+            $this->load->view('user/footer_user');
+        }
     }
 
     public function back_form_account()         //back to home
@@ -319,6 +327,62 @@ class UserControl extends CI_Controller
         $data['ans']=$this->User->replay_admin($user_id);
         $this->load->view('user/headeruser');
         $this->load->view('user/query_ans',$data);
+        $this->load->view('user/footer_user');
+    }
+    public function add_to_cart()
+    {
+        //$this->load->view('user/footer_user');
+        // print_r($x);
+        // var_dump($x);
+
+        $prod_id = $this->uri->segment(3);
+        //echo $prod_id;
+        $product = $this->User->fetch_data($prod_id);
+        //var_dump($data);
+        //var_dump($data);
+        //$this->load->view('user/headeruser');
+        //var_dump($product);
+        foreach ($product as $item) {
+//            echo "<pre>";print_r($item);echo "</pre>";
+//            $data = array(
+//                'id'=> $item['product_id'],
+//                'product_id' => $item['product_id'],
+//                'quantity' => 1,
+//                //     'price' => 324,
+//                'price' => 100,
+//                //'name' =>'df',
+//                'name' => $item['name'],
+//                //'options' => array('Size' => 'L', 'Color' => 'Red')
+//            );
+//        var_dump($data);
+//            $x = $this->cart->insert($data);
+
+            $data = array(
+                'id'      => 'sku_123ABC',
+                'qty'     => 1,
+                'price'   => 39.95,
+                'name'    => 'T-Shirt',
+//                'options' => array('Size' => 'L', 'Color' => 'Red')
+            );
+
+            $x = $this->cart->insert($data);
+
+            var_dump($x);
+        }
+        // redirect('UserControl');
+    }
+    public function user_cart()
+    {
+        //$this->load->view('user/headeruser');
+        $this->load->view('user/pract_cart');
+       // $this->load->view('user/footer_user');
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('user_session');
+        $this->load->view('user/headeruser');
+        $this->load->view('user/login_user');
         $this->load->view('user/footer_user');
     }
 }

@@ -22,7 +22,7 @@
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<body class="page-header-fixed">
+<!--<body class="page-header-fixed">-->
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-inverse navbar-fixed-top" ">
 <!-- BEGIN TOP NAVIGATION BAR -->
@@ -249,7 +249,7 @@
             <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
             <li class="divider"></li>
             <li><a href="<?php echo base_url('extra_lock.html')?>"><i class="icon-lock"></i> Lock Screen</a></li>
-            <li><a href="<?php echo base_url('login.html')?>"><i class="icon-key"></i> Log Out</a></li>
+            <li><a href="<?php echo base_url('admin/dashboard/logout')?>"><i class="icon-key"></i> Log Out</a></li>
         </ul>
     </li>
     <!-- END USER LOGIN DROPDOWN -->
@@ -259,4 +259,3 @@
 </div>
 <!-- END TOP NAVIGATION BAR -->
 </div>
-</body>

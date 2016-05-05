@@ -47,9 +47,9 @@
     }
 
     ?>
-
+<script src="<?php echo base_url('js/valid.js')?>"></script>
     <!-- BEGIN REGISTRATION FORM -->
-    <form action="<?php if(isset($add)){echo site_url('Welcome/add');}else{echo site_url('Welcome/insert');}?>" method="post">
+    <form onsubmit="return regi()" action="<?php if(isset($add)){echo site_url('admin/login/add');}else{echo site_url('admin/login/insert');}?>" method="post">
         <h3 class="">Sign Up</h3>
         <p>Enter your account details below:</p>
 
@@ -58,8 +58,10 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-user"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Firstname" name="admin_name" value="<?php if(isset($edit_userdata)){echo $value['admin_name'];}else echo "";?>"/>
+                    <div id="admin_name"></div>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Firstname" name="admin_name"  id="admin_name" value="<?php echo set_value('admin_name')?>"/>
                 </div>
+
                 <div style="display:inline; color: red" >
                     <?php echo form_error('admin_name'); ?>
                 </div>
@@ -70,7 +72,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-user"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Lastname" name="admin_lastname" value="<?php if(isset($edit_userdata)){echo $value['admin_lastname'];}else echo "";?>"/>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo set_value('admin_lastname')?>">
                 </div>
                 <div style="display:inline; color: red" >
                     <?php echo form_error('admin_lastname'); ?>
@@ -82,7 +84,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-lock"></i>
-                    <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo "";?>" name="admin_password"/>
+                    <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" name=admin_password value="<?php echo set_value('admin_password')?>"/>
                 </div>
                 <div style="display:inline;color: red ">
                     <?php echo form_error('admin_password'); ?>
@@ -94,7 +96,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-ok"></i>
-                    <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="admin_compass" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo "";?> "/>
+                    <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="admin_compass" vvalue="<?php echo set_value('admin_compass')?>"/>
                 </div>
                 <div style="display:inline;color: red">
                     <?php echo form_error('admin_compass'); ?>
@@ -107,7 +109,7 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-envelope"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php if(isset($edit_userdata)){echo $value['admin_email'];}else echo "";?>"/>
+                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
                 </div>
                 <div style="display:inline;color: red">
                     <?php echo form_error('admin_email'); ?>
@@ -134,7 +136,7 @@
             </div>
         </div>
         <div class="form-actions">
-            <a  href="<?php echo site_url('welcome/links')?>" type="button" class="btn">
+            <a  href="<?php echo site_url('admin/login/index')?>" type="button" class="btn">
                 <i class="m-icon-swapleft"></i>  Back
             </a>
             <input type="submit" id="register-submit-btn" class="btn green pull-right">

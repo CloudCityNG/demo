@@ -20,7 +20,7 @@ class Welcome extends CI_Controller {
 	}
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('login');
 	}
 	public function links()
 	{
@@ -39,7 +39,7 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('tnc','TNC','required');
 		$this->form_validation->set_rules('status','Status','required');
 		if ($this->form_validation->run() == FALSE){
-			//$data['cut']=$this->insert_admin->fetch();
+			//$data['cut']=$this->Admin_Insert->fetch();
 			$this->load->view('admin_registration');
 		}
 		else
@@ -57,6 +57,7 @@ class Welcome extends CI_Controller {
 			$this->load->view('login');
 		}
 	}
+	//public function asd(){}
 	function add()
 	{
 		$perpage_value=$this->input->post('perpage');
@@ -69,8 +70,8 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('tnc', 'TNC', 'required');
 		$this->form_validation->set_rules('status', 'Status', 'required');
 		if ($this->form_validation->run() == FALSE) {
-			//$data['cut']=$this->insert_admin->fetch();
-			$this->load->view('admin_registration');
+			//$data['cut']=$this->Admin_Insert->add_fetch();
+			$this->load->view('add_admin');
 		} else {
 			$perpage_value=$this->input->post('perpage');
 			$data = array(
@@ -88,7 +89,7 @@ class Welcome extends CI_Controller {
 			$config["base_url"] = base_url()."welcome/view_user";
 			$total_row = $this->Admin_Insert->record_count();
 			$config["total_rows"] = $total_row;
-			$config["per_page"] = $perpage_value;
+			$config["per_page"] = 2;
 			$config['use_page_numbers'] = TRUE;
 			$config['num_links'] = $total_row;
 			$config['cur_tag_open'] = '&nbsp;<a class="current">';
@@ -118,20 +119,31 @@ class Welcome extends CI_Controller {
 	}
 	function add_admin()
 	{
-		$data['add']="";
-		$this->load->view('admin_registration',$data);
+		//$this->load->view('header');
+
+		$this->load->view('add_admin');
+		$this->load->view('footer');
+
 	}
 	public function admin_dashboard()
 	{
+		if($this->session->userdata('session')){
 		$this->load->view('footer');
 		$this->load->view('header');
 		$count['admin_count']=$this->Admin_Insert->record_count();
 		$count['product_count']=$this->Admin_Insert->product_count();
-		$this->load->view('dashboard',$count);
+		$this->load->view('dashboard',$count);}
+		else{
+			$this->load->view('login');
+		}
 	}
 	function registration()
 	{
-		$this->load->view('admin_registration');
+		if($this->session->userdata('session')) {
+			$this->load->view('admin_registration');
+		}else{
+			$this->load->view('login');
+		}
 	}
 	function admin_login()
 	{
@@ -283,8 +295,6 @@ class Welcome extends CI_Controller {
 	public function add_product()
 	{
 		if($this->session->userdata('session')){
-//			$this->load->view('header');
-//			$this->load->view('footer');
 			$this->load->view('add_product');}
 		else{
 			$this->load->view('login');
@@ -339,6 +349,84 @@ class Welcome extends CI_Controller {
 			redirect('welcome/view_user');
 		}
 	}
+	public function sort()
+	{
+		if($this->session->userdata('session')){
+			$var=$this->input->get('sortby');
+			$data['customer']=$this->Admin_Insert->sort_data($var);
+			$config = array();
+			$config["base_url"] = base_url()."welcome/view_user";
+			$total_row = $this->Admin_Insert->record_count();
+			$config["total_rows"] = $total_row;
+			$config["per_page"] = 2;
+			$config['use_page_numbers'] = TRUE;
+			$config['num_links'] = $total_row;
+			$config['cur_tag_open'] = '&nbsp;<a class="current">';
+			$config['cur_tag_close'] = '</a>';
+			$config['next_link'] = 'Next';
+			$config['prev_link'] = 'Previous';
+			$this->pagination->initialize($config);
+			if($this->uri->segment(3))
+			{
+				$page = ($this->uri->segment(3));
+			}
+			else
+			{
+				$page = 1;
+			}
+			//$data['customer'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
+			$str_links = $this->pagination->create_links();
+			$data["links"] = explode('&nbsp;',$str_links );
+			$this->load->view('header');
+			$this->load->view('footer');
+			//	$data['product']=$this->Admin_Insert->list_product();
+			$this->load->view('view_user',$data);
+		}
+		else{
+			$this->load->view('login');
+		}
+
+
+	}
+//	public function sort_product()
+//	{
+//		if($this->session->userdata('session')){
+//			$var=$this->input->get('sortby');
+//			$data['products']=$this->Admin_Insert->sort_prod($var);
+//			$config = array();
+//			$config["base_url"] = base_url()."welcome/view_product";
+//			$total_row = $this->Admin_Insert->record_count_product();
+//			$config["total_rows"] = $total_row;
+//			$config["per_page"] = 2;
+//			$config['use_page_numbers'] = TRUE;
+//			$config['num_links'] = $total_row;
+//			$config['cur_tag_open'] = '&nbsp;<a class="current">';
+//			$config['cur_tag_close'] = '</a>';
+//			$config['next_link'] = 'Next';
+//			$config['prev_link'] = 'Previous';
+//			$this->pagination->initialize($config);
+//		if($this->uri->segment(3))
+//		{
+//			$page = ($this->uri->segment(3));
+//		}
+//		else
+//		{
+//			$page = 1;
+//		}
+//		$data['products'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
+//		$str_links = $this->pagination->create_links();
+//		$data["links"] = explode('&nbsp;',$str_links );
+//		$this->load->view('header');
+//		$this->load->view('footer');
+//		//	$data['product']=$this->Admin_Insert->list_product();
+//		$this->load->view('view_product',$data);
+//		}
+//		else{
+//				$this->load->view('login');
+//			}
+//
+//
+//	}
 
 	public function insert_product()
 	{
@@ -352,7 +440,7 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
 		$this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
 		$this->form_validation->set_rules('status','Status','required');
-		$this->form_validation->set_rules('quntity', 'Quntity', 'required');
+		$this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/');
 		$this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
 		$this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
 		$this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
@@ -440,7 +528,7 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
 		$this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
 		$this->form_validation->set_rules('status','Status','required');
-		$this->form_validation->set_rules('quntity', 'Quntity', 'required');
+		$this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/);');
 		$this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
 		$this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
 		$this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
@@ -505,10 +593,16 @@ class Welcome extends CI_Controller {
 	}
 	public function banner()
 	{
-		$data['banner']=$this->Admin_Insert->view_banner();
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('banner_mgmt',$data);
+		if($this->session->userdata('session')) {
+
+			$data['banner'] = $this->Admin_Insert->view_banner();
+			$this->load->view('header');
+			$this->load->view('footer');
+			$this->load->view('banner_mgmt', $data);
+		}
+		else{
+			$this->load->view('login');
+		}
 	}
 	public function edit_img()
 	{
@@ -532,10 +626,7 @@ class Welcome extends CI_Controller {
 	}
 	public function done()
 	{
-		//$this->load->helper('lookup');
 		$data['image']=$this->Admin_Insert->show_image();
-		//$data['img']=lookup_value('product_images', 'image_name', array('img_id' => $param));
-
 		$this->load->view('done_image',$data);
 	}
 	public function delete_img()
@@ -556,23 +647,41 @@ class Welcome extends CI_Controller {
 	}
 	public function reply()
 	{
+		if($this->session->userdata('session')) {
 		$data['query']=$this->Admin_Insert->user_query();
 		$this->load->view('header');
 		$this->load->view('footer');
-		$this->load->view('user_query',$data);
+		$this->load->view('user_query',$data);}
+		else{
+			$this->load->view('login');
+		}
 	}
 	public function replay_user()
 	{
+		if($this->session->userdata('session')) {
 		$user_id = $this->input->get('contact_id', TRUE);
 		$data['view']=$this->Admin_Insert->view_query($user_id);
 		$this->load->view('header');
 		$this->load->view('footer');
 		$this->load->view('view_user_query',$data);
+		$this->load->view('add_product');}
+		else{
+		$this->load->view('login');
+			}
 	}
 	public function admin_replay()
 	{
 
 		$this->Admin_Insert->replay_admin();
+		redirect('replay_user');
+	}
+	public function logout()
+	{
+		if($this->session->unset_userdata('session'));
+		{
+			$this->load->view('login');
+
+		}
 	}
 
 

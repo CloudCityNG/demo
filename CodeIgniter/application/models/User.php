@@ -117,6 +117,15 @@ class User extends CI_Model
         $query=$this->db->get();
         return $query->result_array();
     }
+    public function fetch_data($prod_id)            // fetch product data for cart entry
+    {
+        $this->db->select('*');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('product.product_id',$prod_id);
+        $query=$this->db->get();
+        return $query->result_array();
 
+    }
 }
 ?>

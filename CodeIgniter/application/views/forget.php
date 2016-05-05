@@ -84,7 +84,7 @@
 <!--    </form>-->
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form  action="<?php echo site_url('welcome/verify_email')?>">
+    <form  action="<?php echo site_url('admin/login/verify_email')?>">
         <h3 class="">Forget Password ?</h3>
         <p>Enter your e-mail address below to reset your password.</p>
         <div class="control-group">
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="form-actions">
-            <a  href="<?php echo site_url('welcome/links')?>" type="button" id="back-btn" class="btn">
+            <a  href="<?php echo site_url('admin/login/index')?>" type="button" id="back-btn" class="btn">
                 <i class="m-icon-swapleft"></i> Back
             </a>
             <button type="submit" class="btn green pull-right">

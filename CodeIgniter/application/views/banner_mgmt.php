@@ -799,7 +799,7 @@
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
-                            <a href="<?php echo site_url('welcome/back_dashbord')?>">Data Tables</a>
+                            <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Data Tables</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li><a href="#">Product Management </a></li>
@@ -826,12 +826,12 @@
                             <div class="clearfix">
                                 <div class="btn-group">
                                     <!--                                    <button id="sample_editable_1_new" class="btn green">-->
-                                    <a href="<?php echo site_url('welcome/add_product')?>" class="btn green">
+                                    <a href="<?php echo site_url('admin/dashboard/add_product')?>" class="btn green">
                                         Add New <i class="icon-plus"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <form style="height: 30px; " action="<?php echo site_url('welcome/search_product')?>" method="post">
+                                    <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_product')?>" method="post">
                                         <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                         <input type="submit" class="btn" name="searchs">Search
                                         </input>
@@ -873,9 +873,9 @@
                                             <td><?php echo $value['image_name'];?></td>
                                             <td><?php echo $value['status'];?></td>
 
-                                            <td><a href="<?php echo site_url('welcome/edit_img?img_id='.$value['img_id'])?>">Edit </a></td>
-                                            <td><a href="<?php echo site_url('welcome/delete_img?img_id='.$value['img_id'])?>">Delete</a></td>
-                                            <td><a href="<?php echo site_url('welcome/view_img_details?img_id='.$value['img_id'])?>">View</a></td>
+                                            <td><a href="<?php echo site_url('admin/dashboard/edit_img?img_id='.$value['img_id'])?>">Edit </a></td>
+                                            <td><a href="<?php echo site_url('admin/dashboard/delete_img?img_id='.$value['img_id'])?>">Delete</a></td>
+                                            <td><a href="<?php echo site_url('admin/dashboard/view_img_details?img_id='.$value['img_id'])?>">View</a></td>
                                         </tr>
 
                                     <?php } }?>
