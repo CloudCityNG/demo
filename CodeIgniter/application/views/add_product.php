@@ -41,7 +41,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -49,6 +49,10 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>

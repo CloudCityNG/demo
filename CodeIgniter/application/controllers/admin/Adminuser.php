@@ -18,6 +18,7 @@ class Adminuser extends CI_Controller
     {
         if($this->session->userdata('session')){
 
+
             $x=$this->session->userdata('id');
             $perpage=$this->Admin_Insert->fetch_perpage($x);
             $data['customer']=$this->Admin_Insert->list_user();
@@ -92,8 +93,8 @@ class Adminuser extends CI_Controller
         }
         else
         {
+                         //email session
             $id = $this->session->userdata('id');
-            echo "fsdfsdfsdf".$id;
             $data= array(
 
                 'admin_name' => $this->input->post('admin_name'),
@@ -103,6 +104,8 @@ class Adminuser extends CI_Controller
                 'status' => $this->input->post('status'),
                 'modified_by_data'=>date('Y/m/d')
             );
+
+
             $this->Admin_Insert->update_admin($id,$data);
             redirect('admin/adminuser');
         }

@@ -44,6 +44,48 @@ class Userlogin extends CI_Controller
                 'user_status' => $this->input->post('user_status')
             );
             $this->User->insert_user($data);
+
+                //send mail to user after successfull registration
+            $config = Array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'mail.wwindia.com',
+                'smtp_port' => 25,
+                'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
+                'smtp_pass' => 'nb=np2^89mKn', // change it to yours
+                'mailtype' => 'html',
+                //'charset' => 'iso-8859-1',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+            $message = 'Welcome';
+
+            $this->email->initialize($config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+            $this->email->to('sumit.desai@wwindia.com');// change it to yours
+            $this->email->subject('Welcome to E-Shopping');
+            $this->email->message($message);
+            if ($this->email->send()) {
+
+
+            } else {
+                show_error($this->email->print_debugger());
+            }
+
+            $message = 'New User';
+
+            $this->email->initialize($config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+            $this->email->to('sumit.desai@wwindia.com');// change it to yours
+            $this->email->subject('New User Add');
+            $this->email->message($message);
+            if ($this->email->send()) {
+
+
+            } else {
+                show_error($this->email->print_debugger());
+            }
             redirect('Userlogin/login');
         }
     }

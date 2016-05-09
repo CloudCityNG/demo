@@ -39,7 +39,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -47,6 +47,10 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -137,7 +141,7 @@
                         <i class="icon-angle-right"></i>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('admin/dashboard/banner')?>">Image List</a>
+                        <a href="<?php echo site_url('admin/banner')?>">Image List</a>
                         <i class="icon-angle-right"></i>
                     </li>
                     <li><a href="#">Update Image</a></li>
@@ -175,7 +179,7 @@ foreach($img as $item)
 
 ?>
 
-    <form action="<?php echo site_url('admin/dashboard/updateed_image?img_id='.$item['img_id'])?>" enctype="multipart/form-data" method="post">
+    <form action="<?php echo site_url('admin/banner/updateed_image?img_id='.$item['img_id'])?>" enctype="multipart/form-data" method="post">
         <img src="<?php echo base_url().'/images/'.$item['image_name']?>"><BR><BR>
         <input type="file" class="default" name="image_name" size="20"/>
         <input type="submit" name="Apply" value="Upload">

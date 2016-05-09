@@ -12,8 +12,7 @@ class Login extends CI_Controller
         $this->load->library('email');
         $this->load->library('upload');
         $this->load->helper(array('form', 'url'));
-        //$this->load->helper('form');
-        //$this->load->library('session');
+
     }
     public function index()                                          //login page
     {
@@ -119,11 +118,9 @@ class Login extends CI_Controller
     }
     function registration()                                     //registraion page view
     {
-       // if($this->session->userdata('session')) {
+
             $this->load->view('admin_registration');
-       // }else{
-          //  $this->load->view('login');
-      //  }
+
     }
     function admin_login()                                      //admin login
     {

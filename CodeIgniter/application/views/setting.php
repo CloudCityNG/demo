@@ -39,7 +39,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -48,12 +48,17 @@
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>
+
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
+            </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
                 <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
 
             </li>
-            <li >
+            <li>
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
                     Setting</a>
             </li>
@@ -127,18 +132,15 @@
                     <!-- END BEGIN STYLE CUSTOMIZER -->
                     <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                     <h3 class="page-title">
-                        Blank Page <small>blank page</small>
+                       Admin Setting  <small>Admin Setting</small>
                     </h3>
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="index.html">Home</a>
+                            <a href="<?php echo site_url('admin/dashboard')?>">Home</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li>
-                            <a href="#">Layouts</a>
-                            <i class="icon-angle-right"></i>
-                        </li>
+
                         <li><a href="#">Setting Page</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
@@ -152,12 +154,7 @@
             <div class="row-fluid">
                 <div class="span12"><lable></lable>
                     <div>
-<!--                        --><?php //foreach($setting as $value)
-//
-//                        $value=(array)$value;
-                       // var_dump($setting)?>
-<!--                        <input type="text" name="hidden" readonly value="--><?php //echo $value['admin_name']?><!--">-->
-                       <br>
+
                         <?php if(isset($msg))
                         {
                             echo "<p style='color: green'> $msg </p>";
@@ -167,22 +164,33 @@
                         }?>
                         <!--" method="post">-->
                         <?php $x=$this->session->userdata('session')?>
-                        <label>User Name</label><BR><input type="text" name="admin_id" readonly value='<?php echo $x?>'><br>
-                        <lable>Per Page Setting<lable><br>
+                        <label>User Name</label><BR><input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_id" readonly value='<?php echo $x?>'><br>
+                        <lable> CMS Admin Setting<lable><br>
                                 <select name="perpage">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option></select><br>
                                 <button type="submit" class="btn blue">Apply</button>
                                 <button type="button" class="btn">Cancel</button>
-                           </form><br><br>
+                           </form><br>
 
-<!--                           <form action="--><?php //base_url('admin/dashboard/change_email')?><!--" method="post">-->
-<!--                                <label>User Name</label><BR><input type="text" name="admin_id" readonly value="--><?php //echo $value['admin_name']?><!--">-->
-<!--                                <BR><label>Email</label><input type="text" name="admin_email" value="--><?php //echo $value['admin_email']?><!--">-->
-<!--                        </div><br>-->
-<!--                        <button type="submit" class="btn blue">Apply</button>-->
-<!--                        <button type="button" class="btn">Cancel</button>-->
+
+
+
+
+
+
+
+            <form action="<?php base_url('admin/dashboard/change_email')?>" method="post">
+                <?php $email=$this->session->userdata('email');
+                ?>
+
+                               <input style="width:220px;" class="span6 m-wrap"  type="hidden" name="admin_id" readonly value='<?php echo $x?>'><br>                                <BR>
+                               <label>Email</label>
+                               <input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_email" value="<?php echo $email ?>">
+        </div><br>
+                        <button type="submit" class="btn blue">Apply</button>
+                        <button type="button" class="btn">Cancel</button>
                 </div>
             </div>
             </form>

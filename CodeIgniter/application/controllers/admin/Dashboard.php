@@ -22,6 +22,8 @@ class Dashboard extends CI_Controller
             $this->load->view('header');
             $count['admin_count'] = $this->Admin_Insert->record_count();
             $count['product_count'] = $this->Admin_Insert->product_count();
+            $count['compliant_count'] = $this->Admin_Insert->compliant_count();
+            $count['banner_count'] = $this->Admin_Insert->record_count_banner();
             $this->load->view('dashboard', $count);
         } else {
             redirect('admin/login');
@@ -36,100 +38,17 @@ class Dashboard extends CI_Controller
         }
     }
 
-    public function banner()                                    //banner table
-    {
-        if($this->session->userdata('session')) {
 
-            $data['banner'] = $this->Admin_Insert->view_banner();
-            $x=$this->session->userdata('id');
-            $perpage=$this->Admin_Insert->fetch_perpage($x);
-            $config = array();
-            $config["base_url"] = base_url()."admin/dashboard/banner";
-            $total_row = $this->Admin_Insert->record_count_banner();
-            $config["total_rows"] = $total_row;
-            $config["per_page"] = $perpage;
-            $config['use_page_numbers'] = TRUE;
-            $config['num_links'] = $total_row;
-            $config['cur_tag_open'] = '&nbsp;<a class="current">';
-            $config['cur_tag_close'] = '</a>';
-            $config['next_link'] = 'Next';
-            $config['prev_link'] = 'Previous';
-            $this->pagination->initialize($config);
-            if($this->uri->segment(4))
-            {
-                $page = ($this->uri->segment(4));
-            }
-            else
-            {
-                $page = 1;
-            }
-            $data['banner'] = $this->Admin_Insert->fetch_banner_data($config["per_page"], $page);
-            $str_links = $this->pagination->create_links();
-            $data["links"] = explode('&nbsp;',$str_links );
-            $this->load->view('header');
-            $this->load->view('footer');
-            $this->load->view('banner_mgmt', $data);
-        }
-        else{
-            redirect('admin/login');
-        }
-    }
-    public function edit_img()                                        //edit banner-imiage
-    {
-        $data['img']=$this->Admin_Insert->img_edit();
-        $this->load->view('header');
-        $this->load->view('footer');
-        $this->load->view('update_banner',$data);
-    }
-    public function updateed_image()                                   //update banner_image
-    {
-        //$id=$this->input->get();
-        $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
-
-        if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path )) {
-            $uploed = $_FILES['image_name']['name'];
-            $img = array(
-                'image_name' => $uploed,
-                //'product_id'=>$prod
-            );
-            $this->Admin_Insert->image_update($img);
-            redirect('admin/dashboard/banner');
-        }
-    }
-    public function done()                                         // practice img
-    {
-        $data['image']=$this->Admin_Insert->show_image();
-        $this->load->view('done_image',$data);
-    }
-    public function delete_img()                                   //delete img
-    {
-        $this->Admin_Insert->img_delete();
-        redirect('admin/dashboard/banner');
-    }
-    public function search_image()                                  //serach img
-    {
-        $image_serach=$this->input->post('search');
-        $data['banner']=$this->Admin_Insert->search_image($image_serach);
-        $str_links = $this->pagination->create_links();
-        $data["links"] = explode('&nbsp;',$str_links );
-        $this->load->view('header');
-        $this->load->view('footer');
-        $this->load->view('banner_mgmt',$data);
-    }
-    public function view_img_details()                              //view img
-    {
-        $data['image']=$this->Admin_Insert->img_detalis();
-        $this->load->view('header');
-        $this->load->view('footer');
-        $this->load->view('img_details',$data);
-    }
     public function setting()                                       //setting
     {
-        $session_data=$this->session->userdata('session');
 
+        $session_data=$this->session->userdata('session');
+        $email=$this->Admin_Insert->session_email();
+        $this->session->set_userdata('email',$email);
+        $this->session->userdata('email');
         $this->load->view('header');
         $this->load->view('footer');
-        $this->load->view('setting',$session_data);
+        $this->load->view('setting',$session_data,$email);
     }
     public function perpage_change()
     {
@@ -184,9 +103,39 @@ class Dashboard extends CI_Controller
 
     public function admin_replay()                                    //replay query
     {
-
+        $replay=$this->input->post('replay');
         $this->Admin_Insert->replay_admin();
-        redirect('replay_user');
+
+
+
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'mail.wwindia.com',
+            'smtp_port' => 25,
+            'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
+            'smtp_pass' => 'nb=np2^89mKn', // change it to yours
+            'mailtype' => 'html',
+            //'charset' => 'iso-8859-1',
+            'charset' => 'utf-8',
+            'wordwrap' => TRUE
+        );
+        $message = 'About Query';
+
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+        $this->email->to('sumit.desai@wwindia.com');// change it to yours
+        $this->email->subject($message);
+        $this->email->message($replay);
+        if ($this->email->send()) {
+
+
+        } else {
+            show_error($this->email->print_debugger());
+        }
+        $con=$this->input->post('con_id');
+        $this->Admin_Insert->delete_signle($con);
+        redirect('admin/dashboard/reply');
     }
     public function logout()                                            //logout
     {

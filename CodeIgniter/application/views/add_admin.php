@@ -42,7 +42,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -50,6 +50,10 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -178,7 +182,7 @@
                     <div style="display:inline; color: red" >
                         <?php echo form_error('admin_name'); ?>
                     </div>
-            </div>
+                 </div>
 
 
 

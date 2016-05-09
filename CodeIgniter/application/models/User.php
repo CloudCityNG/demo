@@ -130,7 +130,43 @@ class User extends CI_Model
         $this->db->where('product.product_id',$prod_id);
         $query=$this->db->get();
         return $query->result_array();
-
     }
+    public function soft()
+    {
+        $this->db->select('*');
+        $this->db->from('product_category');
+        $this->db->join('product','product.product_id=product_category.product_id');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('category_name','Software');
+        $query=$this->db->get('category');
+        return $query->result_array();
+    }
+    public function display_wishlist($ses_id)
+    {
+
+        $this->db->where('user.user_id',$ses_id);
+        $this->db->select('*');
+        $this->db->from('user_wish_list');
+        $this->db->join('product','product.product_id=user_wish_list.product_id');
+        $this->db->join('user','user.user_id=user_wish_list.user_id');
+        $this->db->join('product_images','product_images.product_id=user_wish_list.product_id');
+
+        $query=$this->db->get()->result_array();
+
+        return $query;
+    }
+    public function add_wishlist($data)
+    {
+        $this->db->insert('user_wish_list',$data);
+    }
+    public function delete_wishlist ($wish_id)
+    {
+        echo $wish_id;
+        $this->db->where('wishlist_id',$wish_id);
+        $this->db->delete('user_wish_list');
+    }
+
+
+
 }
 ?>

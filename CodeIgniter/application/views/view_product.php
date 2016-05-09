@@ -40,7 +40,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -48,6 +48,11 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -218,14 +223,16 @@
                             </table>
                         </div>
                     </div>
-                    <div  class="pagination_listing  page_links" id="page_a_link" >
+                    <div>
 
+                      <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
                         <?php
                         foreach($links as $li)
                         {
-                            echo "<li>". $li . "</li>";
+                            echo " <li>". $li . "</li>";
                         }
                         ?>
+                      </ul>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>

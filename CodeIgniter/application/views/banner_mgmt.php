@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -39,7 +40,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -47,6 +48,10 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -160,12 +165,12 @@
                             <div class="clearfix">
                                 <div class="btn-group">
                                     <!--                                    <button id="sample_editable_1_new" class="btn green">-->
-                                    <a href="<?php echo site_url('admin/dashboard/add_product')?>" class="btn green">
+                                    <a href="<?php echo site_url('admin/product/add_product')?>" class="btn green">
                                         Add New <i class="icon-plus"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_image')?>" method="post">
+                                    <form style="height: 30px; " action="<?php echo site_url('admin/banner/search_image')?>" method="post">
                                         <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                         <input type="submit" class="btn" name="searchs">Search
                                         </input>
@@ -207,9 +212,9 @@
                                             <td><?php echo $value['image_name'];?></td>
                                             <td><?php echo $value['status'];?></td>
 
-                                            <td><a href="<?php echo site_url('admin/dashboard/edit_img?img_id='.$value['img_id'])?>">Edit </a></td>
-                                            <td><a href="<?php echo site_url('admin/dashboard/delete_img?img_id='.$value['img_id'])?>">Delete</a></td>
-                                            <td><a href="<?php echo site_url('admin/dashboard/view_img_details?img_id='.$value['img_id'])?>">View</a></td>
+                                            <td><a href="<?php echo site_url('admin/banner/edit_img?img_id='.$value['img_id'])?>">Edit </a></td>
+                                            <td><a href="<?php echo site_url('admin/banner/delete_img?img_id='.$value['img_id'])?>">Delete</a></td>
+                                            <td><a href="<?php echo site_url('admin/banner/view_img_details?img_id='.$value['img_id'])?>">View</a></td>
                                         </tr>
 
                                     <?php } }?>
@@ -217,6 +222,7 @@
                         </div>
                     </div>
                     <div class="pagination_listing">
+                        <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
                         <?php
                         foreach($links as $li)
                         {

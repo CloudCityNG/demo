@@ -134,8 +134,8 @@
                     <ul>
                         <?php $totals=$this->cart->format_number($this->cart->total());
                         echo $totals;
-                        $eco=2.00;
-                        $grand_total=$totals+$eco?>
+
+                        //$grand_total=$totals+$eco?>
                         <li>Cart Sub Total <span><?php echo $this->cart->format_number($this->cart->total());?></span></li>
                         <li>Eco Tax <span>$2</span></li>
                         <li>Shipping Cost <span>Free</span></li>

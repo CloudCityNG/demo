@@ -173,6 +173,15 @@ class Useraccount extends CI_Controller
             $this->load->view('user/footer_user');
         }
         else{
+
+
+
+
+            $message = $this->input->post('message');
+            $note_admin = $this->input->post('note_admin');
+
+
+
             $data=array(
 
                 'user_name'=>$this->input->post('user_name'),
@@ -184,6 +193,33 @@ class Useraccount extends CI_Controller
             );
             $this->User->send_query($data);
             $user_id=$this->input->post('user_id');
+
+            $config = Array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'mail.wwindia.com',
+                'smtp_port' => 25,
+                'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
+                'smtp_pass' => 'nb=np2^89mKn', // change it to yours
+                'mailtype' => 'html',
+                //'charset' => 'iso-8859-1',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+            //$message = 'Welcome';
+
+            $this->email->initialize($config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+            $this->email->to('sumit.desai@wwindia.com');// change it to yours
+            $this->email->subject($message);
+            $this->email->message($note_admin);
+
+            if ($this->email->send()) {
+            } else {
+                show_error($this->email->print_debugger());
+            }
+
+
             $data['user_data']=$this->User->user_data($user_id);
             $data['query']="Message Suucessfully Delevierd";
             $this->load->view('user/contact_us',$data);

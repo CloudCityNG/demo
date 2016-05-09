@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-
+<html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -111,8 +110,8 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('UserControl')?>" >Home</a></li>
-                            <li ><a href="<?php echo site_url('Useraccount/address_update/'.$data)?>"class="active">Address Book</a>
+                            <li><a href="<?php echo base_url('UserControl')?>" class="active">Home</a></li>
+                            <li ><a href="<?php echo site_url('Useraccount/address_update/'.$data)?>">Address Book</a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
                                     <li><a href="product-details.html">Product Details</a></li>
@@ -141,104 +140,42 @@
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
-<?php
-if(!empty($user_address))
-{
-foreach($user_address as $value) {
-    $value = (array)$value;
-}?>
-<body>
-<section id="form" style="margin-top: 00px"><!--form-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 ">
-                <div class="login-form"><!--login form-->
 
-                    <form action="<?php echo site_url('Useraccount/change_address')?>" method="post">
 
-                        <h2>Your Address</h2>
-                        <input type="hidden" name="user_id" value="<?php echo $data?>">
-                        <input type="text" placeholder="Address_1" name="address_1"value="<?php if(isset($user_address)){echo $value['address_1'];}else{echo '';}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('address_1'); ?>
-                        </div>
-                        <input type="text" placeholder="Address_2" name="address_2"value="<?php if(isset($user_address)){echo $value['address_2'];}else{echo set_value('address_2');}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('address_2'); ?>
-                        </div>
-                        <input type="text" placeholder="City" name="city"value="<?php if(isset($user_address)){echo $value['city'];}else{echo set_value('city');}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('city'); ?>
-                        </div>
-                        <input type="text" placeholder="State" name="state"value="<?php if(isset($user_address)){echo $value['state'];}else{echo set_value('state');}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('state'); ?>
-                        </div>
-                        <input type="text" placeholder="Country" name="country"value="<?php if(isset($user_address)){echo $value['country'];}else{echo set_value('country');}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('country'); ?>
-                        </div>
-                        <input type="text" placeholder="Zipcode" name="zipcode"value="<?php if(isset($user_address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('zipcode'); ?>
-                        </div>
 
-                        <a href="<?php echo site_url('UserControl')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
-                        <button type="submit" style="margin-left: 125px;display:inline; margin-top: 00%" class="btn btn-default col-sm-4">Submit</button>
-                    </form>
-                </div><!--/login form-->
-            </div>
-        </div>
+<div class="container">
+<div class="row">
+
+<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+
+    <tr>
+        <th>Product  </th>
+        <th>Product Name  <a href='<?php echo site_url('admin/product/sort_product?sortby=name');?>' class='sort_icon'>  </a></th>
+        <th>Price  <a href='<?php echo site_url('admin/product/sort_product?sortby=price');?>' class='sort_icon'>  </a></th>
+        <th>Delete</th>
+        <th>Add To Cart</th>
+    </tr>
+    <?php
+    if(empty($wishlist)){
+        echo "No data avalablie";
+    }
+    else{
+
+        foreach($wishlist as $value)
+        {$value = (array) $value;
+            ?>
+
+            <tr>
+                <td><img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 20px;height: 20px">
+                <td><?php echo $value['name'];?></td>
+
+                <td><?php echo $value['price'];?></td>
+                <td><a href="<?php echo site_url('Userwishlist/delete_from_wishlist/'.$value['wishlist_id'])?>">Delete</a></td>
+                <td><a href="<?php echo site_url('UserControl/add_to_cart/'.$value['wishlist_id'])?>">Add</a></td>
+            </tr>
+        <?php } } ?>
+</table>
     </div>
-</section><!--/form-->
-
-<?php
-}else{?>
-
-<section id="form" style="margin-top: 00px"><!--form-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 ">
-                <div class="login-form"><!--login form-->
-
-                    <form action="<?php echo site_url('Useraccount/change_address')?>" method="post">
-
-                        <h2>Your Address</h2>
-                        <input type="hidden" name="user_id" value="<?php echo $data?>">
-                        <input type="text" placeholder="Address_1" name="address_1"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('address_1'); ?>
-                        </div>
-                        <input type="text" placeholder="Address_2" name="address_2"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('address_2'); ?>
-                        </div>
-                        <input type="text" placeholder="City" name="city"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('city'); ?>
-                        </div>
-                        <input type="text" placeholder="State" name="state"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('state'); ?>
-                        </div>
-                        <input type="text" placeholder="Country" name="country"/>
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('country'); ?>
-                        </div>
-                        <input type="text" placeholder="Zipcode" name="zipcode">
-                        <div style="display:inline; color: red" >
-                            <?php echo form_error('zipcode'); ?>
-                        </div>
-
-                        <a href="<?php echo site_url('UserControl')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
-                        <button type="submit" style="margin-left: 125px;display:inline; margin-top: 00%" class="btn btn-default col-sm-4">Submit</button>
-                    </form>
-                </div><!--/login form-->
-            </div>
-        </div>
     </div>
-</section><!--/form-->
-<?php } ?>
-
 </body>
 </html>

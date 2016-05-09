@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -39,7 +40,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -47,6 +48,11 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -178,9 +184,9 @@
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                <thead>
                                 <tr>
-                                    <th>Username   <a href='<?php echo site_url('admin/adminuser/sort?sortby=admin_name');?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                    <th>Last Name  <a href='<?php echo site_url('admin/adminuser/sort?sortby=admin_lastname');?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                    <th>Email      <a href='<?php echo site_url('admin/adminuser/sort?sortby=admin_email');?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Username   <a href='<?php echo site_url('admin/adminuser?sortby=admin_name');?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Last Name  <a href='<?php echo site_url('admin/adminuser?sortby=admin_lastname');?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Email      <a href='<?php echo site_url('admin/adminuser?sortby=admin_email');?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -208,10 +214,11 @@
                         </div>
                     </div>
                     <div class="pagination_listing">
+                        <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
                         <?php
                         foreach($links as $li)
                         {
-                            echo "<li>" . $li . "</li>";
+                            echo "<li style=''>" . $li . "</li>";
                         }
                         ?>
                     </div>

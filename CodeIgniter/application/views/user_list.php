@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -39,7 +40,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -47,6 +48,11 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -128,19 +134,16 @@
                 <!-- END BEGIN STYLE CUSTOMIZER -->
                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                 <h3 class="page-title">
-                    Admin Management <small>Admin detail</small>
+                    User List
                 </h3>
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="index.html">Home</a>
+                        <a href="<?php echo site_url('admin/dashboard/')?>">Home</a>
                         <i class="icon-angle-right"></i>
                     </li>
-                    <li>
-                        <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Data Tables</a>
-                        <i class="icon-angle-right"></i>
-                    </li>
-                    <li><a href="#">Editable Tables</a></li>
+
+                    <li><a href="#">User List</a></li>
                 </ul>
 
                 <!-- END PAGE TITLE & BREADCRUMB-->
@@ -153,7 +156,7 @@
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
                     <div class="portlet-title">
-                        <div class="caption"><i class="icon-edit"></i>Admin Managenemt</div>
+                        <div class="caption"><i class="icon-edit"></i>User List</div>
                         <!--                            <div class="tools">-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
@@ -163,11 +166,7 @@
                     </div>
                     <div class="portlet-body">
                         <!--                            <div class="clearfix">-->
-                        <div class="btn-group">
-                            <a href="<?php echo base_url('admin/adminuser/add_admin');?>" id="sample_editable_1_new" class="btn green">
-                                Add New <i class="icon-plus"></i>
-                            </a>
-                        </div>
+
                         <div class="btn-group pull-right">
 
 
@@ -206,6 +205,7 @@
                     </div>
                 </div>
                 <div class="pagination_listing">
+                    <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
                     <?php
                     foreach($links as $li)
                     {

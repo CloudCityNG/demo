@@ -34,76 +34,76 @@
 </a>
 <!-- END LOGO -->
 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-<a href="<?php echo base_url('javascript:;')?>" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-    <img src="<?php echo base_url('assets/img/menu-toggler.png')?>" alt="" />
+<!--<a href="--><?php //echo base_url('javascript:;')?><!--" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">-->
+<!--    <img src="--><?php //echo base_url('assets/img/menu-toggler.png')?><!--" alt="" />-->
 </a>
 <!-- END RESPONSIVE MENU TOGGLER -->
 <!-- BEGIN TOP NAVIGATION MENU -->
 <ul class="nav pull-right">
     <!-- BEGIN NOTIFICATION DROPDOWN -->
-    <li class="dropdown" id="header_notification_bar">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-warning-sign"></i>
-            <span class="badge">6</span>
-        </a>
+<!--    <li class="dropdown" id="header_notification_bar">-->
+<!--        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+<!--            <i class="icon-warning-sign"></i>-->
+<!--            <span class="badge">6</span>-->
+<!--        </a>-->
         <ul class="dropdown-menu extended notification">
-            <li>
-                <p>You have 14 new notifications</p>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-success"><i class="icon-plus"></i></span>
-                    New user registered.
-                    <span class="time">Just now</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-important"><i class="icon-bolt"></i></span>
-                    Server #12 overloaded.
-                    <span class="time">15 mins</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-warning"><i class="icon-bell"></i></span>
-                    Server #2 not respoding.
-                    <span class="time">22 mins</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-info"><i class="icon-bullhorn"></i></span>
-                    Application error.
-                    <span class="time">40 mins</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-important"><i class="icon-bolt"></i></span>
-                    Database overloaded 68%.
-                    <span class="time">2 hrs</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="label label-important"><i class="icon-bolt"></i></span>
-                    2 user IP blocked.
-                    <span class="time">5 hrs</span>
-                </a>
-            </li>
-            <li class="external">
-                <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
-            </li>
+<!--            <li>-->
+<!--                <p>You have 14 new notifications</p>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-success"><i class="icon-plus"></i></span>-->
+<!--                    New user registered.-->
+<!--                    <span class="time">Just now</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-important"><i class="icon-bolt"></i></span>-->
+<!--                    Server #12 overloaded.-->
+<!--                    <span class="time">15 mins</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-warning"><i class="icon-bell"></i></span>-->
+<!--                    Server #2 not respoding.-->
+<!--                    <span class="time">22 mins</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-info"><i class="icon-bullhorn"></i></span>-->
+<!--                    Application error.-->
+<!--                    <span class="time">40 mins</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-important"><i class="icon-bolt"></i></span>-->
+<!--                    Database overloaded 68%.-->
+<!--                    <span class="time">2 hrs</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">-->
+<!--                    <span class="label label-important"><i class="icon-bolt"></i></span>-->
+<!--                    2 user IP blocked.-->
+<!--                    <span class="time">5 hrs</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li class="external">-->
+<!--                <a href="#">See all notifications <i class="m-icon-swapright"></i></a>-->
+<!--            </li>-->
         </ul>
     </li>
     <!-- END NOTIFICATION DROPDOWN -->
     <!-- BEGIN INBOX DROPDOWN -->
-    <li class="dropdown" id="header_inbox_bar">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-envelope"></i>
-            <span class="badge">5</span>
-        </a>
+<!--    <li class="dropdown" id="header_inbox_bar">-->
+<!--        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+<!--            <i class="icon-envelope"></i>-->
+<!--            <span class="badge">5</span>-->
+<!--        </a>-->
         <ul class="dropdown-menu extended inbox">
             <li>
                 <p>You have 12 new messages</p>
@@ -154,11 +154,11 @@
     </li>
     <!-- END INBOX DROPDOWN -->
     <!-- BEGIN TODO DROPDOWN -->
-    <li class="dropdown" id="header_task_bar">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-tasks"></i>
-            <span class="badge">5</span>
-        </a>
+<!--    <li class="dropdown" id="header_task_bar">-->
+<!--        <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+<!--            <i class="icon-tasks"></i>-->
+<!--            <span class="badge">5</span>-->
+<!--        </a>-->
         <ul class="dropdown-menu extended tasks">
             <li>
                 <p>You have 12 pending tasks</p>
@@ -245,7 +245,7 @@
         <ul class="dropdown-menu">
             <li><a href="<?php echo base_url('extra_profile.html')?>"><i class="icon-user"></i> My Profile</a></li>
             <li><a href="<?php echo base_url('page_calendar.html')?>"><i class="icon-calendar"></i> My Calendar</a></li>
-            <li><a href="<?php echo base_url('inbox.html')?>">"><i class="icon-envelope"></i> My Inbox(3)</a></li>
+            <li><a href="<?php echo base_url('inbox.html')?>"><i class="icon-envelope"></i> My Inbox(3)</a></li>
             <li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
             <li class="divider"></li>
             <li><a href="<?php echo base_url('extra_lock.html')?>"><i class="icon-lock"></i> Lock Screen</a></li>

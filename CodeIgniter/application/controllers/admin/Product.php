@@ -12,14 +12,11 @@ class Product extends CI_Controller
         $this->load->library('email');
         $this->load->library('upload');
         $this->load->helper(array('form', 'url'));
-        //$this->load->helper('form');
-        //$this->load->library('session');
     }
     public  function index()
     {
-        if($this->session->userdata('session')){
-
-
+        if($this->session->userdata('session'))
+        {
             $data['product']=$this->Admin_Insert->list_product();
             $x=$this->session->userdata('id');
             $perpage=$this->Admin_Insert->fetch_perpage($x);
@@ -50,7 +47,8 @@ class Product extends CI_Controller
             $this->load->view('footer');
             $this->load->view('view_product',$data);
         }
-        else{
+        else
+        {
             redirect('admin/login');
         }
     }
@@ -63,7 +61,6 @@ class Product extends CI_Controller
         else{
             redirect('admin/login');
         }
-
     }
     public function insert_product()                    //insert_product
     {

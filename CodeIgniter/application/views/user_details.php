@@ -39,7 +39,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -47,6 +47,11 @@
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
+            </li>
+
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
@@ -127,19 +132,19 @@
                     <!-- END BEGIN STYLE CUSTOMIZER -->
                     <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                     <h3 class="page-title">
-                        Blank Page <small>blank page</small>
+                        User Details <small>User Details</small>
                     </h3>
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="index.html">Home</a>
+                            <a href="<?php echo site_url('admin/dashboard/')?>">Home</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
                             <a href="<?php echo base_url('admin/userlist')?>">Back</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li><a href="#">Setting Page</a></li>
+                        <li><a href="#">User Details</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -152,15 +157,30 @@
             ?>     </div>
 
 
+        <div class="control-group">
+            <label style="display: inline">Username</label>
+            <input readonly class="span6 m-wrap"  style="display: inline;width:250px;"type="text" placeholder="Firstname" name="admin_name" value="<?php echo $value['user_name']?>"/>
+        </div>
 
 
-        <div style="display: inline;width: 200px; height: 300px">
-            <b><h4 style="display: inline">Product Name:</h4></b>
-            <h4 style="display: inline"><?php echo $value['user_name']?></h4><br>
-            <b><h4 style="display: inline">Brand:</h4></b>
-            <h4 style="display: inline"><?php echo $value['user_lastname']?></h4> <br>
-            <b><h4 style="display: inline">Description:</h4></b>
-            <h4 style="display: inline"><?php echo $value['user_email']?></h4> <br>
+
+
+
+    <div class="control-group">
+        <label style="display: inline">Lastname</label>
+
+        <input readonly class="span6 m-wrap" style="display: inline;width:250px;" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo $value['user_lastname']?>"/>
+    </div>
+
+
+
+
+
+    <div class="control-group">
+        <label style="display: inline" >Password</label>
+        <input readonly class="span6 m-wrap" style="display: inline;width:250px;" type="text " id="register_password" placeholder="Password"   value="<?php echo $value['user_email']?>"/>
+    </div>
+
 
         <?php
         }

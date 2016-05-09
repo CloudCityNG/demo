@@ -41,7 +41,7 @@
 
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/banner')?>">
+                <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
 
@@ -50,7 +50,10 @@
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
+            </li>
 
 
             <li >
@@ -62,10 +65,7 @@
                         <a href="<?php echo site_url('admin/dashboard/setting')?>">
                             Setting</a>
                     </li>
-                    <li >
-                        <a href="<?php echo site_url('admin/userlist')?>">
-                            User List</a>
-                    </li>
+
 
         </ul>
         <!-- END SIDEBAR MENU -->
@@ -200,7 +200,7 @@
                                 <i class="icon-globe"></i>
                             </div>
                             <div class="details">
-                                <div class="number">+89%</div>
+                                <div class="number"><?php echo $compliant_count;?></div>
                                 <div class="desc">Complaint Book</div>
                             </div>
                             <a class="more" href="<?php echo site_url('admin/dashboard/reply')?>">
@@ -214,10 +214,10 @@
                                 <i class="icon-bar-chart"></i>
                             </div>
                             <div class="details">
-                                <div class="number">12,5M$</div>
+                                <div class="number"><?php echo $banner_count;?> </div>
                                 <div class="desc">Banner Management</div>
                             </div>
-                            <a class="more" href="<?php echo site_url('admin/dashboard/banner')?>">
+                            <a class="more" href="<?php echo site_url('admin/banner')?>">
                                 View more <i class="m-icon-swapright m-icon-white"></i>
                             </a>
                         </div>
