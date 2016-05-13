@@ -9,6 +9,8 @@ else
 {
     $value="";
 }?>
+
+<script src="<?php echo base_url('js/up_admin_valid.js');?>"></script>
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -52,7 +54,10 @@ else
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/category')?>">
+                    Category Management</a>
+            </li>
 
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
@@ -179,8 +184,10 @@ else
 </div>
 
 
+            <?php $a_id=$this->session->userdata('id')?>
+                <form  name="form" onsubmit="return admin_valid()" action="<?php echo site_url('admin/adminuser/update/');?>" method="post">
 
-                <form action="<?php echo site_url('admin/adminuser/update/');?>" method="post">
+                    <input type="HIDDEN" value="<?php echo $a_id?>" name="hidden">
 
                         <div class="control-group">
                             <label style="display: inline">Username</label>
@@ -188,7 +195,7 @@ else
 
                             <input  class="span6 m-wrap" style="display: inline ;width: 250px" type="text" placeholder="Firstname" name="admin_name" value="<?php if(isset($edit_userdata)){echo $value['admin_name'];}else echo set_value('admin_name');?>"/>
                         </div>
-                                <div style="display:inline; color: red" >
+                                <div id="first" style="display:inline; color: red" >
                                     <?php echo form_error('admin_name'); ?>
                                 </div>
                             </div>
@@ -200,29 +207,29 @@ else
 
                                     <input class="span6 m-wrap" style="display: inline ;width: 250px"type="text" placeholder="Lastname" name="admin_lastname" value="<?php if(isset($edit_userdata)){echo $value['admin_lastname'];}else echo set_value('admin_lastname');?>"/>
                                 </div>
-                                <div style="display:inline; color: red" >
+                                <div id="last" style="display:inline; color: red" >
                                     <?php echo form_error('admin_lastname'); ?>
                                 </div>
 
 
 
 
-                        <div class="control-group">
-                            <label style="display: inline" >Password</label>
-                                 <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" id="register_password" placeholder="Password" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?>" name="admin_password"/>
-                                </div>
-                                <div style="display:inline;color: red ">
-                                    <?php echo form_error('admin_password'); ?>
-                                </div>
-
-                        <div class="control-group">
-                            <label style="display: inline" >Confirm</label>
-                            &nbsp;
-                                    <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" placeholder="Re-type Your Password" name="admin_compass" value="<?php if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?> "/>
-                                </div>
-                                <div style="display:inline;color: red">
-                                    <?php echo form_error('admin_compass'); ?>
-                                </div>
+<!--                        <div class="control-group">-->
+<!--                            <label style="display: inline" >Password</label>-->
+<!--                                 <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" id="register_password" placeholder="Password" value="--><?php //if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?><!--" name="admin_password"/>-->
+<!--                                </div>-->
+<!--                                <div style="display:inline;color: red ">-->
+<!--                                    --><?php //echo form_error('admin_password'); ?>
+<!--                                </div>-->
+<!---->
+<!--                        <div class="control-group">-->
+<!--                            <label style="display: inline" >Confirm</label>-->
+<!--                            &nbsp;-->
+<!--                                    <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" placeholder="Re-type Your Password" name="admin_compass" value="--><?php //if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?><!-- "/>-->
+<!--                                </div>-->
+<!--                                <div style="display:inline;color: red">-->
+<!--                                    --><?php //echo form_error('admin_compass'); ?>
+<!--                                </div>-->
 
                         <div class="control-group">
                             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -230,7 +237,7 @@ else
 
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="span6 m-wrap" style="display: inline ;width: 250px" type="text" placeholder="Email" name="admin_email" value="<?php if(isset($edit_userdata)){echo $value['admin_email'];}else echo set_value('admin_email');?>"/>
                                 </div>
-                                <div style="display:inline;color: red">
+                                <div id="email" style="display:inline;color: red">
                                     <?php echo form_error('admin_email'); ?>
                                 </div>
 

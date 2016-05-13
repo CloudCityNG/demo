@@ -42,7 +42,10 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/category')?>">
+                    Category Management</a>
+            </li>
 
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">

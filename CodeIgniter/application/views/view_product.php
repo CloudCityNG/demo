@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
@@ -43,7 +55,10 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/category')?>">
+                    Category Management</a>
+            </li>
 
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
@@ -179,6 +194,7 @@
                                 </div>
                             </div>
 
+                            <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
 
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
@@ -215,7 +231,7 @@
                                             <td><?php echo $value['quntity'];?></td>
                                             <td><?php echo $value['price'];?></td>
                                             <td><a href="<?php echo site_url('admin/product/edit_product/'.$value['product_id'])?>">Edit </a></td>
-                                            <td><a href="<?php echo site_url('admin/product/delete_product/'.$value['product_id'])?>">Delete</a></td>
+                                            <td><a onclick="return delete_con()" href="<?php echo site_url('admin/product/delete_product/'.$value['product_id'])?>">Delete</a></td>
                                             <td><a href="<?php echo site_url('admin/product/view_product_details/'.$value['product_id'])?>">View</a></td>
                                         </tr>
 

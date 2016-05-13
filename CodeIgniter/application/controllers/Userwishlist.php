@@ -34,7 +34,7 @@ class Userwishlist extends CI_Controller
             'product_id'=>$product_id
         );
         $this->User->add_wishlist($data);
-        redirect('UserControl');
+        redirect('home');
     }
     public function delete_from_wishlist()
     {

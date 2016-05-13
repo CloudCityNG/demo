@@ -84,11 +84,13 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
-                            <!--                            <li><a href="--><?php //echo site_url('Useraccount/account_user/'.$data)?><!--"><i class="fa fa-user"></i> Account</a></li>-->
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="<?php echo site_url('UserControl/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <li><a href="<?php if(!empty($data)){ echo site_url('home/user_cart');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <?php }?>
                         </ul>
                     </div>
                 </div>
@@ -110,8 +112,8 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('UserControl')?>" class="active">Home</a></li>
-                            <li ><a href="<?php echo site_url('Useraccount/address_update/'.$data)?>">Address Book</a>
+                            <li><a href="<?php echo base_url('home')?>" class="active">Home</a></li>
+                            <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
                                     <li><a href="product-details.html">Product Details</a></li>
@@ -120,15 +122,14 @@
                                     <li><a href="login.html">Login</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?php echo site_url('Useraccount/password_change/'.$data)?>">Chnage Password<i></i></a>
+                            <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
                                 </ul>
                             </li>
                             <li><a href="404.html">404</a></li>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/contact/'.$data);}else{echo site_url('Userlogin/login');}?>"> Contact</a></li>                        </ul>
-                        </ul>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/contact/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Contact</a></li>                        </ul>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -171,7 +172,7 @@
 
                 <td><?php echo $value['price'];?></td>
                 <td><a href="<?php echo site_url('Userwishlist/delete_from_wishlist/'.$value['wishlist_id'])?>">Delete</a></td>
-                <td><a href="<?php echo site_url('UserControl/add_to_cart/'.$value['wishlist_id'])?>">Add</a></td>
+                <td><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id'])?>">Add</a></td>
             </tr>
         <?php } } ?>
 </table>

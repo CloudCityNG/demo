@@ -10,6 +10,11 @@ class Practice extends CI_Controller
     }
     public function index()
     {
+
+        $var=$this->input->get('sortby');
+
+
+
         $data['customer']=$this->Datamodel->show_data();
         $config = array();
         $config["base_url"] = base_url()."Practice/index";
@@ -31,15 +36,16 @@ class Practice extends CI_Controller
         {
             $page = 1;
         }
-        $data["customer"] = $this->Datamodel->fetch_data($config["per_page"], $page);
+        $data["customer"] = $this->Datamodel->fetch_data($config["per_page"], $page,$var);
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
         $this->load->view("exam", $data);
     }
     public function deleteall()
     {
-        $data['customer']= $this->Datamodel->deleteall_data();
-        $this->load->view('exam',$data);
+        $data=$this->input->post('data');
+         $this->Datamodel->deleteall_data($data);
+        redirect('Practice/index');
     }
     public function delete()
     {
@@ -52,29 +58,10 @@ class Practice extends CI_Controller
         $data['keyword']=$keyword=$this->input->post('keyword');
             $keyword=$this->input->post('keyword');
 
-        $data['customer']= $this->Datamodel->search_data($keyword);
+        $x=trim($keyword);
+        $data['customer']= $this->Datamodel->search_data($x);
 
-//        $config = array();
-//        $config["base_url"] = base_url()."Practice/index";
-//        $total_row = $this->Datamodel->record_count();
-//        $config["total_rows"] = $total_row;
-//        $config["per_page"] = 2;
-//        $config['use_page_numbers'] = TRUE;
-//        $config['num_links'] = $total_row;
-//        $config['cur_tag_open'] = '&nbsp;<a class="current">';
-//        $config['cur_tag_close'] = '</a>';
-//        $config['next_link'] = 'Next';
-//        $config['prev_link'] = 'Previous';
-//
-//        $this->pagination->initialize($config);
-//        if($this->uri->segment(3))
-//        {
-//            $page = ($this->uri->segment(3));
-//        }
-//        else
-//        {
-//            $page = 1;
-//        }
+
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
         $this->load->view("exam", $data);
@@ -84,6 +71,7 @@ class Practice extends CI_Controller
     {
         $product_id = $this->input->get('id', TRUE);
         $data['user']=$this->Datamodel->edit($product_id);
+        var_dump($data);
         $this->load->view('editform',$data);
     }
     public function update()
@@ -100,12 +88,15 @@ class Practice extends CI_Controller
         $this->form_validation->set_rules('about', 'Aboutus', 'required|min_length[5]|max_length[15]');
         if ($this->form_validation->run() == FALSE)
         {
-            $data['first']=$this->input->post('firstname');
-
-            $this->load->view('entryform',$data);
+            $product_id['id'] = $this->input->get('id', TRUE);
+            $this->load->view('editform',$product_id);
         }
         else {
             $product_id = $this->input->get('id', TRUE);
+            $month=$this->input->post('month');
+            $day=$this->input->post('day');
+            $year=$this->input->post('year');
+
             $data = array(
                 'first_name' => $this->input->post('firstname'),
                 'last_name' => $this->input->post('lastname'),
@@ -114,6 +105,7 @@ class Practice extends CI_Controller
                 'email' => $this->input->post('email'),
                 'password' => $this->input->post('password'),
                 'gender' => $this->input->post('gender'),
+                'dob'=>$year."-".$month."-".$day,
                 'age' => $this->input->post('age'),
                 'pincode' => $this->input->post('pincode'),
                 'aboutus' => $this->input->post('about')
@@ -130,14 +122,14 @@ class Practice extends CI_Controller
     {
 
             $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-            $this->form_validation->set_rules('firstname', 'Firstname', 'required|min_length[5]|max_length[15]');
-            $this->form_validation->set_rules('lastname', 'Lastname', 'required|min_length[5]|max_length[15]');
+            $this->form_validation->set_rules('firstname', 'Firstname', 'required|min_length[2]|max_length[15]|regex_match[/^[a-zA-Z]/]');
+            $this->form_validation->set_rules('lastname', 'Lastname', 'required|min_length[2]|max_length[15]|regex_match[/^[a-zA-Z]/]');
             $this->form_validation->set_rules('phone', 'Phone', 'required|regex_match[/^[0-9]{10}$/]');
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
             $this->form_validation->set_rules('compass', 'Confirm Password', 'required');
-            $this->form_validation->set_rules('age', 'Age', 'required|regex_match[/^[0-9]2}$/]');
-            $this->form_validation->set_rules('pincode', 'Pincode', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
+            $this->form_validation->set_rules('age', 'Age', 'required');
+            $this->form_validation->set_rules('pincode', 'Pincode', 'required|regex_match[/^[0-9]{6}$/]');
             $this->form_validation->set_rules('about', 'Aboutus', 'required|min_length[5]|max_length[15]');
         if ($this->form_validation->run() == FALSE)
         {
@@ -145,7 +137,9 @@ class Practice extends CI_Controller
             $this->load->view('entryform',$data);
         }
         else
-        {
+        {$month=$this->input->post('month');
+            $day=$this->input->post('day');
+            $year=$this->input->post('year');
         $data= array(
             'first_name' => $this->input->post('firstname'),
             'last_name' => $this->input->post('lastname'),
@@ -154,12 +148,15 @@ class Practice extends CI_Controller
             'email' => $this->input->post('email'),
             'password' => $this->input->post('password'),
             'gender' => $this->input->post('gender'),
+            'dob'=>$year."-".$month."-".$day,
             'age' => $this->input->post('age'),
             'pincode' => $this->input->post('pincode'),
             'aboutus' => $this->input->post('about')
             );
-        $this->Datamodel->insert_data($data);
-        $this->load->view('entryform');
+                 $this->Datamodel->insert_data($data);
+            $this->session->set_flashdata('msg','Registration Successfull');
+
+        redirect('Practice/index');
         }
     }
     public function viewall()

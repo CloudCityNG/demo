@@ -76,6 +76,7 @@
                 </div><!--/login form-->
             </div>
             <div class="col-sm-1">
+                <br>
                 <h2 class="or">OR</h2>
             </div>
             <div class="col-sm-4">
@@ -98,7 +99,7 @@
                         <input type="password" placeholder="Password" name="user_password"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('user_password'); ?>
-                        </div>
+                        </div><br>
                         <label><input type="radio" name="user_status" value="1" style="display: inline;width: 20px">Male</label>
                         <label><input type="radio" name="user_status" value="1" style="display: inline;width: 20px">Female</label>
                         <div></div>

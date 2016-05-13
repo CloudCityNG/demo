@@ -84,11 +84,13 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
-                            <!--                            <li><a href="--><?php //echo site_url('Useraccount/account_user/'.$data)?><!--"><i class="fa fa-user"></i> Account</a></li>-->
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="<?php echo site_url('UserControl/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <li><a href="<?php if(!empty($data)){ echo site_url('home/user_cart');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <?php }?>
                         </ul>
                     </div>
                 </div>
@@ -144,6 +146,9 @@
 
 
 
+<div class="container">
+    <div class="row">
+
 
 <h1 style="text-align: center">Question Anwser</h1>
 <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
@@ -167,6 +172,7 @@
             </tr>
         <?php } } ?>
 </table>
-
+</div>
+</div>
 </body>
 </html>

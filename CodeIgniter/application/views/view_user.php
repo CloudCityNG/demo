@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
@@ -43,7 +55,10 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/category')?>">
+                    Category Management</a>
+            </li>
 
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
@@ -181,6 +196,7 @@
 
                                 </div>
 <!--                            </div>-->
+                            <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                <thead>
                                 <tr>
@@ -205,8 +221,8 @@
                                 <td><?php echo $value['admin_name'];?></td>
                                 <td><?php echo $value['admin_lastname'];?></td>
                                 <td><?php echo $value['admin_email'];?></td>
-                                <td><a href="<?php echo site_url('admin/adminuser/edit_user/'.$value['admin_id']);?>">Edit </a></td>
-                                <td><a href="<?php echo site_url('admin/adminuser/delete_user/'.$value['admin_id']);?>">Delete</a></td>
+                                <td><a  href="<?php echo site_url('admin/adminuser/edit_user/'.$value['admin_id']);?>">Edit </a></td>
+                                <td><a onclick="return delete_con()" href="<?php echo site_url('admin/adminuser/delete_user/'.$value['admin_id']);?>">Delete</a></td>
                                 </tr>
                                 <?php } } ?>
                             </table>

@@ -33,3 +33,4 @@
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?php echo base_url('assets/scripts/app.js')?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/scripts/index.js')?>" type="text/javascript"></script>
+

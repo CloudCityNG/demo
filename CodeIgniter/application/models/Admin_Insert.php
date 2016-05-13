@@ -2,17 +2,18 @@
 
 class Admin_insert extends CI_Model
 {
+
+
     function insert_admin($data)                    //insert admin
     {
-       // echo 'hello';
         $this->db->insert('e-commers',$data);
-
     }
     function update_admin($id,$data)
     {
         $this->db->where('admin_id',$id);
         $this->db->update('e-commers',$data);
     }
+
     function login()                                //admin login
     {
        // $query['count']=$this->db->count_all("e-commers");
@@ -34,6 +35,9 @@ class Admin_insert extends CI_Model
             redirect('admin/login/error');
         }
     }
+
+
+
     function verify()                               //verify e-mail
     {
         $email=$this->input->get('admin_email');
@@ -51,6 +55,9 @@ class Admin_insert extends CI_Model
             redirect('admin/login/email_error');
         }
     }
+
+
+
     public function list_user()                         //admin_list
     {
         $query = $this->db->get('e-commers');
@@ -66,14 +73,12 @@ class Admin_insert extends CI_Model
         $query_result = $query->result_array();
         return $query_result;
     }
-
     public function user_delete()                       //delete admin
     {
         $getid=$this->uri->segment(4);
         $this->db->where('admin_id',$getid);
         $this->db->delete('e-commers');
     }
-
     public function user_edit()                         //edit admin
     {
         $getid=$this->uri->segment(4);
@@ -109,20 +114,6 @@ class Admin_insert extends CI_Model
         $data['admin_email']=$this->input->post('admin_name');
         return $data;
     }
-//    function sort_prod($var)                            //sort product
-//    {
-//        $this->db->select('*');
-//        $this->db->from('product');
-//        $this->db->join('product_images','product_images.product_id=product.product_id');
-//        $this->db->order_by($var,"decs");
-//        $query=$this->db->get();
-//        $q=$query->result_array();
-//        return $q;
-//    }
-    public function product_count()                     //count product
-    {
-        return $this->db->count_all("product");
-    }
     public function record_count()                      //count admin
     {
         return $this->db->count_all("e-commers");
@@ -134,8 +125,6 @@ class Admin_insert extends CI_Model
         if(empty($var))
         {
             $var='admin_name';
-
-            echo "<p style='color: red'> " ."fsdfsdf" . $var . "</p>";
 
             $offset = ($page - 1) * $limit;
             $this->db->limit($limit, $offset);
@@ -150,8 +139,6 @@ class Admin_insert extends CI_Model
             }
             return false;}
         else {
-            echo "<p style='color: red'> " . "fsdfsdf" . $var . "</p>";
-
             $offset = ($page - 1) * $limit;
             $this->db->limit($limit, $offset);
             $this->db->order_by($var, "decs");
@@ -166,17 +153,22 @@ class Admin_insert extends CI_Model
             return false;
         }
     }
-    public function record_count_product()                  //product_count
-    {
 
+                                     //PRODUCT
+
+    public function product_count()                            //count product
+    {
+        return $this->db->count_all("product");
+    }
+    public function record_count_product()                     //product_count
+    {
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product.product_id=product_images.product_id');
-
+        $this->db->group_by('product_images.product_id');
         return $this->db->get()->num_rows();
-
     }
-    public function fetch_product_data($limit, $page)       //pagignation product
+    public function fetch_product_data($limit, $page)           //pagignation product
     {
 
         $offset = ($page - 1) * $limit;
@@ -184,6 +176,8 @@ class Admin_insert extends CI_Model
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product.product_id=product_images.product_id');
+        $this->db->group_by('product_images.product_id');
+
         $query = $this->db->get()->result_array();
 
         if (count($query)> 0)
@@ -204,20 +198,93 @@ class Admin_insert extends CI_Model
     return $prod_id;
 
     }
+
+
     public function upload_img($uploed)                      //insert img
     {
         $this->db->insert('product_images',$uploed);
     }
+
+
+            //CATEGORY
+
     public function select_category($category_name)          //select category
     {
         $this->db->insert('category',$category_name);
         $cat_id=$this->db->insert_id();
         return $cat_id;
     }
+
     public function product_category($pro_cat)              //insert category
     {
         $this->db->insert('product_category',$pro_cat);
     }
+    public function update_product_category($prod_id,$data)
+    {
+        $this->db->where('category_id',$prod_id);
+        $this->db->update('category',$data);
+    }
+    public function category_list()
+    {
+        return $this->db->count_all('category');
+    }
+    public function fetch_data_from_category($limit,$page)
+    {
+
+            $offset = ($page - 1) * $limit;
+            $this->db->limit($limit, $offset);
+            $this->db->order_by('category_name', "decs");
+            $query = $this->db->get("category");
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+                    $data[] = $row;
+                }
+
+                return $data;
+            }
+           else return false;
+    }
+    public function cat($category_name)
+    {
+        $this->db->select('category_id');
+        $this->db->from('category');
+        $this->db->where('category_name',$category_name);
+        return $this->db->get()->row()->category_id;
+
+    }
+    public function category_edit($id)
+    {
+        $this->db->select('*');
+        $this->db->from('category');
+        $this->db->where('category_id',$id);
+        return $this->db->get()->result_array();
+    }
+    public function categoryall()
+    {
+        $query=$this->db->get('category')->result_array();
+        return $query;
+    }
+    public function category_search($category_search)
+    {
+        $this->db->like('category_name',$category_search);
+        $query = $this->db->get('category');
+        $x=$query->result_array();
+        return $x;
+    }
+    public function category_insert($data)
+    {
+        $this->db->insert('category',$data);
+    }
+    public function category_update($data,$cate_id)
+    {
+        $this->db->where('category_id',$cate_id);
+        $this->db->update('category',$data);
+    }
+
+
+
+
+
     public function product_delete()                         //delete product
     {
         $getid=$this->uri->segment(4);
@@ -227,20 +294,25 @@ class Admin_insert extends CI_Model
     public function product_edit()                          //edit product
     {
         $getid=$this->uri->segment(4);
+
         $this->db->select('*');
-        $this->db->where('product_id',$getid);
-        $query=$this->db->get('product');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('product.product_id',$getid);
+        $query=$this->db->get();
         $query_result=$query->result();
         return $query_result;
     }
     function update($id,$data)                             //update product
     {
-        $this->db->where('id',$id);
+        $this->db->where('product_id',$id);
         $this->db->update('product',$data);
     }
     public function search($admin_serach)                 //serach admin
     {
         $this->db->like('admin_name',$admin_serach);
+        $this->db->or_like('admin_email',$admin_serach);
+        $this->db->or_like('admin_lastname',$admin_serach);
         $query = $this->db->get('e-commers');
         $x=$query->result_array();
         return $x;
@@ -258,6 +330,8 @@ class Admin_insert extends CI_Model
         $this->db->from('product');
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->like('name',$product_serach);
+        $this->db->or_like('price',$product_serach);
+        $this->db->or_like('quntity',$product_serach);
         $query = $this->db->get();
         //$query = $this->db->get('product');
         $x=$query->result_array();
@@ -275,7 +349,7 @@ class Admin_insert extends CI_Model
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product_images.product_id=product.product_id');
-
+        $this->db->group_by('product_images.product_id');
         $query = $this->db->get();
         $x=$query->result_array();
         return $x;
@@ -314,6 +388,15 @@ class Admin_insert extends CI_Model
         $query=$this->db->get('product_images');
         $query_result=$query->result();
         return $query_result;
+    }
+
+
+    public function from_image_update($prod_id,$data)                  //uppdate img
+    {
+
+        $this->db->where('product_id',$prod_id);
+        $this->db->update('product_images',$data);
+
     }
     public function image_update($data)                  //uppdate img
     {
@@ -408,17 +491,28 @@ class Admin_insert extends CI_Model
     }
     public function fetch_perpage($id)
     {
-      //  echo $id;
+
         $this->db->select('perpage');
         $this->db->from('configration');
         $this->db->where('created_by',$id);
-     return $this->db->get()->row()->perpage;
+
+        $query=@$this->db->get()->row()->perpage;
+
+
+        if(!empty($query))
+        {
+            return $query;
+        }
+        else{
+            $per=2;
+            return $per;
+        }
 
     }
     public function session_id()
     {
         $hidden=$this->input->post('hidden');
-         echo $hidden;
+        echo $hidden;
         $this->db->select('admin_id');
         $this->db->from('e-commers');
         $this->db->where('admin_name',$hidden);
@@ -448,8 +542,7 @@ class Admin_insert extends CI_Model
     }
     public function upadate_email($data,$id)
     {
-        ECHO 'sds'.$id;
-        var_dump($data);
+
         $this->db->where('admin_name',$id);
         $this->db->update('e-commers',$data);
     }
@@ -483,16 +576,15 @@ class Admin_insert extends CI_Model
     public function userlist_data()                         //delete userlist data
     {
         $getid=$this->uri->segment(4);
-        $this->db->where('user_id',$getid);
-        $query=$this->db->get('user');
+        $this->db->where('user.user_id',$getid);
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('user_address','user_address.user_id=user.user_id');
+        $query=$this->db->get();
         return $query->result_array();
     }
     public function compliant_count()
     {
         return $this->db->count_all("contact_us");
     }
-
-
-
-
 }

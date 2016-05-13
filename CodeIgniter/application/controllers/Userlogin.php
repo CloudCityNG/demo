@@ -101,7 +101,7 @@ class Userlogin extends CI_Controller
     {
         $user_data = $this->uri->segment(3);
         $this->session->set_userdata('user_session', $user_data);
-        redirect('UserControl');
+        redirect('home');
     }
 
     public function error()                    // login error

@@ -233,7 +233,7 @@
                                     <img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 100px;height: 100px">
                                     <h2><?php echo $value['price']?></h2>
                                     <p><?php echo $value['image_name']?></p>
-                                    <a href="<?php echo site_url('UserControl/add_to_cart/19')?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a href="<?php echo site_url('home/add_to_cart/19')?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </div>
                                 <div >
 

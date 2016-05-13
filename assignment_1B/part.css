@@ -1,0 +1,516 @@
+.button{
+    width: 150px;
+    height: 50px;
+    background: forestgreen;
+    color: white;
+    border-radius: 10%;
+    text-align: center;
+}
+.button:hover
+{
+    background-color: black;
+}
+.head
+{
+     height: 6px;
+    width:244px;
+    margin-left:94px;
+    display: inline;
+}
+    .color
+    {
+        color: forestgreen;
+        text-align: left;
+    }
+.dis
+{
+    display: inline;
+}
+.head1
+{
+    width:420px;
+    margin-left:186px;
+    display: inline;
+    text-align: right;
+}
+
+.list1
+{
+    display: inline;
+    word-spacing: 2px;
+}
+.deco
+{
+    text-decoration: none;
+    color: black;
+    display: inline;
+}
+.deco:hover
+{
+    color: forestgreen;
+}
+.list
+{
+    display: inline;
+    word-spacing: 20px;
+    margin-left: 160px;
+}
+.header
+{
+    width: 250px;
+    height: 200px;
+
+}
+#new
+{
+    height: 50px;
+    background-color: gray;
+    text-align: center;
+}
+#new1
+{
+    height: 50px;
+    background-color: gray;
+    margin-top: 600px;
+    text-align: center;
+}
+.image{
+    width: 928px;
+    height: 400px;
+    position: relative;
+    left: 0;
+    right: 0;
+    top:0;
+}
+.videoimg
+{
+    position: absolute;
+    left: 200px;
+    top: 300px;
+    width: 60px;
+    height: 60px;
+}
+.textright
+{
+    text-align: center;
+    position: absolute;
+    float:left;
+    left: 450px;
+    top: 200px;
+    line-height: 36px;
+}
+.image1{
+    width: 928px;
+    height: 400px;
+    position: relative;
+    left: 0;
+    right: 0;
+    top:0;
+    opacity: 0.6;
+    margin-top: 10px;
+}
+.vitalwork
+{
+    text-decoration: none;
+    position: absolute;
+    left: 375px;
+    top: 925px;
+    margin-top: 50px;
+}
+.step
+{
+    text-decoration: none;
+    position: absolute;
+    left: 325px;
+    top: 1000px;
+    margin-top: 50px;
+}
+.stepimg
+{
+    width: 400px;
+    height: 50px ;
+    position: absolute;
+    left: 290px;
+    top: 1075px;
+    margin-top: 50px;
+}
+.place
+{
+    width: 275px ;
+    height: 30px;
+    position: absolute;
+    left: 360px;
+    top: 1175px;
+    margin-top: 50px;
+}
+.aboutimg
+{
+    left: 420px;
+    top: 500px;
+    float:left;
+    display: inline;
+    margin-top: 100px;
+}
+.first
+{
+    width: 94px;
+
+}
+.second
+{
+    width: 376px;
+
+}
+nav
+{
+    width: 846px;
+
+}
+.fourth
+{
+    width: 470px;
+
+}
+.full
+{
+    width: 940px;
+
+}
+.footer1
+{
+    margin-left: 94px;
+    top:2920px;
+    position: absolute;
+    color: green;
+    display: inline;
+}
+.footer1top
+{
+    top:2990px;
+    color: white;
+
+}
+.footershort
+{
+    margin-left: 96px;
+    top:2955px;
+    position: absolute;
+    color: white;
+    display: inline;
+    word-spacing: 7px;
+}
+.footright
+{
+    left: 420px;
+    width:470px;
+    top:2910px;
+    text-align:center;
+    position: absolute;
+    color: white;
+    display: inline;
+}
+.footrighttop
+{
+    top:2925px;
+}
+.contact
+{
+    line-height:20px;
+    height: 20px;
+    width: 244px;
+    margin-left: 94px;
+    text-align: left;
+    color: white;
+    display: inline;
+    position: absolute;
+}
+
+.contop1
+{
+    top:3070px;
+}
+.contop2
+{
+    top:3100px;
+}
+.contop3
+{
+    top:3170px;
+}
+.tweet
+{
+    line-height:20px;
+    height: 20px;
+    width: 244px;
+    margin-left: 338px;
+    text-align: left;
+    color: white;
+    display: inline;
+    position: absolute;
+}
+.teewtop1
+{
+    top:3070px;
+}
+.teewtop2
+{
+    top:3103px;
+}
+.posts
+{
+    line-height:20px;
+    height: 20px;
+    width: 244px;
+    margin-left: 620px;
+    text-align: left;
+    color: white;
+    display: inline;
+    position: absolute;
+}
+.posts1
+{
+    top:3070px;
+}
+.posts2
+{
+    top:3103px;
+}
+
+
+.blog
+{
+    position:absolute;
+    width: 244px;
+    height: 244px;
+    left: 602px;
+    top:2300px;
+    display: inline;
+}
+.blog.top1
+{
+    top:2550px;
+}
+.blog.top2
+{
+    top:2600px;
+}
+.blog.top3
+{
+    top:2680px;
+}
+.top4
+{
+    top:2750px;
+    display: inline;
+    left: 602px;
+    position:absolute;
+}
+
+.blog1
+{
+    position:absolute;
+    width: 244px;
+    height: 244px;
+    left: 348px;
+    display: inline;
+}
+.blog1.top11
+{
+    top:2300px;
+}
+    .blog1.top12
+    {
+        top:2550px;
+    }
+    .blog1.top13
+    {
+        top:2600px;
+    }
+    .blog1.top15
+    {
+        top:2680px;
+    }
+    .top14
+    {
+        top:2750px;
+        display: inline;
+        left: 348px;
+        position:absolute;
+    }
+
+.blog2
+{
+    position:absolute;
+    width: 244px;
+    height: 244px;
+    left: 94px;
+    top:2300px;
+    display: inline;
+}
+    .blog2.top21
+    {
+        top:2550px;
+    }
+    .blog2.top22
+    {
+        top:2600px;
+    }
+    .blog2.top23
+    {
+        top:2680px;
+    }
+    .top24
+    {
+        top:2750px;
+        left: 94px;
+        display: inline;
+        position:absolute;
+    }
+
+.posttitle
+{
+    text-align: center;
+    left: 360px;
+    top: 200px;
+
+}
+.lorem
+{
+    left: 480px;
+    width: 376px;
+    height:260px;
+    text-align: center;
+    top:1500px;
+    position: absolute;
+    background-color: white;
+}
+.lorem1
+{
+    left: 94px;
+}
+.prev
+{
+    position: absolute;
+    left: 20px;
+    top: 1800px;
+    margin-top: 100px;
+    margin-right: 50px;
+    margin-bottom: 100px;
+    margin-left: 50px;
+}
+.client
+{
+    position: absolute;
+    left: 320px;
+    top: 1775px;
+}
+.roundimg {
+    position: absolute;
+    left: 350px;
+    top: 1875px;
+    border-radius: 50%;
+}
+.text
+{
+    text-align: left;
+    position: absolute;
+    left: 200px;
+    top: 2050px;
+}
+.auther
+{
+    text-align: center;
+    position: absolute;
+    left: 400px;
+    top: 2100px;
+}
+.next
+{
+    position: absolute;
+    left: 720px;
+    top: 1800px;
+    margin-top: 100px;
+    margin-right: 50px;
+    margin-bottom: 100px;
+    margin-left: 50px;
+}
+#title
+{
+    left: 94px;
+    width:752px;
+    height: 50px;
+    text-align: center;
+    top:1420px;
+    position: absolute;
+    right: 94px;
+}
+.black
+{
+    background-color: black;
+    position: relative;
+    height: 50px;
+    color: white;
+    text-align: center;
+}
+
+.foter
+{
+    display: inline;
+    top:3320px;
+
+}
+    .foter1
+    {
+        margin-left: 94px;
+        width: 244px;
+    }
+    .foter2
+    {
+        margin-left: 150px;
+        width: 264px;
+
+    }
+    .foter3
+    {
+        margin-left: 150px;
+        width: 244px;
+    }
+.footbuton1
+{
+    display: inline;
+    left: 470px;
+    top: 2990px;
+    position: absolute;
+}
+.footbuton2
+{
+    display: inline;
+    left: 696px;
+    top: 2990px;
+    position: absolute;
+}
+
+.recenttweet
+{
+    display: inline;
+    text-align: left;
+    text-decoration: none;
+    color: white;
+}
+.line
+{
+    line-height: 2px;
+}
+.aboutimg1
+{
+    float: left;
+    display: inline;
+    width: 420px;
+    margin-left: 94px;
+}
+.aboutbut
+{
+    width: 140px;
+    height: 40px;
+    text-align: center;
+}

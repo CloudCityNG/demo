@@ -19,7 +19,8 @@ class Useraccount extends CI_Controller
     public function account_user()            //user account
     {
         if($this->session->userdata('user_session'))
-        {$user_id=$this->uri->segment(3);
+        {
+            $user_id=$this->uri->segment(3);
             $data['user_data'] = $this->User->user_account($user_id);
             $this->load->view('user/account_user', $data);
             $this->load->view('user/footer_user');}
@@ -30,7 +31,7 @@ class Useraccount extends CI_Controller
 
     public function back_form_account()         //back to home
     {
-        redirect('UserControl');
+        redirect('home');
     }
 
     public function address()                   //user address
@@ -40,15 +41,14 @@ class Useraccount extends CI_Controller
         $this->load->view('user/address_user', $user_id);
         $this->load->view('user/footer_user');
     }
+
     public function address_update()            //update address
     {
-
         $id_user=$this->uri->segment(3);
         $data['user_address'] = $this->User->update_address($id_user);
         $this->load->view('user/address',$data);
         $this->load->view('user/footer_user');
     }
-
 
     public function change_address()            //update user address
     {
@@ -76,15 +76,13 @@ class Useraccount extends CI_Controller
             );
             $user_id=$this->input->post('user_id');
             $this->User->address_user($data,$user_id);
-            redirect('Useraccount/account_user');
+            redirect('Useraccount/account_user/'.$user_id);
         }
 
     }
 
-
     public function update_user()               //update user
     {
-
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
         $this->form_validation->set_rules('user_name', 'Firstname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
@@ -110,9 +108,7 @@ class Useraccount extends CI_Controller
             $this->User->update_user($data,$id);
             $this->load->view('user/account_user',$msg);
             $this->load->view('user/footer_user');
-
         }
-
     }
 
     public function password_change()               // change Password page
@@ -123,7 +119,6 @@ class Useraccount extends CI_Controller
     public function verify_password()              // verify new password
     {
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-
         $this->form_validation->set_rules('password', 'Password', 'required|regex_match[/^[0-9]{6}$/]');
         $this->form_validation->set_rules('new_password', 'New Password', 'required|matches[password]');
 
@@ -144,7 +139,6 @@ class Useraccount extends CI_Controller
     }
     public function pass_error()                    //change password error
     {
-
         $wrong_pass['error']="Wrong Password";
         $this->load->view('user/change_password',$wrong_pass);
     }
@@ -152,7 +146,6 @@ class Useraccount extends CI_Controller
     {
         $user_id=$this->uri->segment(3);
         $data['user_data']=$this->User->user_data($user_id);
-
         $this->load->view('user/contact_us',$data);
         $this->load->view('user/footer_user');
     }
@@ -174,13 +167,8 @@ class Useraccount extends CI_Controller
         }
         else{
 
-
-
-
             $message = $this->input->post('message');
             $note_admin = $this->input->post('note_admin');
-
-
 
             $data=array(
 
@@ -218,8 +206,6 @@ class Useraccount extends CI_Controller
             } else {
                 show_error($this->email->print_debugger());
             }
-
-
             $data['user_data']=$this->User->user_data($user_id);
             $data['query']="Message Suucessfully Delevierd";
             $this->load->view('user/contact_us',$data);
@@ -229,7 +215,6 @@ class Useraccount extends CI_Controller
     {
         $user_id=$this->uri->segment(3);
         $data['ans']=$this->User->replay_admin($user_id);
-        //$this->load->view('user/headeruser');
         $this->load->view('user/query_ans',$data);
         $this->load->view('user/footer_user');
     }

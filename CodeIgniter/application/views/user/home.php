@@ -14,44 +14,29 @@
                     </ol>
 
                     <div class="carousel-inner">
-                        <div class="item active">
-                            <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>Free E-Commerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                <img src="images/home/pricing.png"  class="pricing" alt="" />
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>100% Responsive Design</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?php echo base_url('images/home/girl2.jpg')?>" class="girl img-responsive" alt="" />
-                                <img src="<?php echo base_url('images/home/pricing.png')?>"  class="pricing" alt="" />
-                            </div>
-                        </div>
 
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>Free Ecommerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?php echo base_url('images/home/girl3.jpg')?>" class="girl img-responsive" alt="" />
-                                <img src="<?php echo base_url('images/home/pricing.png')?>" class="pricing" alt="" />
-                            </div>
-                        </div>
-
+<!--          Banner              -->
+                        <?php
+                            $i = 1;
+                            foreach ($product as $img):
+                                 $img=(array)$img;
+                                 $item_class = ($i == 1) ? 'item active' : 'item';
+                                ?>
+                                <div class="<?php echo $item_class ?>">
+                                 <div class="col-sm-6">
+                                     <h1><span>E</span>-SHOPPER</h1>
+                                     <h2>100% Responsive Design</h2>
+                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                     <button type="button" class="btn btn-default get">Get it now</button>
+                                 </div>
+                                    <div class="col-sm-6">
+                                        <img src="<?php echo base_url().'/images/'.$img['image_name'];?>" class="img-responsive" style="width: 481px;height: 441px">
+                                    </div>
+                                </div>
+                                <?php
+                                $i++;
+                            endforeach;
+                        ?>
                     </div>
 
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -71,12 +56,21 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     <h2>Category</h2>
+
                     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a name="Softwear" href="<?php echo site_url('UserControl/category')?>">
-                                        Softwear
+                                    <?php
+                                        foreach ($category as $item)
+                                        {
+                                            $item=(array)$item;
+                                    ?>
+                                    <a  href="<?php echo site_url('home/category/'.$item['category_id'])?>">
+                                    <?php
+                                         echo $item['category_name']."<br>"."<br>";
+                                        }
+                                    ?>
                                     </a>
                                 </h4>
                             </div>
@@ -217,14 +211,13 @@
                     </div><!--/price-range-->
 
                     <div class="shipping text-center"><!--shipping-->
+
                         <img src="<?php echo base_url('images/home/shipping.jpg')?>" alt="" />
+
                     </div><!--/shipping-->
 
                 </div>
             </div>
-
-
-
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
@@ -238,17 +231,17 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 100px;height: 100px">
+                                        <a href="<?php echo site_url('home/product_view/'.$value['product_id'])?>"> <img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 100px;height: 100px"></a>
                                         <h2><?php echo $value['price']?></h2>
                                         <p><?php echo $value['image_name']?></p>
-                                        <a href="<?php if(!empty($ses)){ echo site_url('UserControl/add_to_cart/'.$value['product_id']);}else{ echo base_url('Userlogin/login');}?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <a href="<?php echo site_url('home/add_to_cart/'.$value['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
                                     <div >
                                     </div>
-                                </div>
+                                </div><?php $data=$this->session->userdata('id');?>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a href="<?php echo base_url('Userwishlist/add_to_wishlist/'.$value['product_id'])?>"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$value['product_id']);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                         <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
                                     </ul>
                                 </div>

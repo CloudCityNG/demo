@@ -4,20 +4,16 @@
 <!--[if IE 8]><html class="no-js lt-ie9 ie" lang="en" dir="ltr"><![endif]-->
 <!--[if gt IE 8]> <html class="no-js gt-ie8 ie" lang="en" dir="ltr"><![endif]-->
 <?php
+if(isset($user))
+{
+foreach($user as $value)
+    $value =(array)$value;
+    $x=$value['id'];
+}
+else{echo "";
 
-$put_data=[];
-array_push($put_data,$user);
 
-foreach($user as $value) {
-
-    array_push($put_data, $user);
-
-    if(is_object($value))
-    {
-        $value=get_object_vars($value);
-
-    }
-else{echo 'not';}
+    $x=$id;}
 ?>
 <html>
 <head>
@@ -38,6 +34,27 @@ else{echo 'not';}
     <link href="<?php echo base_url('css/jquery.bxslider.css')?>" rel="stylesheet">
     <!-- Responsive -->
     <link href="<?php echo base_url('css/responsive.css')?>" rel="stylesheet">
+
+
+
+    <script>
+        function ages(year_select)
+        {
+            var x = (2016 - year_select);
+
+            if (x > 26) {
+                alert(x);
+                document.getElementById('age').value = x;
+            }
+            else {
+                document.getElementById('age').value = '';
+
+            }
+
+        }
+
+
+    </script>
 
 </head>
 
@@ -93,8 +110,9 @@ else{echo 'not';}
             <!--            --><?php //echo "$display_output";?>
         </div>
     </div>
-    <?php echo form_open('Practice/update?id='.$value['id']);?>
-    <!-- Content Section Start-->
+    <form action="<?php echo base_url('Practice/update?id='.$x); ?>"method="post">
+
+      <!-- Content Section Start-->
     <div class="section content_section">
         <div class="container">
             <div class="filable_form_container">
@@ -103,11 +121,11 @@ else{echo 'not';}
                         <li class="fileds">
                             <div class="name_fileds">
                                 <label>First Name</label>
-                                <input name="firstname" id="firstname" type="text" value="<?php echo $value['first_name'];?>">
+                                <input name="firstname" id="firstname" type="text" value="<?php if(isset($user)){echo $value['first_name'];}else{echo set_value('firstname');}?>">
                             </div>
                             <div class="name_fileds">
                                 <label>Last Name</label>
-                                <input name="lastname" type="text"  id="lastname" value="<?php echo $value['last_name'];?>">
+                                <input name="lastname" type="text"  id="lastname" value="<?php  if(isset($user)){ echo $value['last_name'];}else{echo set_value('lastname');}?>">
                             </div>
 
                             <div style="display:inline">
@@ -121,11 +139,11 @@ else{echo 'not';}
                         <li class="fileds">
                             <div class="phone_fileds">
                                 <label>Phone No</label>
-                                <input name="phone" type="number"  id="phone" value="<?php echo $value['phone_no'];?>">
+                                <input name="phone" type="number" id="phone" value="<?php  if(isset($user)){ echo $value['phone_no'];}else{echo set_value('phone');}?>">
                             </div>
                             <div class="phone_fileds">
                                 <label>Office No</label>
-                                <input name="office" type="number" "<?php echo $value['office_no'];?>">
+                                <input name="office" type="number" value="<?php  if(isset($user)){ echo $value['office_no'];}else{echo set_value('office');}?>">
                             </div>
                             <div style="display:inline">
                                 <?php echo form_error('phone'); ?>
@@ -134,7 +152,7 @@ else{echo 'not';}
                         <li class="fileds">
                             <div class="email_fileds">
                                 <label>Email</label>
-                                <input name="email" type="email" value="<?php echo $value['email'];?>">
+                                <input name="email" type="email" value="<?php  if(isset($user)){ echo $value['email'];}else{echo set_value('email');}?>">
                             </div>
                             <div class="gender_fileds">
                                 <label>Gender</label>
@@ -152,7 +170,7 @@ else{echo 'not';}
                         <li class="fileds">
                             <div class="pass_fileds">
                                 <label>Password</label>
-                                <input name="password" type="password"  id="password"value="<?php echo $value['password'];?>">
+                                <input name="password" type="password"  id="password"value="<?php  if(isset($user)){ echo $value['password'];}else{echo set_value('password');}?>">
                                 <div style="display:inline">
                                     <?php echo form_error('password'); ?>
                                 </div>
@@ -160,7 +178,7 @@ else{echo 'not';}
                             </div>
                             <div class="pass_fileds">
                                 <label>Confirm Password</label>
-                                <input name="compass" type="password"  id="compass" value="<?php echo $value['password'];?>">
+                                <input name="compass" type="password"  id="compass" value="<?php  if(isset($user)){ echo $value['password'];}else{echo set_value('compass');}?>">
                                 <div style="display:inline">
                                     <?php echo form_error('compass'); ?>
                                 </div>
@@ -170,92 +188,212 @@ else{echo 'not';}
                         <li class="fileds">
                             <div class="dob_fileds selectbox">
                                 <label>My birthdate is</label>
+<!--                                --><?php
+//                                if(isset($user)){$birth_array=explode("-",$value["dob"]);
+//                               // $birth_day=$birth_array[2];
+//
+//                                    $birth_month=$birth_array[1];
+//                                }
+//                               // $birth_year=$birth_array[0];}
+//                                else
+//                                {
+//                                    echo set_value('month');
+//                                }
+//
+//                                ?>
 
                                 <ul>
-                                    <li>
-                                        <select name="month" class="select month" id='month'>                                                <option value="0">Month</option>
-                                            <option value="01">Jan</option>
-                                            <option value="02">Feb</option>
-                                            <option value="03">March</option>
-                                            <option value="04">April</option>
-                                            <option value="05">May</option>
-                                            <option value="06">June</option>
-                                            <option value="07">July</option>
-                                            <option value="08">Aug</option>
-                                            <option value="09">Sep</option>
-                                            <option value="10">Oct</option>
-                                            <option value="11">Nov</option>
-                                            <option value="12">Dec</option>
-                                        </select>
-                                        <!--                                            --><?//=$month_error?>
-                                    </li>
-                                    <li>
-                                        <select name="day" class="select day">
-                                            <option value="0">Day</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                            <option value="07">07</option>
-                                            <option value="08">08</option>
-                                            <option value="09">09</option>
-                                            <option value="10">10</option>
+                                        <li>
+                                            <select name="month"  id='month'>
+                                            <option value="-1"><?php
+                                                if(isset($user)){
+                                                    $birth_array=explode("-",$value["dob"]);
+                                                    $birth_month=$birth_array[1];
 
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                            <option value="13">13</option>
-                                            <option value="14">14</option>
-                                            <option value="15">15</option>
-                                            <option value="16">16</option>
-                                            <option value="17">17</option>
-                                            <option value="18">18</option>
-                                            <option value="19">19</option>
-                                            <option value="20">20</option>
+                                                    for($i=01;$i<=12;$i++)
+                                                    {
+                                                        if($birth_month==$i)
+                                                        {
+                                                            echo "<option value='$i' selected>$i</option>";
+                                                        }
+                                                        else
+                                                        {
+                                                            echo "<option value='$i'>$i</option>";
+                                                        }
 
-                                            <option value="21">21</option>
-                                            <option value="22">22</option>
-                                            <option value="23">23</option>
-                                            <option value="24">24</option>
-                                            <option value="25">25</option>
-                                            <option value="26">26</option>
-                                            <option value="27">27</option>
-                                            <option value="28">28</option>
-                                            <option value="29">29</option>
-                                            <option value="30">30</option>
-                                            <option value="31">31</option>
-                                        </select>
-                                        <!--                                            --><?//=$day_error?>
-                                    </li>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    echo set_value('month');
+                                                }
 
-                                    <li>
-                                        <select name="year" class="select year" id='year'>
-                                            <option value="0">Year</option>
-                                            <option value="1980">1980</option>
-                                            <option value="1981">1981</option>
-                                            <option value="1982">1982</option>
-                                            <option value="1983">1983</option>
-                                            <option value="1984">1984</option>
-                                            <option value="1985">1985</option>
-                                            <option value="1986">1986</option>
-                                            <option value="1987">1987</option>
-                                            <option value="1988">1988</option>
-                                            <option value="1989">1989</option>
-                                            <option value="1990">1990</option>
-                                            <option value="1991">1991</option>
-                                            <option value="1992">1992</option>
-                                            <option value="1993">1993</option>
-                                            <option value="1994">1994</option>
-                                            <option value="1995">1995</option>
-                                        </select>
-                                        <!--                                            --><?//=$year_error?>
-                                    </li>
+                                                ?></option>
+
+                                            </select>
+                                        </li>
+                                        <li>
+                                            <select name="day" id="day">
+                                                <option value="-1">
+                                                    <?php
+                                                    if(isset($user)){
+                                                        $birth_array=explode("-",$value["dob"]);
+                                                        $birth_day=$birth_array[2];
+
+                                                        for($i=01;$i<=31;$i++)
+                                                        {
+                                                            if($birth_day==$i)
+                                                            {
+                                                                echo "<option value='$i' selected>$i</option>";
+                                                            }
+                                                            else
+                                                            {
+                                                                echo "<option value='$i'>$i</option>";
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        echo set_value('day');
+                                                    }
+
+                                                    ?></option>
+                                            </select>
+                                        </li>
+
+                                        <li>
+                                            <select name="year"  id='year' onchange="ages(this.value)">
+                                                <option value="-1"><?php
+                                                    if(isset($user)){
+                                                        $birth_array=explode("-",$value["dob"]);
+                                                        $birth_year=$birth_array[0];
+
+                                                        for($i=1980;$i<=2200;$i++)
+                                                        {
+                                                            if($birth_year==$i)
+                                                            {
+                                                                echo "<option value='$i' selected>$i</option>";
+                                                            }
+                                                            else
+                                                            {
+                                                                echo "<option value='$i'>$i</option>";
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        echo set_value('year');
+                                                    }
+
+                                                    ?></option>
+                                                <?php
+
+                                                for($i=1980;$i<=2200;$i++)
+                                                {
+                                                    if($birth_year==$i)
+                                                    {
+                                                        echo "<option value='$i' selected>$i</option>";
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "<option value='$i'>$i</option>";
+                                                    }
+
+                                                }
+
+                                                ?>
+                                            </select>
+                                        </li>
+
+
+
+<!--                                    <li>-->
+<!--                                        <select name="month" class="select month" id='month'>                                                <option value="0">Month</option>-->
+<!--                                            <option value="01">Jan</option>-->
+<!--                                            <option value="02">Feb</option>-->
+<!--                                            <option value="03">March</option>-->
+<!--                                            <option value="04">April</option>-->
+<!--                                            <option value="05">May</option>-->
+<!--                                            <option value="06">June</option>-->
+<!--                                            <option value="07">July</option>-->
+<!--                                            <option value="08">Aug</option>-->
+<!--                                            <option value="09">Sep</option>-->
+<!--                                            <option value="10">Oct</option>-->
+<!--                                            <option value="11">Nov</option>-->
+<!--                                            <option value="12">Dec</option>-->
+<!--                                        </select>-->
+<!--                                        <!--                                            --><?////=$month_error?>
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <select name="day" class="select day">-->
+<!--                                            <option value="0">Day</option>-->
+<!--                                            <option value="--><?php // if(isset($user)){ echo $value['password'];}else{echo set_value('compass');}?>
+<!--                                            <option value="01">01</option>-->
+<!--                                            <option value="02">02</option>-->
+<!--                                            <option value="03">03</option>-->
+<!--                                            <option value="04">04</option>-->
+<!--                                            <option value="05">05</option>-->
+<!--                                            <option value="06">06</option>-->
+<!--                                            <option value="07">07</option>-->
+<!--                                            <option value="08">08</option>-->
+<!--                                            <option value="09">09</option>-->
+<!--                                            <option value="10">10</option>-->
+<!---->
+<!--                                            <option value="11">11</option>-->
+<!--                                            <option value="12">12</option>-->
+<!--                                            <option value="13">13</option>-->
+<!--                                            <option value="14">14</option>-->
+<!--                                            <option value="15">15</option>-->
+<!--                                            <option value="16">16</option>-->
+<!--                                            <option value="17">17</option>-->
+<!--                                            <option value="18">18</option>-->
+<!--                                            <option value="19">19</option>-->
+<!--                                            <option value="20">20</option>-->
+<!---->
+<!--                                            <option value="21">21</option>-->
+<!--                                            <option value="22">22</option>-->
+<!--                                            <option value="23">23</option>-->
+<!--                                            <option value="24">24</option>-->
+<!--                                            <option value="25">25</option>-->
+<!--                                            <option value="26">26</option>-->
+<!--                                            <option value="27">27</option>-->
+<!--                                            <option value="28">28</option>-->
+<!--                                            <option value="29">29</option>-->
+<!--                                            <option value="30">30</option>-->
+<!--                                            <option value="31">31</option>-->
+<!--                                        </select>-->
+<!--                                        <!--                                            --><?////=$day_error?>
+<!--                                    </li>-->
+<!---->
+<!--                                    <li>-->
+<!--                                        <select name="year" class="select year" id='year'>-->
+<!--                                            <option value="0">Year</option>-->
+<!--                                            <option value="1980">1980</option>-->
+<!--                                            <option value="1981">1981</option>-->
+<!--                                            <option value="1982">1982</option>-->
+<!--                                            <option value="1983">1983</option>-->
+<!--                                            <option value="1984">1984</option>-->
+<!--                                            <option value="1985">1985</option>-->
+<!--                                            <option value="1986">1986</option>-->
+<!--                                            <option value="1987">1987</option>-->
+<!--                                            <option value="1988">1988</option>-->
+<!--                                            <option value="1989">1989</option>-->
+<!--                                            <option value="1990">1990</option>-->
+<!--                                            <option value="1991">1991</option>-->
+<!--                                            <option value="1992">1992</option>-->
+<!--                                            <option value="1993">1993</option>-->
+<!--                                            <option value="1994">1994</option>-->
+<!--                                            <option value="1995">1995</option>-->
+<!--                                        </select>-->
+<!--                                        <!--                                            --><?////=$year_error?>
+<!--                                    </li>-->
                                 </ul>
                             </div>
                             <div class="age_fileds">
                                 <label>Age</label>
-                                <input name="age" id="age" type="text" value="<?php echo $value['age'];?>"  >
+                                <input name="age" id="age" type="text" value="<?php  if(isset($user)){ echo $value['age'];}else{echo set_value('age');}?>">
                                 <div style="display:inline">
                                     <?php echo form_error('age'); ?>
                                 </div>
@@ -264,7 +402,7 @@ else{echo 'not';}
                         <li>
                             <div class="pincode_fileds">
                                 <label>Pincode</label>
-                                <input name="pincode" type="number"  id="pincode" value="<?php echo $value['pincode'];?>">
+                                <input name="pincode" type="number"  id="pincode" value="<?php  if(isset($user)){ echo $value['pincode'];}else{echo set_value('pincode');}?>">
                                 <div style="display:inline">
                                     <?php echo form_error('pincode'); ?>
                                 </div>
@@ -273,9 +411,7 @@ else{echo 'not';}
                         <li>
                             <div class="about_you_fileds">
                                 <label>About you</label>
-                                    <textarea  name="about" >
-                                        <?php echo $value['aboutus'];?>
-                                    </textarea>
+                                    <textarea name="about" ><?php if((isset($user))){echo $value['aboutus'];}else{echo set_value('about');}?></textarea>
                             </div>
                         </li>
                         <div style="display:inline">
@@ -297,8 +433,8 @@ else{echo 'not';}
 
 
     </form>
+<!--   --><?php //} else{echo "";}?>
 
-<?php } ?>
     <div class="section clearfix section-colored7"><!--section start-->
 
         <div class="container"><!--container Start-->

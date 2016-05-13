@@ -2,10 +2,39 @@
 
 class User extends CI_Model
 {
-    public function insert_user($data)              //inser user data
+
+    public function home_category()
+    {
+        $p_id=0;
+        $this->db->select('*');
+        $this->db->where('parent_id',$p_id);
+        return $this->db->get('category')->result_array();
+    }
+    public function data($category)
+    {
+
+        $this->db->select('*');
+        $this->db->from('product_category');
+        $this->db->join('category','category.category_id=product_category.category_id');
+        $this->db->join('product','product.product_id=product_category.product_id');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+
+        $this->db->where('category.category_id',$category);
+
+
+        $query= $this->db->get()->result_array();
+        return $query;
+        var_dump($query);
+    }
+    public function select_cat($category)
+    {
+        $this->db->select('*');
+        $this->db->where('parent_id',$category);
+        return $this->db->get('category')->result_array();
+    }
+    public function insert_user($data)              //insert user data
     {
         $this->db->insert('user', $data);
-
     }
     public function update_user($data,$id)
     {
@@ -133,11 +162,12 @@ class User extends CI_Model
     }
     public function soft()
     {
+        $this->db->where('category_name','Software');
         $this->db->select('*');
         $this->db->from('product_category');
         $this->db->join('product','product.product_id=product_category.product_id');
         $this->db->join('product_images','product_images.product_id=product.product_id');
-        $this->db->where('category_name','Software');
+
         $query=$this->db->get('category');
         return $query->result_array();
     }
@@ -165,8 +195,14 @@ class User extends CI_Model
         $this->db->where('wishlist_id',$wish_id);
         $this->db->delete('user_wish_list');
     }
-
-
-
+    public function view_product()
+    {
+        $prod_id=$this->uri->segment(3);
+        $this->db->select('*');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('product.product_id',$prod_id);
+        return $this->db->get()->result_array();
+    }
 }
 ?>

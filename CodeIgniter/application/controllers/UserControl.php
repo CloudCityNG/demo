@@ -23,6 +23,7 @@ class UserControl extends CI_Controller
 
         $data['product']=$this->Admin_Insert->home();
 
+        $data['category']=$this->User->home_category();
 
         $this->load->view('user/headeruser');
         $this->load->view('user/home',$data);
@@ -30,19 +31,18 @@ class UserControl extends CI_Controller
     }
     public function category()
     {
-        $data['product']=$this->User->soft();
+
+        $category=$this->uri->segment(3);
+        $data['product']=$this->User->data($category);
+        $data['category']=$this->User->select_cat($category);
         $this->load->view('user/headeruser');
         $this->load->view('user/home',$data);
         $this->load->view('user/footer_user');
 
     }
-//    public function add_in_cart()
-//    {
-//        $prod_id = $this->uri->segment(3);
-//        $this->db->where('product_id',$prod_id);
-//        $this->db->delete('user_wish_list');
-//        redirect('UserControl/add_to_cart/'.$prod_id);
-//    }
+
+
+
     public function add_to_cart()
     {
         $prod_id = $this->uri->segment(3);
@@ -58,7 +58,6 @@ class UserControl extends CI_Controller
                 'price'   => $price,
                 'name'    => $name,
             );
-
             $this->cart->insert($data);
          redirect('UserControl');
     }

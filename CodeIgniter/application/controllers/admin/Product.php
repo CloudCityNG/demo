@@ -55,10 +55,14 @@ class Product extends CI_Controller
     public function add_product()                     //new product
     {
         if($this->session->userdata('session')){
+
+            $data['category']=$this->Admin_Insert->categoryall();
+
             $this->load->view('header');
             $this->load->view('footer');
-            $this->load->view('add_product');}
+            $this->load->view('add_product',$data);}
         else{
+
             redirect('admin/login');
         }
     }
@@ -74,21 +78,25 @@ class Product extends CI_Controller
         $this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
         $this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
         $this->form_validation->set_rules('status','Status','required');
-        $this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/');
+        $this->form_validation->set_rules('quntity', 'Quntity', 'required|numeric');
         $this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
         $this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
         $this->form_validation->set_rules('product_status','Status','required');
 
+
         if ($this->form_validation->run() == FALSE){
 
-            $this->load->view('add_product');
+            $this->load->view('header');
+            $this->load->view('footer');
+            $data['category']=$this->Admin_Insert->categoryall();
+            $this->load->view('add_product',$data);
         }
         else
         {
-
+            $id = $this->session->userdata('id');
             $data= array(
-                //'category_name'=>$this->input->post('category'),
+
                 'name' => $this->input->post('name'),
                 'sku' => $this->input->post('sku'),
                 'short_description' => $this->input->post('short_description'),
@@ -103,15 +111,14 @@ class Product extends CI_Controller
                 'meta_description' => $this->input->post('meta_description'),
                 'meta_keywords' => $this->input->post('meta_keywords'),
                 'product_status' => $this->input->post('product_status'),
+                'created_by'=>$id
 
             );
             $prod=$this->Admin_Insert->product_insert($data);
 
-            $cat= array(
-                'category_name'=>$this->input->post('category')
+            $category_name=$this->input->post('category');
 
-            );
-            $catid=$this->Admin_Insert->select_category($cat);
+            $catid=$this->Admin_Insert->cat($category_name);
 
             $pro_cat=array(
                 'category_id'=>$catid,
@@ -119,28 +126,41 @@ class Product extends CI_Controller
             );
             $this->Admin_Insert->product_category($pro_cat);
 
-            $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
 
-            if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path ))
-            {
-                $uploed = $_FILES['image_name']['name'];
-                $img = array(
-                    'image_name' => $uploed,
-                    'product_id'=>$prod
-                );
-                $this->Admin_Insert->upload_img($img);
-                redirect('admin/product/view_product');
-            }
-            else
-            {
-                echo 'Error';
-            }
+            foreach($_FILES['image_name']['tmp_name'] as $key => $tmp_name ) {
+                $file_name = $key . $_FILES['image_name']['name'][$key];
+                //  $file_size =$_FILES['files']['size'][$key];
+                $file_tmp = $_FILES['image_name']['tmp_name'][$key];
+                //   $file_type=$_FILES['files']['type'][$key];
+
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $file_name;
+
+
+                //  $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
+
+                if (move_uploaded_file($file_tmp, $path))
+                {
+
+                    $uploed = $file_name;
+                    $img = array(
+                        'image_name' => $uploed,
+                        'product_id' => $prod
+                    );
+                    $this->Admin_Insert->upload_img($img);
+
+                    $this->session->set_flashdata('msg', 'New Product Added Successfully');
+
+                }
+                else{
+                    echo "Error";
+                }
+            }redirect('admin/product/');
         }
     }
     public function delete_product()                    //delet product
     {
         $this->Admin_Insert->product_delete();
-        redirect('admin/product/view_product');
+        redirect('admin/product/');
     }
     public function edit_product()                        //edit_product
     {
@@ -159,10 +179,10 @@ class Product extends CI_Controller
         $this->form_validation->set_rules('long_description', 'Breif Description', 'required');
         $this->form_validation->set_rules('price', 'Price', 'required');
         $this->form_validation->set_rules('special_price', 'Special Price', 'required');
-        $this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
+        $this->form_validation->set_rules('special_price_form', 'special_price_from', 'required');
         $this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
         $this->form_validation->set_rules('status','Status','required');
-        $this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/);');
+        $this->form_validation->set_rules('quntity', 'Quntity', 'required|numeric');
         $this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
         $this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
@@ -170,11 +190,16 @@ class Product extends CI_Controller
 
         if ($this->form_validation->run() == FALSE){
             //$data['cut']=$this->insert_admin->fetch();
-            $this->load->view('add_product');
+
+            $p_id=$this->uri->segment(3);
+            $this->load->view('header');
+            $this->load->view('footer');
+            $this->load->view('update_product',$p_id);
         }
         else
         {
-            $id = $this->input->get('id', TRUE);
+            $id = $this->session->userdata('id');
+            $prod_id=$this->input->post('prod_id');
             $data= array(
 
                 'name' => $this->input->post('name'),
@@ -191,14 +216,31 @@ class Product extends CI_Controller
                 'meta_description' => $this->input->post('meta_description'),
                 'meta_keywords' => $this->input->post('meta_keywords'),
                 'product_status' => $this->input->post('product_status'),
+                'modified_date'=>date('Y/m/d'),
+                'modified_by'=>$id
             );
-            $this->Admin_Insert->update($id,$data);
-            redirect('admin/product/view_product');
+            $this->Admin_Insert->update($prod_id,$data);
+
+            $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
+
+            if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path )) {
+                $upload = $_FILES['image_name']['name'];
+                echo "asdasd".$path;
+                $img = array(
+                    'image_name' => $upload,
+                    'modify_date'=>date('Y/m/d'),
+                    'modify_by'=>$id
+                );
+                var_dump($img);
+                $this->Admin_Insert->from_image_update($prod_id,$img);
+                redirect('admin/product/');
+             }
         }
     }
     public function search_product()                        //serach product
     {
-        $product_serach=$this->input->post('search');
+        $product_ser=$this->input->post('search');
+        $product_serach=trim($product_ser);
         $data['product']=$this->Admin_Insert->product_search($product_serach);
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );

@@ -42,7 +42,10 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
-
+            <li >
+                <a href="<?php echo site_url('admin/category')?>">
+                    Category Management</a>
+            </li>
 
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
@@ -150,42 +153,91 @@
                 </div>
             </div>
 
+            <table class="table" style="border: 0px">
+            <tr>
+                <th>Title</th>
+                <th>Details</th>
+            </tr>
+
             <?php
             foreach($user as $value)
             {
+
             $value=(array)$value;
             ?>     </div>
 
-
+        <tr>
         <div class="control-group">
-            <label style="display: inline">Username</label>
-            <input readonly class="span6 m-wrap"  style="display: inline;width:250px;"type="text" placeholder="Firstname" name="admin_name" value="<?php echo $value['user_name']?>"/>
+            <td>
+                <label style="display: inline">Username</label>
+            </td>
+            <td>
+              <?php echo $value['user_name']?>
+            </td>
         </div>
+        </tr>
+        <tr>
+        <div class="control-group">
+            <td>
+                <label style="display: inline">Lastname</label>
+            </td>
+            <td>
+                <?php echo $value['user_lastname']?>
+            </td>
+        </div>
+        </tr>
 
 
-
-
-
+        <tr>
     <div class="control-group">
-        <label style="display: inline">Lastname</label>
-
-        <input readonly class="span6 m-wrap" style="display: inline;width:250px;" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo $value['user_lastname']?>"/>
+        <td><label style="display: inline" >E-mail</label></td>
+        <td><?php echo $value['user_email']?></td>
     </div>
-
-
-
-
-
-    <div class="control-group">
-        <label style="display: inline" >Password</label>
-        <input readonly class="span6 m-wrap" style="display: inline;width:250px;" type="text " id="register_password" placeholder="Password"   value="<?php echo $value['user_email']?>"/>
-    </div>
-
+        </tr>
+        <tr>
+        <div class="control-group">
+            <td><label style="display: inline" >address_1</label>
+            </td><td><?php echo $value['address_1']?>
+        </td></div>
+            </tr>
+        <tr>
+        <div class="control-group">
+            <td><label style="display: inline" >address_2</label></td>
+            <td><?php echo $value['address_2']?>
+            </td></div>
+            <tr><td>
+        <div class="control-group">
+            <label style="display: inline" >city</label>
+            </td><td><?php echo $value['city']?></td>
+        </div>
+        </tr>
+        <tr>
+        <div class="control-group">
+            <td>
+                <label style="display: inline" >state</label>
+            </td>
+            <td>
+                <?php echo $value['state']?>
+            </td>
+        </div>
+        </tr>
+        <tr>
+        <div class="control-group">
+            <td><label style="display: inline" >country</label></td>
+            <td><?php echo $value['country']?></td>
+        </div>
+        </tr>
+        <tr>
+        <div class="control-group">
+            <td><label style="display: inline" >zipcode</label>
+            </td><td><?php echo $value['zipcode']?>
+        </td></div></tr>
 
         <?php
         }
         ?>
     </div>
+</table>
 </div>
 </form>
 <!-- END PAGE CONTENT-->

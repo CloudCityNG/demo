@@ -85,11 +85,13 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
-                            <!--                            <li><a href="--><?php //echo site_url('Useraccount/account_user/'.$data)?><!--"><i class="fa fa-user"></i> Account</a></li>-->
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="<?php echo site_url('UserControl/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <li><a href="<?php if(!empty($data)){ echo site_url('home/user_cart');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <?php }?>
                         </ul>
                     </div>
                 </div>
@@ -111,7 +113,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('UserControl')?>" >Home</a></li>
+                            <li><a href="<?php echo base_url('home')?>" >Home</a></li>
                             <li ><a href="<?php echo site_url('Useraccount/address_update/'.$data)?>"class="active">Address Book</a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
@@ -158,32 +160,38 @@ foreach($user_address as $value) {
 
                         <h2>Your Address</h2>
                         <input type="hidden" name="user_id" value="<?php echo $data?>">
+                        <lable>Address</lable>
                         <input type="text" placeholder="Address_1" name="address_1"value="<?php if(isset($user_address)){echo $value['address_1'];}else{echo '';}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('address_1'); ?>
                         </div>
+                        <lable>Address</lable><br>
                         <input type="text" placeholder="Address_2" name="address_2"value="<?php if(isset($user_address)){echo $value['address_2'];}else{echo set_value('address_2');}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('address_2'); ?>
                         </div>
+                        <lable>City</lable><br>
                         <input type="text" placeholder="City" name="city"value="<?php if(isset($user_address)){echo $value['city'];}else{echo set_value('city');}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('city'); ?>
                         </div>
+                        <lable>State</lable><br>
                         <input type="text" placeholder="State" name="state"value="<?php if(isset($user_address)){echo $value['state'];}else{echo set_value('state');}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('state'); ?>
                         </div>
+                        <lable>Country</lable><br>
                         <input type="text" placeholder="Country" name="country"value="<?php if(isset($user_address)){echo $value['country'];}else{echo set_value('country');}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('country'); ?>
                         </div>
+                        <lable>Zipcode</lable><br>
                         <input type="text" placeholder="Zipcode" name="zipcode"value="<?php if(isset($user_address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>"/>
                         <div style="display:inline; color: red" >
                             <?php echo form_error('zipcode'); ?>
                         </div>
 
-                        <a href="<?php echo site_url('UserControl')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
+                        <a href="<?php echo site_url('home')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
                         <button type="submit" style="margin-left: 125px;display:inline; margin-top: 00%" class="btn btn-default col-sm-4">Submit</button>
                     </form>
                 </div><!--/login form-->
@@ -230,7 +238,7 @@ foreach($user_address as $value) {
                             <?php echo form_error('zipcode'); ?>
                         </div>
 
-                        <a href="<?php echo site_url('UserControl')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
+                        <a href="<?php echo site_url('home')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
                         <button type="submit" style="margin-left: 125px;display:inline; margin-top: 00%" class="btn btn-default col-sm-4">Submit</button>
                     </form>
                 </div><!--/login form-->

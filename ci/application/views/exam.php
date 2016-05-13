@@ -3,6 +3,12 @@
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8 ie" lang="en" dir="ltr"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9 ie" lang="en" dir="ltr"><![endif]-->
 <!--[if gt IE 8]> <html class="no-js gt-ie8 ie" lang="en" dir="ltr"><![endif]-->
+
+
+
+
+
+
 <html xmlns="http://www.w3.org/1999/html"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="">
@@ -21,9 +27,30 @@
     <link href="<?php echo base_url('css/jquery.bxslider.css')?>" rel="stylesheet">
     <!-- Responsive -->
     <link href="<?php echo base_url('css/responsive.css')?>" rel="stylesheet">
+
+    <script>
+        function delete_con()
+        {
+            {
+                var x = confirm("Are you sure you want to delete?");
+                if (x)
+                    return true;
+                else
+                    return false;
+            }
+        }
+    </script>
+
+
+
+
+
+
 </head>
 <body>
 <!--wrapper-starts-->
+
+
 
     <div id="wrapper">
         <!--header-starts-->
@@ -80,11 +107,24 @@
                                  <a href="<?php echo site_url('Practice/entry');?>">Create Customer</a>
                              </li>
                             <li>
-                                <?php echo form_open('Practice/deleteall'); ?>
+                                <form onclick="return delete_con()" action="<?php echo base_url('Practice/deleteall');?>"method="post">
                                 <input type="submit" name="Submit" style="display:inline;text-align: center;    margin-left: 00px;border-radius: 5px;;  font-family: 'roboto_slablight';width: 150px; height: 50px;background-color: #9fbc35 " type="SUBMIT" value="Delete Customer">
                             </li>
                         </ul>
                     </div>
+                    <center><?php echo $this->session->flashdata('msg');?></center>
+
+                    <?php if(isset($oreder))
+                    {
+                        $sortof='desc';
+                    }
+                    else{
+                        $sortof='asc';
+                    }
+                    ?>
+
+
+
                     <div class="table_container_block">
                         <table>
                         <thead>
@@ -92,23 +132,27 @@
                             <th>
                                 <input class='checkbox' id='checkbox_sample18' type='checkbox'> <label class='css-label mandatory_checkbox_fildes' for='checkbox_sample18'></label>
                             </th>
-                            <th style='width:12%'>Name <a href='<?php echo site_url('Practice/sort?sortby=first_name');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></ a></th>
-                            <th>Email<a href='<?php echo site_url('Practice/sort?sortby=email');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"</a></th>
-                            <th>Phone<a href='<?php echo site_url('Practice/sort?sortby=phone_no');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></a></th>
-                            <th>Gender<a href='<?php echo site_url('Practice/sort?sortby=gender');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></a></th>
-                            <th>Pincode<a href='<?php echo site_url('Practice/sort?sortby=pincode');?>' class='sort_icon'><img src=<?php echo base_url('images/sort.png')?>></a></th>
+                            <th style='width:12%'>Name <a href='<?php echo site_url('Practice/?sortby=first_name');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></a></th>
+                            <th>Email<a href='<?php echo site_url('Practice/?sortby=email');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"</a></th>
+                            <th>Phone<a href='<?php echo site_url('Practice/?sortby=phone_no');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></a></th>
+                            <th>Gender<a href='<?php echo site_url('Practice/?sortby=gender');?>' class='sort_icon'><img src="<?php echo base_url('images/sort.png')?>"></a></th>
+                            <th>Pincode<a href='<?php echo site_url('Practice/?sortby=pincode');?>' class='sort_icon'><img src=<?php echo base_url('images/sort.png')?>></a></th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
+                        if(empty($customer))
+                        {
+                            echo "No Data Avalibale";
+                        }else{
                         foreach($customer as $value)
                         {
                             $value = (array) $value;
                             ?>
                             <tr>
                                 <td>
-                                    <input type="checkbox"  name="data[]" value= '<?php echo $value['id']?>'>
+                                    <input type="checkbox"   name="data[]" value= '<?php echo $value['id']?>'>
                                 </td>
 
                                 <td><?php echo $value['first_name'];?></td>
@@ -117,16 +161,14 @@
                                 <td><?php echo $value['gender'];?></td>
                                 <td><?php echo $value['pincode'];?></td>
                                 <td>
+
                                     <div class="">
-                                        <form style="display: inline" action="<?php echo site_url('Practice/delete?id='.$value['id']);?>" method="post">
-                                            <button style="display: inline" class="btn btn_edit">Edit</button>
-                                        </form>
-                                        <form style="display: inline" action="<?php echo site_url('Practice/edit?id='.$value['id']);?>" method="post">
-                                            <button style="display: inline"class="btn btn_delete">Delete</button>
-                                        </form>
+                                            <a onclick="return delete_con()"  href="<?php echo base_url('Practice/delete?id='.$value['id'])?>" style="display: inline" class="btn btn_edit"></a>
+                                            <a  href="<?php echo base_url('Practice/edit?id='.$value['id'])?>" style="display: inline"class="btn btn_delete"></a>
                                     </div>
                                 </td>
-                            </tr> <?php } ?>
+                            </tr> <?php }} ?>
+
                         </tbody>
                         </table>
                     </div>
@@ -141,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <?php echo form_close();?>
+        <form>
         <!-- Content Section End-->
         <div class="section clearfix section-colored7"><!--section start-->
 

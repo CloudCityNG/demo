@@ -4,6 +4,7 @@ class Datamodel extends CI_Model
 {
     function show_data()
     {
+
         $query = $this->db->get('customer');
         $query_result = $query->result_array();
         return $query_result;
@@ -11,6 +12,7 @@ class Datamodel extends CI_Model
     function insert_data($data)
     {
         $this->db->insert('customer',$data);
+
     }
     function update_data($product_id,$data)
     {
@@ -36,6 +38,8 @@ class Datamodel extends CI_Model
     function search_data($keyword)
     {
         $this->db->like('first_name',$keyword);
+        $this->db->or_like('phone_no',$keyword);
+        $this->db->or_like('email',$keyword);
         $query =  $this->db->get('customer');
         $x=$query->result_array();
         return $x;
@@ -57,30 +61,46 @@ class Datamodel extends CI_Model
 
     public function fetch_data($limit, $page)
     {
-        $offset = ($page - 1) * $limit;
-        $this->db->limit($limit, $offset);
-        $query = $this->db->get("customer");
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row)
-            {
-                $data[] = $row;
-            }
+        $var=$this->input->get('sortby');
 
+        if(empty($var))
+        {
+            $var='id';
+            $offset = ($page - 1) * $limit;
+            $this->db->limit($limit, $offset);
+            $this->db->order_by($var,"desc");
+            $query = $this->db->get("customer");
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row)
+                {
+                    $data[] = $row;
+                }
             return $data;
         }
-        return false;
-    }
-    public function deleteall_data()
-    {
-        $getdata=$this->input->post('data');
-        //print_r($getdata);
-        foreach($getdata as $value)
-        {
-            $this->db->where('id',$value);
-            $this->db->delete('customer');
+        return false;}
+        else {
+            echo "<p style='color: red'> " . "fsdfsdf" . $var . "</p>";
+
+            $offset = ($page - 1) * $limit;
+            $this->db->limit($limit, $offset);
+            $this->db->order_by($var,"desc");
+            $query = $this->db->get("customer");
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row)
+                {
+                    $data[] = $row;
+                }
+                return $data;
+            }
+            return false;
         }
-        $query=$this->db->get('customer');
-        return $query->result_array();
+    }
+    public function deleteall_data($data)
+    {
+            if (!empty($data)) {
+                $this->db->where_in('id', $data);
+                $this->db->delete('customer');
+            }
     }
     public function fetch()
     {
@@ -94,6 +114,9 @@ class Datamodel extends CI_Model
         $data['age']=$this->input->post('age');
         $data['pincode']=$this->input->post('pincode');
         $data['about']=$this->input->post('about');
+        $data['month']=$this->input->post('month');
+        $data['day']=$this->input->post('day');
+        $data['year']=$this->input->post('year');
         return $data;
     }
 }

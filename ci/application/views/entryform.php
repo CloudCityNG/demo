@@ -14,6 +14,25 @@
 //}
 //?>
 
+<script>
+function ages(year_select)
+{
+var x = (2016 - year_select);
+
+if (x > 26) {
+alert(x);
+document.getElementById('age').value = x;
+}
+else {
+document.getElementById('age').value = '';
+
+}
+
+}
+
+
+</script>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -134,7 +153,7 @@
                             <li class="fileds">
                                 <div class="email_fileds">
                                     <label>Email</label>
-                                    <input name="text" type="email" value="<?php if(isset($cut)){echo $cut['email'];}else{echo "";}?>">
+                                    <input name="email" type="email" value="<?php if(isset($cut)){echo $cut['email'];}else{echo "";}?>">
                                 </div>
                                 <div class="gender_fileds">
                                     <label>Gender</label>
@@ -172,12 +191,13 @@
 
                                     <ul>
                                         <li>
-                                            <select name="month" class="month" id='month'>
-                                                <option value="0">Month</option>
+                                            <select name="month" class="month" id='month' >
+                                                <option value="Month">Month</option>
+                                                <option value="<?php echo set_value('month')?>" selected><?php echo set_value('month')?></option>
                                                 <option value="01">Jan</option>
                                                 <option value="02">Feb</option>
                                                 <option value="03">March</option>
-                                                <option value="04">April</option>
+                                                <option value="04" >April</option>
                                                 <option value="05">May</option>
                                                 <option value="06">June</option>
                                                 <option value="07">July</option>
@@ -186,12 +206,15 @@
                                                 <option value="10">Oct</option>
                                                 <option value="11">Nov</option>
                                                 <option value="12">Dec</option>
+
                                             </select>
 <!--                                            --><?//=$month_error?>
                                         </li>
                                         <li>
                                             <select name="day" class=" day">
-                                                <option value="0">Day</option>
+                                                <option value="Day">Day</option>
+                                                <option value="<?php echo set_value('day')?>" selected><?php echo set_value('day')?></option>
+
                                                 <option value="01">01</option>
                                                 <option value="02">02</option>
                                                 <option value="03">03</option>
@@ -230,8 +253,10 @@
                                         </li>
 
                                         <li>
-                                            <select name="year" class="year" id='year'>
-                                                <option value="0">Year</option>
+                                            <select name="year" class="year" id='year' onchange="ages(this.value)">
+                                                <option value="Year">Year</option>
+                                                <option value="<?php echo set_value('year')?>" selected><?php echo set_value('year')?></option>
+
                                                 <option value="1980">1980</option>
                                                 <option value="1981">1981</option>
                                                 <option value="1982">1982</option>
@@ -274,9 +299,7 @@
                             <li>
                                 <div class="about_you_fileds">
                                     <label>About you</label>
-                                    <textarea  name="about" >
-                                        <?php if(isset($cut)){echo $cut['last'];}else{echo "";}?>
-                                    </textarea>
+                                    <textarea  name="about"><?php if(isset($cut)){echo $cut['last'];}else{echo "";}?></textarea>
 
                                 </div>
                             </li>

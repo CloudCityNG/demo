@@ -12,7 +12,7 @@
             </ol>
         </div>
 
-        <form action="<?php echo site_url('UserControl/update_cart')?>" method="post">
+        <form action="<?php echo site_url('home/update_cart')?>" method="post">
         <div class="table-responsive cart_info">
             <table class="table table-condensed">
                 <thead>
@@ -48,7 +48,7 @@
                         <p class="cart_total_price"><?php echo $this->cart->format_number($items['subtotal']); ?></p>
                     </td>
                     <td class="cart_delete">
-                        <a class="cart_quantity_delete" href="<?php echo base_url('UserControl/delete_cart/'.$items['rowid'])?>"><i class="fa fa-times"></i></a>
+                        <a class="cart_quantity_delete" href="<?php echo base_url('home/delete_cart/'.$items['rowid'])?>"><i class="fa fa-times"></i></a>
                     </td>
                 </tr>
                 <?php $i++; ?>

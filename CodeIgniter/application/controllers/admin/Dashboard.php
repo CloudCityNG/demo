@@ -58,6 +58,7 @@ class Dashboard extends CI_Controller
                 'created_by'=>$ses_id,
                 'perpage'=>$this->input->post('perpage'),
             );
+
         $this->Admin_Insert->change_perpage($data,$ses_id);
 
         $msg['msg']='Chnage Successsfully Done';

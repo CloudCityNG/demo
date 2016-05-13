@@ -39,16 +39,15 @@ class Login extends CI_Controller
 
                 'admin_name' => $this->input->post('admin_name'),
                 'admin_lastname' => $this->input->post('admin_lastname'),
-                'admin_password' => $this->input->post('admin_password'),
+                'admin_password' => md5($this->input->post('admin_password')),
                 'admin_email' => $this->input->post('admin_email'),
                 'status' => $this->input->post('status')
             );
             $this->Admin_Insert->insert_admin($data);
-
             redirect('admin/login');
         }
     }
-    //public function asd(){}
+
     function add()                                      //add new admin
     {
         $perpage_value=$this->input->post('perpage');
