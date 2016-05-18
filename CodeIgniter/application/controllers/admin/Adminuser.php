@@ -49,6 +49,12 @@ class Adminuser extends CI_Controller
                 $data["customer"] = $this->Admin_Insert->fetch_data($config["per_page"], $page);
                 $str_links = $this->pagination->create_links();
                 $data["links"] = explode('&nbsp;', $str_links);
+
+                $sortorder = 'DESC';
+                if($this->input->get('sortorder') == 'DESC')
+                    $sortorder = 'ASC';
+
+                $data["sortorder"] = $sortorder;
                 $this->load->view('header');
                 $this->load->view('footer');
                 $this->load->view('view_user', $data);
@@ -85,11 +91,9 @@ class Adminuser extends CI_Controller
         $this->form_validation->set_rules('admin_name', 'Firstname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('admin_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('admin_email', 'Email', 'required|valid_email');
-      //  $this->form_validation->set_rules('admin_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
-      //  $this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
 
         if ($this->form_validation->run() == FALSE){
-            //$data['cut']=$this->insert_admin->fetch();
+
             $this->load->view('header');
             $this->load->view('footer');
             $this->load->view('update_admin');
@@ -157,6 +161,13 @@ class Adminuser extends CI_Controller
         $admin_ser=$this->input->post('search');
         $admin_serach=trim($admin_ser);
         $data['customer']=$this->Admin_Insert->search($admin_serach);
+
+        $sortorder = 'DESC';
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+
+        $data['sort']="sort";
+        $data["sortorder"] = $sortorder;
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
         $this->load->view('header');

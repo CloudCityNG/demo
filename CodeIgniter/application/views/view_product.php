@@ -200,9 +200,9 @@
                                 <thead>
                                 <tr>
                                     <th>Product  </th>
-                                    <th>Product Name  <a href='<?php echo site_url('admin/product/sort_product?sortby=name');?>' class='sort_icon'>  </a></th>
-                                    <th>Quntity  <a href='<?php echo site_url('admin/product/sort_product?sortby=quntity');?>' class='sort_icon'>   </a></th>
-                                    <th>Price  <a href='<?php echo site_url('admin/product/sort_product?sortby=price');?>' class='sort_icon'>  </a></th>
+                                    <th>Product Name  <a href='<?php if(empty($sort)){echo site_url('admin/product/?sortby=name&sortorder='.$sortorder);}else{echo site_url('admin/product/search_product?sortby=name&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"> </a></th>
+                                    <th>Quntity  <a href='<?php if(empty($sort)){ echo site_url('admin/product/?sortby=quntity&sortorder='.$sortorder);}else{echo site_url('admin/product/search_product?sortby=quntity&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"> </a></th>
+                                    <th>Price  <a href='<?php if(empty($sort)){ echo site_url('admin/product/?sortby=price&sortorder='.$sortorder);}else{echo site_url('admin/product/search_product?sortby=price&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"> </a></th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                     <th>View</th>

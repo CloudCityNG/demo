@@ -170,7 +170,15 @@
                     <div class="portlet-body">
                         <!--                            <div class="clearfix">-->
 
-                        <div class="btn-group pull-right">
+                            <div class="btn-group pull-right">
+                                <form style="height: 30px; " action="<?php echo site_url('admin/userlist/search_user')?>" method="post">
+                                    <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
+                                    <input type="submit" class="btn" name="searchs">Search
+                                    </input>
+
+                                </form>
+
+
 
 
                         </div>
@@ -178,9 +186,9 @@
                         <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                             <thead>
                             <tr>
-                                <th>Username   <a href='<?php echo site_url('admin/userlist/sort?sortby=user_name');?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Last Name  <a href='<?php echo site_url('admin/userlist/sort?sortby=user_lastname');?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Email      <a href='<?php echo site_url('admin/userlist/sort?sortby=user_email');?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Username   <a href='<?php if(empty($sort)){ echo site_url('admin/userlist?sortby=user_name&sortorder='.$sortorder);}else{echo site_url('admin/userlist/search_user?sortby=user_name&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Last Name  <a href='<?php if(empty($sort)){echo site_url('admin/userlist?sortby=user_lastname&sortorder='.$sortorder);}else{echo site_url('admin/userlist/search_user?sortby=user_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Email      <a href='<?php if(empty($sort)){echo site_url('admin/userlist?sortby=user_email&sortorder='.$sortorder);}else{echo site_url('admin/userlist/search_user?sortby=user_email&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                 <th>View</th>
                                 <th>Delete</th>
                             </tr>

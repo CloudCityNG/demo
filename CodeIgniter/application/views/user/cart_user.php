@@ -142,7 +142,7 @@
                         <li>Total <span><?php echo $this->cart->format_number($this->cart->total());?></span></li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    <a class="btn btn-default check_out" href="<?php echo site_url('home/checkout')?>">Check Out</a>
                 </div>
             </div>
         </div>

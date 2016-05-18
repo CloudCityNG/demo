@@ -43,6 +43,12 @@ class Product extends CI_Controller
             $data['product'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
             $str_links = $this->pagination->create_links();
             $data["links"] = explode('&nbsp;',$str_links );
+
+            $sortorder = 'DESC';
+            if($this->input->get('sortorder') == 'DESC')
+                $sortorder = 'ASC';
+
+            $data["sortorder"] = $sortorder;
             $this->load->view('header');
             $this->load->view('footer');
             $this->load->view('view_product',$data);
@@ -208,7 +214,7 @@ class Product extends CI_Controller
                 'long_description' => $this->input->post('long_description'),
                 'price' => $this->input->post('price'),
                 'special_price' => $this->input->post('special_price'),
-                'special_price_form' => $this->input->post('special_price_from'),
+                'special_price_form' => $this->input->post('special_price_form'),
                 'special_price_to' => $this->input->post('special_price_to'),
                 'status' => $this->input->post('status'),
                 'quntity' => $this->input->post('quntity'),
@@ -221,20 +227,34 @@ class Product extends CI_Controller
             );
             $this->Admin_Insert->update($prod_id,$data);
 
+            $x=$_FILES['image_name']['name'];
+            if(!empty($x)){
             $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
 
             if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path )) {
                 $upload = $_FILES['image_name']['name'];
-                echo "asdasd".$path;
+
                 $img = array(
                     'image_name' => $upload,
                     'modify_date'=>date('Y/m/d'),
                     'modify_by'=>$id
                 );
-                var_dump($img);
+
                 $this->Admin_Insert->from_image_update($prod_id,$img);
                 redirect('admin/product/');
              }
+
+            }
+            else{
+                $img = array(
+
+                    'modify_date'=>date('Y/m/d'),
+                    'modify_by'=>$id
+                );
+
+                $this->Admin_Insert->from_image_update($prod_id,$img);
+                redirect('admin/product/');
+            }
         }
     }
     public function search_product()                        //serach product
@@ -242,8 +262,16 @@ class Product extends CI_Controller
         $product_ser=$this->input->post('search');
         $product_serach=trim($product_ser);
         $data['product']=$this->Admin_Insert->product_search($product_serach);
+
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
+
+        $sortorder = 'DESC';
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+
+        $data['sortorder']="$sortorder";
+        $data['sort']="sort";
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('view_product',$data);

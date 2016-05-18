@@ -13,7 +13,7 @@ function product_valid()
     var title = document.forms["form"]["meta_title"].value;
     var meta_desc = document.forms["form"]["meta_description"].value;
     var meta_key = document.forms["form"]["meta_keywords"].value;
-    var image = document.forms["form"]["image_name"].value;
+    var image = document.getElementById('image').value;
 
 
 
@@ -23,7 +23,7 @@ function product_valid()
         special == null || special == "" ||(/^[0-9]+$/.test(special)) || date_from == null ||
         date_from == "" || date_to == null || date_to == "" || qun == null || qun == ""||
         (/^[0-9]+$/.test(qun)) ||title == null || title == "" || meta_desc == null ||
-        meta_desc == ""||meta_key == null || meta_key == ""|| image == null || image == "")
+        meta_desc == ""||meta_key == null || meta_key == "")
     {
         document.getElementById('name').innerHTML="";
         document.getElementById('sku').innerHTML="";
@@ -99,9 +99,9 @@ function product_valid()
         {
             document.getElementById('meta_key').innerHTML="Meta_key Required";
         }
-        if(image == null || image == "")                      //image
+        if(image == "")                      //image
         {
-            document.getElementById('image').innerHTML="Image Required";
+            document.getElementById('image_error').innerHTML="Image Required";
         }
         return false;
     }

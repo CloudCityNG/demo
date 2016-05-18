@@ -174,21 +174,21 @@
 
 
 
-                    <?php
+                        <?php
 
-foreach($img as $item)
-{
-    $item=(array)$item;
+                        foreach($banner as $item) {
+                            $item = (array)$item;
+                        }
+                            ?>
 
-?>
+                            <form action="<?php echo site_url('admin/banner/updated_banner?banner_id='.$item['banner_id'])?>" enctype="multipart/form-data" method="post">
+                                <img src="<?php echo base_url().'/images/'.$item['banner']?>"> <BR><BR>
+                                <?php if(!empty($msg)){echo "<p style='color: red'>".$msg."<p>";}else{ echo "";}?>
 
-    <form action="<?php echo site_url('admin/banner/updateed_image?img_id='.$item['img_id'])?>" enctype="multipart/form-data" method="post">
-        <img src="<?php echo base_url().'/images/'.$item['image_name']?>"><BR><BR>
-
-        <input type="file" class="default" name="image_name" size="20"/>
-        <input type="submit" name="Apply" value="Upload">
-</form>
-<?php }?>
+                                <input type="file" class="default" name="banner" size="20"/>
+                                <input type="submit" name="Apply" value="Upload">
+                            </form>
+<!--                        --><?php //}?>
 
 
                     </div>

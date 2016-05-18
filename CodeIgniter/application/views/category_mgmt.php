@@ -172,12 +172,7 @@
                 <div class="portlet box blue">
                     <div class="portlet-title">
                         <div class="caption"><i class="icon-edit"></i>Category Managenemt</div>
-                        <!--                            <div class="tools">-->
-                        <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
-                        <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
-                        <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="reload"></a>-->
-                        <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
-                        <!--                            </div>-->
+
                     </div>
                     <div class="portlet-body">
                         <!--                            <div class="clearfix">-->
@@ -200,8 +195,8 @@
                         <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                             <thead>
                             <tr>
-                                <th>Category Name   <a href='<?php echo site_url('admin/adminuser?sortby=category_name');?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Parent Id> </th>
+                                <th>Category Name   <a href='<?php if(empty($sort)){echo site_url('admin/category?sortby=category_name&sortorder='.$sortorder);}else{echo site_url('admin/category/search_category?sortby=category_name&sortorder='.$sortorder) ;}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Parent Id  <a href='<?php if(empty($sort)){echo site_url('admin/category?sortby=parent_id&sortorder='.$sortorder);}else{echo site_url('admin/category/search_category?sortby=parent_id&sortorder='.$sortorder) ;}?>'class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>

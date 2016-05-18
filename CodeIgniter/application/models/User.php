@@ -10,21 +10,41 @@ class User extends CI_Model
         $this->db->where('parent_id',$p_id);
         return $this->db->get('category')->result_array();
     }
-    public function data($category)
-    {
 
+    public function record_cat_count($category)
+    {
         $this->db->select('*');
         $this->db->from('product_category');
         $this->db->join('category','category.category_id=product_category.category_id');
         $this->db->join('product','product.product_id=product_category.product_id');
         $this->db->join('product_images','product_images.product_id=product.product_id');
-
         $this->db->where('category.category_id',$category);
+        $x= $this->db->get()->num_rows();
+
+        return $x;
+    }
+    public function data($category)
+    {
+        $this->db->select('*');
+        $this->db->from('product_category');
+        $this->db->join('category','category.category_id=product_category.category_id');
+        $this->db->join('product','product.product_id=product_category.product_id');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('product_category.category_id',$category);
+        $this->db->order_by('product.product_id', "decs");
+
+        $query= $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
 
 
-        $query= $this->db->get()->result_array();
-        return $query;
-        var_dump($query);
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        else return false;
     }
     public function select_cat($category)
     {
@@ -79,19 +99,31 @@ class User extends CI_Model
     public function user_forget()                       //email verifiacction
     {
         $email = $this->input->post('user_email');
-        $this->db->select('*');
+        $this->db->select('user_id');
         $this->db->from('user');
         $this->db->where('user_email', $email);
         $this->db->limit(1);
         $query = $this->db->get();
+
         if ($query->num_rows() == 1)
         {
-            redirect('Userlogin/sendmail');
+            $email = $this->input->post('user_email');
+            $this->db->select('user_id');
+            $this->db->from('user');
+            $this->db->where('user_email', $email);
+            $this->db->limit(1);
+            $x=$this->db->get()->row()->user_id;
+            redirect('Userlogin/sendmail/'.$x);
 
         } else
         {
             redirect('Userlogin/email_error');
         }
+    }
+    public function newpassword($data,$id)
+    {
+        $this->db->where('user_id',$id);
+        $this->db->update('user',$data);
     }
     public function user_account($user_id)              // get user_id
     {
@@ -204,5 +236,26 @@ class User extends CI_Model
         $this->db->where('product.product_id',$prod_id);
         return $this->db->get()->result_array();
     }
+    public function chekout_data($id)
+    {
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('user_address','user_address.user_id=user.user_id');
+        $this->db->where('user.user_id',$id);
+        return $this->db->get()->result_array();
+    }
+    public function all_search($search)
+    {
+        echo 'df'.$search;
+
+        $this->db->select('*');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->like('product.name',$search);
+        $this->db->or_like('product.price',$search);
+
+        return $this->db->get()->result_array();
+    }
+
 }
 ?>

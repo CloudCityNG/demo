@@ -73,7 +73,7 @@
 
 <?php $img='';?>
 
-        
+
 
         <div class="preview" align="center">
             <img name="preview" src="<?php echo base_url('./images/'.$img)?>" alt=""/>

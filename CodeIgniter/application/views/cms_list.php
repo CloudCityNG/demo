@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -51,6 +64,7 @@
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
@@ -135,19 +149,16 @@
                 <!-- END BEGIN STYLE CUSTOMIZER -->
                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                 <h3 class="page-title">
-                    Update Image <small>Update Image</small>
+                    CMS Management <small>CMS detail</small>
                 </h3>
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="<?php echo site_url('admin/dashboard')?>">Home</a>
+                        <a href="<?php echo base_url('admin/dashboard')?>">Home</a>
                         <i class="icon-angle-right"></i>
                     </li>
-                    <li>
-                        <a href="<?php echo site_url('admin/banner')?>">Image List</a>
-                        <i class="icon-angle-right"></i>
-                    </li>
-                    <li><a href="#">Update Image</a></li>
+
+                    <li><a href="#">CMS List</a></li>
                 </ul>
 
                 <!-- END PAGE TITLE & BREADCRUMB-->
@@ -160,7 +171,7 @@
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
                     <div class="portlet-title">
-                        <div class="caption"><i class="icon-edit"></i>View Image</div>
+                        <div class="caption"><i class="icon-edit"></i>CMS Managenemt</div>
                         <!--                            <div class="tools">-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
@@ -169,37 +180,76 @@
                         <!--                            </div>-->
                     </div>
                     <div class="portlet-body">
+                        <!--                            <div class="clearfix">-->
+                        <div class="btn-group">
+                            <a href="<?php echo base_url('admin/cms/add_cms');?>" id="sample_editable_1_new" class="btn green">
+                                Add New <i class="icon-plus"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group pull-right">
+                            <form style="height: 30px; " action="<?php echo site_url('admin/cms/search_cms')?>" method="post">
+                                <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
+                                <input type="submit" class="btn" name="searchs">Search
+                                </input>
 
+                            </form>
 
+                        </div>
+                        <!--                            </div>-->
+                        <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
+                        <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                            <thead>
+                            <tr>
+                                <th>Banner</th>
+                                <th>Title   <a href='<?php if(empty($sort)){ echo site_url('admin/cms?sortby=title&sortorder='.$sortorder);}else{echo site_url('admin/cms/search_cms?sortby=title&sortorder='.$sortorder);}?>' class='sort_icon' > <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                <th>Content   <a href='<?php if(empty($sort)){ echo site_url('admin/cms?sortby=content&sortorder='.$sortorder);}else{echo site_url('admin/cms/search_cms?sortby=content&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                <th>Meta-Description  <a href='<?php if(empty($sort)){echo site_url('admin/cms?sortby=meta_description&sortorder='.$sortorder);}else{echo site_url('admin/cms/search_cms?sortby=meta_description&sortorder='.$sortorder);}?>'  class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                <th>Meta-Keywords      <a href='<?php if(empty($sort)){echo site_url('admin/cms?sortby=meta_keywords&sortorder='.$sortorder);}else{echo site_url('admin/cms/search_cms?sortby=meta_keywords&sortorder='.$sortorder);}?>'  class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <?php
 
+                            if(empty($cms)){
+                                echo "No data avalablie";
+                            }
+                            else{
 
-
-                    <?php
-
-foreach($img as $item)
-{
-    $item=(array)$item;
-
-?>
-
-    <form action="<?php echo site_url('admin/banner/updateed_image?img_id='.$item['img_id'])?>" enctype="multipart/form-data" method="post">
-        <img src="<?php echo base_url().'/images/'.$item['image_name']?>"><BR><BR>
-
-        <input type="file" class="default" name="image_name" size="20"/>
-        <input type="submit" name="Apply" value="Upload">
-</form>
-<?php }?>
-
+                                foreach($cms as $value)
+                                {$value = (array) $value;
+                                    ?>
+                                    <tr>
+                                        <td><img src="<?php echo base_url().'/images/'.$value['banner_name'];?>" style="width: 20px;height: 20px">
+                                        <td><?php echo $value['title'];?></td>
+                                        <td><?php echo $value['content'];?></td>
+                                        <td><?php echo $value['meta_description'];?></td>
+                                        <td><?php echo $value['meta_keywords'];?></td>
+                                        <td><a  href="<?php echo site_url('admin/cms/edit_cms/'.$value['cms_id']);?>">Edit </a></td>
+                                        <td><a onclick="return delete_con()" href="<?php echo site_url('admin/cms/delete_cms/'.$value['cms_id']);?>">Delete</a></td>
+                                    </tr>
+                                <?php } } ?>
+                        </table>
 
                     </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
+                <div class="pagination_listing">
+                    <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+                        <?php
+                        foreach($links as $li)
+                        {
+                            echo "<li style=''>" . $li . "</li>";
+                        }
+                        ?>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
             </div>
-            <!-- END PAGE CONTENT -->
         </div>
-        <!-- END PAGE CONTAINER-->
+        <!-- END PAGE CONTENT -->
     </div>
-    <!-- END PAGE -->
+    <!-- END PAGE CONTAINER-->
+</div>
+<!-- END PAGE -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
@@ -223,4 +273,3 @@ foreach($img as $item)
 </body>
 <!-- END BODY -->
 </html>
-

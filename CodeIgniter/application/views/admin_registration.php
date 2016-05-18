@@ -23,6 +23,7 @@
     <link href="<?php echo base_url('assets/css/pages/login.css"')?> rel="stylesheet" type="text/css"/>
     <!-- END PAGE LEVEL STYLES -->
     <link rel="shortcut icon" href="<?php echo base_url('favicon.ico')?>" />
+    <script src="<?php echo base_url('js/registration_valid.js')?>"></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -47,9 +48,9 @@
     }
 
     ?>
-<script src="<?php echo base_url('js/valid.js')?>"></script>
+<!--<script src="--><?php //echo base_url('js/valid.js')?><!--"></script>-->
     <!-- BEGIN REGISTRATION FORM -->
-    <form onsubmit="return regi()" action="<?php if(isset($add)){echo site_url('admin/login/add');}else{echo site_url('admin/login/insert');}?>" method="post">
+    <form name="form" onsubmit="return registration()" action="<?php if(isset($add)){echo site_url('admin/login/add');}else{echo site_url('admin/login/insert');}?>" method="post">
         <h3 class="">Sign Up</h3>
         <p>Enter your account details below:</p>
 
@@ -62,7 +63,7 @@
                     <input class="m-wrap placeholder-no-fix" type="text" placeholder="Firstname" name="admin_name"  id="admin_name" value="<?php echo set_value('admin_name')?>"/>
                 </div>
 
-                <div style="display:inline; color: red" >
+                <div id="first" style="display:inline; color: red" >
                     <?php echo form_error('admin_name'); ?>
                 </div>
             </div>
@@ -74,7 +75,7 @@
                     <i class="icon-user"></i>
                     <input class="m-wrap placeholder-no-fix" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo set_value('admin_lastname')?>">
                 </div>
-                <div style="display:inline; color: red" >
+                <div id="last" style="display:inline; color: red" >
                     <?php echo form_error('admin_lastname'); ?>
                 </div>
             </div>
@@ -86,7 +87,7 @@
                     <i class="icon-lock"></i>
                     <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" name=admin_password value="<?php echo set_value('admin_password')?>"/>
                 </div>
-                <div style="display:inline;color: red ">
+                <div id="pass" style="display:inline;color: red ">
                     <?php echo form_error('admin_password'); ?>
                 </div>
             </div>
@@ -98,11 +99,11 @@
                     <i class="icon-ok"></i>
                     <input class="m-wrap placeholder-no-fix" type="password" placeholder="Re-type Your Password" name="admin_compass" vvalue="<?php echo set_value('admin_compass')?>"/>
                 </div>
-                <div style="display:inline;color: red">
+                <di id="com" style="display:inline;color: red">
                     <?php echo form_error('admin_compass'); ?>
                 </div>
             </div>
-        </div>
+
         <div class="control-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">Email</label>
@@ -111,7 +112,7 @@
                     <i class="icon-envelope"></i>
                     <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
                 </div>
-                <div style="display:inline;color: red">
+                <div id="email" style="display:inline;color: red">
                     <?php echo form_error('admin_email'); ?>
                 </div>
             </div>
@@ -120,7 +121,7 @@
             <div class="controls">
                     <lable>Active<input type="radio"  name="status" value="1"/></lable>
                     <lable>Inctive<input type="radio"  name="status" value="0"/></lable>
-                <div style="display:inline;color: red">
+                <div  style="display:inline;color: red">
                     <?php echo form_error('status'); ?>
                 </div>
             </div>
@@ -130,7 +131,7 @@
                 <label class="checkbox">
                     <input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
                 </label>
-                <div style="display:inline;color: red">
+                <div id="tnc" style="display:inline;color: red">
                     <?php echo form_error('tnc'); ?>
                 </div>
             </div>

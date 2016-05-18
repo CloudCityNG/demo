@@ -44,6 +44,12 @@ class Category extends CI_Controller
                 $page = 1;
             }
             $data["category"] = $this->Admin_Insert->fetch_data_from_category($config["per_page"], $page);
+            $sortorder = 'DESC';
+            if($this->input->get('sortorder') == 'DESC')
+                $sortorder = 'ASC';
+
+            $data["sortorder"] = $sortorder;
+
             $str_links = $this->pagination->create_links();
             $data["links"] = explode('&nbsp;',$str_links );
             $this->load->view('header');
@@ -61,6 +67,13 @@ class Category extends CI_Controller
         $data['category']=$this->Admin_Insert->category_search($category_search);
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
+
+        $sortorder = 'DESC';
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+
+        $data["sortorder"] = $sortorder;
+        $data['sort']='sort';
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('category_mgmt',$data);
@@ -140,6 +153,7 @@ class Category extends CI_Controller
 
             $cat_id = 0;
         }
+
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
         $this->form_validation->set_rules('category_name', 'Category', 'required|min_length[1]|max_length[50]');
         if ($this->form_validation->run() == FALSE) {
@@ -147,7 +161,6 @@ class Category extends CI_Controller
             $data['category'] = $this->Admin_Insert->categoryall();
             $this->load->view('header');
             $this->load->view('footer');
-
             $this->load->view('update_category',$data);
 
         } else {

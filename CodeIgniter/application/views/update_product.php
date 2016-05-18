@@ -171,20 +171,6 @@
                         <div class="portlet box blue"></div>
 
                         <input type="hidden" name="prod_id" value="<?php if(isset($edit_productdata)){echo $value['product_id'];}else echo set_value('prod_id');?>"/>
-                        <div class="control-group">
-                            <label class="control-label">Category</label>
-                            <div class="controls">
-                                <select name="category" class="category" id='category'>
-                                    <!--                                <option value="none"></option>-->
-                                    <option  value="Software">Software</option>
-                                    <option  value="Hardware">Hardware</option>
-                                </select>
-                                <span class="help-inline"></span>
-                                <div style="display:inline; color: red">
-                                    <?php echo form_error('category_name'); ?>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="control-group">
                             <label class="control-label">Product Name</label>
@@ -401,7 +387,7 @@
     $(document).ready(function () {
 
         $('.example1').datepicker({
-            format: "yyyy/mm/dd"
+            dateFormat: "yy-mm-dd",
         });
 
     });

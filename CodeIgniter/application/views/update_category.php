@@ -194,13 +194,15 @@
                         </div>
                     </div>
                     <?php
+                    if(isset($categor)){
                     foreach($categor as $value)
-                    {}
+                    $value=(array)$value;}
+                    else{echo "";}
                     ?>
                     <input type="hidden" value="<?php echo $value['category_id']?>" name="hidden">
                     <div class="control-group">
                         <label >Category Name</label>
-                        <input class="span6 m-wrap"  style=" display: inline;width:220px;"type="text" placeholder="Category_name" name="category_name" value="<?php echo $value['category_name']?>"/>
+                        <input class="span6 m-wrap"  style=" display: inline;width:220px;"type="text" placeholder="Category_name" name="category_name" value="<?php if(isset($categor)){echo $value['category_name'];}else{ echo set_value('category_name');}?>"/>
                     </div>
                     <div style="display:inline; color: red" >
                         <?php echo form_error('category_name'); ?>

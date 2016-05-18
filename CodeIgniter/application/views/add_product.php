@@ -2,16 +2,16 @@
 
         <!-- END PAGE LEVEL STYLES -->
 
-<script>
-    function add()
-    {
-        var input=document.createElement('input');
-        input.type="file";
-        input.name='image_name';
-        document.getElementById('new').appendChild(input);
-    }
-
-</script>
+<!--<script>-->
+<!--    function add()-->
+<!--    {-->
+<!--        var input=document.createElement('input');-->
+<!--        input.type="file";-->
+<!--        input.name='image_name';-->
+<!--        document.getElementById('new').appendChild(input);-->
+<!--    }-->
+<!---->
+<!--</script>-->
 <script src="<?php echo base_url('js/update_validation.js');?>"></script>
     <!-- BEGIN PAGE LEVEL STYLES -->
 <!--    <link href="--><?php //echo base_url('assets/css/pages/login.css"')?><!-- rel="stylesheet" type="text/css"/>-->
@@ -508,7 +508,7 @@
                         <label class="control-label"style="display:inline">Starts with years view</label>
                         <div class="controls">
                             <div class="input-append date date-picker"style="display:inline" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                <input  class="example1"   style="display:inline " name="special_price_from"class="m-wrap m-ctrl-medium date-picker" readonly size="16" type="text" value="<?php echo set_value('special_price_from')?>" /><span class="add-on"><i class="icon-calendar"></i></span>
+                                <input  class="example1"   style="display:inline " name="special_price_from"class="m-wrap m-ctrl-medium " readonly size="16" type="text" value="<?php echo set_value('special_price_from')?>" /><span class="add-on"><i class="icon-calendar"></i></span>
                             </div>
                         </div>
                         <div id="date_from" style="display:inline; color: red" >
@@ -612,10 +612,10 @@
                                 <div>
                                     <span class="btn btn-file"><span class="fileupload-new">Select image</span>
 <!--												<span class="fileupload-exists">Change</span>-->
-                                        <input type="file" class="default" name="image_name[]" size="20" multiple />
+                                        <input id="image" type="file" class="default" name="image_name[]" size="20" multiple />
 <!--                                                    <a  onclick="add()"id="new">Add more</a>-->
-                                    </span>
-                                    <div id="image" style="display:inline; color: red" >
+                                    </span><br>
+                                    <div id="image_error" style="display:inline; color: red" >
                                         <?php echo form_error('image_name'); ?>
                                     </div>
                                 </div>
@@ -661,19 +661,21 @@
     $(document).ready(function () {
 
         $('.example1').datepicker({
-            format: "yyyy-mm-dd",
+            dateFormat: "yy-mm-dd",
         });
 
     });
 </script>
 
-<script>
-    jQuery(document).ready(function() {
-        // initiate layout and plugins
-        App.init();
-        FormComponents.init();
-    });
-</script>
+
+
+<!--<script>-->
+<!--    jQuery(document).ready(function() {-->
+<!--        // initiate layout and plugins-->
+<!--        App.init();-->
+<!--        FormComponents.init();-->
+<!--    });-->
+<!--</script>-->
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

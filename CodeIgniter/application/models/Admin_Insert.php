@@ -120,41 +120,22 @@ class Admin_insert extends CI_Model
     }
     public function fetch_data($limit, $page)           //pagignation admin
     {
-        $var=$this->input->get('sortby');
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'admin_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
 
-        if(empty($var))
-        {
-            $var='admin_name';
-
-            $offset = ($page - 1) * $limit;
-            $this->db->limit($limit, $offset);
-            $this->db->order_by($var, "decs");
-            $query = $this->db->get("e-commers");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $row) {
-                    $data[] = $row;
-                }
-
-                return $data;
+        $offset = ($page - 1) * $limit;
+        $this->db->limit($limit, $offset);
+        $this->db->order_by($var, $order);
+        $query = $this->db->get("e-commers");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
             }
-            return false;}
-        else {
-            $offset = ($page - 1) * $limit;
-            $this->db->limit($limit, $offset);
-            $this->db->order_by($var, "decs");
-            $query = $this->db->get("e-commers");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $row) {
-                    $data[] = $row;
-                }
-
-                return $data;
-            }
-            return false;
+            return $data;
         }
+        return false;
     }
-
-                                     //PRODUCT
+    //PRODUCT
 
     public function product_count()                            //count product
     {
@@ -170,14 +151,15 @@ class Admin_insert extends CI_Model
     }
     public function fetch_product_data($limit, $page)           //pagignation product
     {
-
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product.product_id=product_images.product_id');
         $this->db->group_by('product_images.product_id');
-
+        $this->db->order_by('product.'.$var, $order);
         $query = $this->db->get()->result_array();
 
         if (count($query)> 0)
@@ -231,9 +213,12 @@ class Admin_insert extends CI_Model
     public function fetch_data_from_category($limit,$page)
     {
 
-            $offset = ($page - 1) * $limit;
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'category_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+        $offset = ($page - 1) * $limit;
             $this->db->limit($limit, $offset);
-            $this->db->order_by('category_name', "decs");
+            $this->db->order_by($var, $order);
             $query = $this->db->get("category");
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $row) {
@@ -266,7 +251,11 @@ class Admin_insert extends CI_Model
     }
     public function category_search($category_search)
     {
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'category_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
         $this->db->like('category_name',$category_search);
+        $this->db->or_like('parent_id',$category_search);
+        $this->db->order_by($var, $order);
         $query = $this->db->get('category');
         $x=$query->result_array();
         return $x;
@@ -280,8 +269,6 @@ class Admin_insert extends CI_Model
         $this->db->where('category_id',$cate_id);
         $this->db->update('category',$data);
     }
-
-
 
 
 
@@ -310,30 +297,34 @@ class Admin_insert extends CI_Model
     }
     public function search($admin_serach)                 //serach admin
     {
+
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'admin_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+
         $this->db->like('admin_name',$admin_serach);
         $this->db->or_like('admin_email',$admin_serach);
         $this->db->or_like('admin_lastname',$admin_serach);
+        $this->db->order_by($var,$order);
         $query = $this->db->get('e-commers');
         $x=$query->result_array();
         return $x;
     }
-    public function search_image($image_search)
-    {
-        $this->db->like('image_name',$image_search);
-        $query = $this->db->get('product_images');
-        $x=$query->result_array();
-        return $x;
-    }
+
     public function product_search($product_serach)        //search product
     {
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->like('name',$product_serach);
         $this->db->or_like('price',$product_serach);
         $this->db->or_like('quntity',$product_serach);
+        $this->db->order_by($var,$order);
+        $this->db->group_by('name');
         $query = $this->db->get();
-        //$query = $this->db->get('product');
         $x=$query->result_array();
         return $x;
     }
@@ -344,15 +335,34 @@ class Admin_insert extends CI_Model
         $x=$query->result_array();
         return $x;
     }
-    public function home()
+    public function record_home_count()
     {
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->group_by('product_images.product_id');
+        return $this->db->get()->num_rows();
+    }
+
+    public function home($limit,$page)
+    {
+
+        $offset = ($page - 1) * $limit;
+        $this->db->limit($limit, $offset);
+        $this->db->select('*');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->group_by('product_images.product_id');
+        $this->db->order_by('product.product_id', "decs");
         $query = $this->db->get();
-        $x=$query->result_array();
-        return $x;
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        else return false;
     }
 
     public function product_details($id)                //product_detalis
@@ -381,15 +391,6 @@ class Admin_insert extends CI_Model
         $query=$this->db->get('product_images');
         return $query->result_array();
     }
-    public function img_edit()                          //edit img
-    {
-        $img_id=$this->input->get('img_id');
-        $this->db->where('img_id',$img_id);
-        $query=$this->db->get('product_images');
-        $query_result=$query->result();
-        return $query_result;
-    }
-
 
     public function from_image_update($prod_id,$data)                  //uppdate img
     {
@@ -398,33 +399,14 @@ class Admin_insert extends CI_Model
         $this->db->update('product_images',$data);
 
     }
-    public function image_update($data)                  //uppdate img
-    {
-        $getid=$this->input->get('img_id');
-        $this->db->where('img_id',$getid);
-        $this->db->update('product_images',$data);
 
-    }
     public function show_image()                         //show img
     {
 
         $query=$this->db->get('product_images');
         return $query->result_array();
     }
-    public function img_delete()                         //delete img
-    {
-        $getid=$this->input->get('img_id');
-        $this->db->where('img_id',$getid);
-        $this->db->delete('product_images');
-    }
-    public function img_detalis()                      //img details
-    {
-        $img_id=$this->input->get('img_id');
-        $this->db->where('img_id',$img_id);
-        $query=$this->db->get('product_images');
-        $query_result=$query->result();
-        return $query_result;
-    }
+
     public function user_query()                        //user query
     {
         $this->db->select('*');
@@ -432,27 +414,73 @@ class Admin_insert extends CI_Model
         $prob=$this->db->get();
         return $prob->result_array();
     }
-    public function record_count_banner()                      //count images
-    {
-        return $this->db->count_all("product_images");
-    }
-    public function fetch_banner_data($limit, $page)           //pagignation images
-    {
 
-        $offset = ($page - 1) * $limit;
-        $this->db->limit($limit, $offset);
-        $query = $this->db->get("product_images");
-        if ($query->num_rows() > 0)
-        {
-            foreach ($query->result() as $row)
-            {
-                $data[] = $row;
-            }
 
-            return $data;
-        }
-        return false;
-    }
+                        //banner
+
+//    public function record_count_banner()                      //count images
+//    {
+//        return $this->db->count_all("product_images");
+//    }
+//      public function fetch_banner_data($limit, $page)           //pagignation images
+//    {
+//
+//        $offset = ($page - 1) * $limit;
+//        $this->db->limit($limit, $offset);
+//        $query = $this->db->get("product_images");
+//        if ($query->num_rows() > 0)
+//        {
+//            foreach ($query->result() as $row)
+//            {
+//                $data[] = $row;
+//            }
+//
+//            return $data;
+//        }
+//        return false;
+//    }
+//    public function img_edit()                          //edit img
+//    {
+//        $img_id=$this->input->get('img_id');
+//        $this->db->where('img_id',$img_id);
+//        $query=$this->db->get('product_images');
+//        $query_result=$query->result();
+//        return $query_result;
+//    }
+//    public function image_update($data)                  //uppdate img
+//    {
+//        $getid=$this->input->get('img_id');
+//        $this->db->where('img_id',$getid);
+//        $this->db->update('product_images',$data);
+//
+//    }
+//    public function img_delete()                         //delete img
+//    {
+//        $getid=$this->input->get('img_id');
+//        $this->db->where('img_id',$getid);
+//        $this->db->delete('product_images');
+//    }
+//    public function search_image($image_search)
+//    {
+//        $this->db->like('image_name',$image_search);
+//        $query = $this->db->get('product_images');
+//        $x=$query->result_array();
+//        return $x;
+//    }
+//
+//    public function img_detalis()                      //img details
+//    {
+//        $img_id=$this->input->get('img_id');
+//        $this->db->where('img_id',$img_id);
+//        $query=$this->db->get('product_images');
+//        $query_result=$query->result();
+//        return $query_result;
+//    }
+
+
+
+
+
     public function view_query($user_id)                //view query
     {
         $this->db->select('*');
@@ -475,7 +503,21 @@ class Admin_insert extends CI_Model
     }
     public function change_perpage($number,$ses_id)
     {
-      //  $data=$this->input->post('perpage');
+        $this->db->select('*');
+        $this->db->from('configration');
+        $this->db->where('created_by',$ses_id);
+        $query=$this->db->get();
+        if($query->num_rows() > 0)
+        {
+            $this->db->where('created_by',$ses_id);
+            $this->db->update('configration',$number);
+        }
+        else{
+            $this->db->insert('configration',$number);
+        }
+    }
+    public function change_home_perpage($number,$ses_id)
+    {
         $this->db->select('*');
         $this->db->from('configration');
         $this->db->where('created_by',$ses_id);
@@ -509,6 +551,28 @@ class Admin_insert extends CI_Model
         }
 
     }
+    public function fetch_home_perpage($id)
+    {
+
+        $this->db->select('perpage_home');
+        $this->db->from('configration');
+        $this->db->where('created_by',$id);
+
+        $query=@$this->db->get()->row()->perpage_home;
+
+
+        if(!empty($query))
+        {
+            return $query;
+        }
+        else{
+            $per=12;
+            return $per;
+        }
+
+    }
+
+
     public function session_id()
     {
         $hidden=$this->input->post('hidden');
@@ -552,9 +616,14 @@ class Admin_insert extends CI_Model
     }
     public function fetch_user_data($limit, $page)           //pagignation user
     {
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+
 
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
+        $this->db->order_by($var,$order);
         $query = $this->db->get("user");
         if ($query->num_rows() > 0)
         {
@@ -582,6 +651,21 @@ class Admin_insert extends CI_Model
         $this->db->join('user_address','user_address.user_id=user.user_id');
         $query=$this->db->get();
         return $query->result_array();
+    }
+    public function user_search($user_search)
+    {
+
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+
+        $this->db->like('user_name',$user_search);
+        $this->db->or_like('user_email',$user_search);
+        $this->db->or_like('user_lastname',$user_search);
+        $this->db->order_by($var,$order);
+        $query = $this->db->get('user');
+        $x=$query->result_array();
+        return $x;
     }
     public function compliant_count()
     {

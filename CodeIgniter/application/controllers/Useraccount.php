@@ -167,9 +167,11 @@ class Useraccount extends CI_Controller
         }
         else{
 
-            $message = $this->input->post('message');
+            $msg = $this->input->post('message');
             $note_admin = $this->input->post('note_admin');
-
+            $user = $this->input->post('user_name');
+            $email= $this->input->post('user_email');
+            $contact = $this->input->post('contact_no');
             $data=array(
 
                 'user_name'=>$this->input->post('user_name'),
@@ -193,14 +195,56 @@ class Useraccount extends CI_Controller
                 'charset' => 'utf-8',
                 'wordwrap' => TRUE
             );
-            //$message = 'Welcome';
+            $message = '
+
+
+	<html>
+	<head>
+	<body>
+	<br><br>
+	<div style="margin-left: 120px">
+		<img src="logo.jpg" style="height: 50px;margin-left: 40px">
+		<br>
+
+
+
+		<br>
+		<div style="margin-left: 50px" >Dear Adminstrator :</div><br>
+		<div style="margin-left: 50px" >Plsease check Below Details :</div><br>
+		<div>
+			<table border="1" style="margin-left: 50px;;width:600px;">
+				<tr>
+					<td style="width: 50%">Name</td>
+					<td>'.$user.'</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>'.$email.'</td>
+				</tr>
+				<tr>
+					<td>Contact No</td>
+					<td>'.$contact.'</td>
+				</tr>
+				<tr>
+				<td>Comment</td>
+				<td>'.$note_admin.'</td>
+				</tr>
+			</table>
+		</div><br>
+
+	</div>
+
+	</body>
+	</head>
+	</html>
+            ';
 
             $this->email->initialize($config);
             $this->email->set_newline("\r\n");
             $this->email->from('sumit.desai@wwindia.com'); // change it to yours
             $this->email->to('sumit.desai@wwindia.com');// change it to yours
-            $this->email->subject($message);
-            $this->email->message($note_admin);
+            $this->email->subject($msg);
+            $this->email->message($message);
 
             if ($this->email->send()) {
             } else {

@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller
     {
         parent:: __construct();
         $this->load->model('Admin_Insert');
+        $this->load->model('Bannermgmt');
         $this->load->library('form_validation');
         $this->load->library('email');
         $this->load->library('upload');
@@ -23,7 +24,7 @@ class Dashboard extends CI_Controller
             $count['admin_count'] = $this->Admin_Insert->record_count();
             $count['product_count'] = $this->Admin_Insert->product_count();
             $count['compliant_count'] = $this->Admin_Insert->compliant_count();
-            $count['banner_count'] = $this->Admin_Insert->record_count_banner();
+            $count['banner_count'] = $this->Bannermgmt->record_count_banner();
             $this->load->view('dashboard', $count);
         } else {
             redirect('admin/login');
@@ -53,14 +54,24 @@ class Dashboard extends CI_Controller
     public function perpage_change()
     {
          $ses_id=$this->session->userdata('id');
-            $data=array(
-                'conf_key'=>$this->input->post('admin_id'),
-                'created_by'=>$ses_id,
-                'perpage'=>$this->input->post('perpage'),
+        $page = $this->input->post('page');
+        if($page == 'admin') {
+            $data = array(
+                'conf_key' => $this->input->post('admin_id'),
+                'created_by' => $ses_id,
+                'perpage' => $this->input->post('perpage'),
             );
-
-        $this->Admin_Insert->change_perpage($data,$ses_id);
-
+            $this->Admin_Insert->change_perpage($data,$ses_id);
+        }
+        else
+        {
+            $data = array(
+                'conf_key' => $this->input->post('admin_id'),
+                'created_by' => $ses_id,
+                'perpage_home' => $this->input->post('perpage'),
+            );
+            $this->Admin_Insert->change_perpage($data,$ses_id);
+        }
         $msg['msg']='Chnage Successsfully Done';
         $this->load->view('header');
         $this->load->view('footer');
@@ -105,9 +116,24 @@ class Dashboard extends CI_Controller
     public function admin_replay()                                    //replay query
     {
         $replay=$this->input->post('replay');
+        $email=$this->input->post('email');
+        $username=$this->input->post('username');
+        $msg=$this->input->post('message');
+        $contact=$this->input->post('contact');
         $this->Admin_Insert->replay_admin();
 
+        $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
+        $this->form_validation->set_rules('replay', 'Replay', 'required|min_length[3]|max_length[500]');
 
+        if ($this->form_validation->run() == FALSE){
+            $user_id = $this->input->get('contact_id', TRUE);
+
+            $data['view']=$this->Admin_Insert->view_query($user_id);
+            $this->load->view('header');
+            $this->load->view('footer');
+            $this->load->view('view_user_query',$data);
+        }
+        else{
 
         $config = Array(
             'protocol' => 'smtp',
@@ -120,14 +146,56 @@ class Dashboard extends CI_Controller
             'charset' => 'utf-8',
             'wordwrap' => TRUE
         );
-        $message = 'About Query';
+        $message = '
+
+
+	<html>
+	<head>
+	<body>
+	<br><br>
+	<div style="margin-left: 120px">
+		<img src="logo.jpg" style="height: 50px;margin-left: 40px">
+		<br>
+
+
+
+		<br>
+		<div style="margin-left: 50px" >Dear Customer : '.$username.' </div><br>
+		<div style="margin-left: 50px" >Plsease check Below Details </div><br>
+		<div>
+			<table border="1" style="margin-left: 50px;;width:600px;">
+				<tr>
+					<td style="width: 50%">Name</td>
+					<td>'.$username.'</td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td>'.$email.'</td>
+				</tr>
+				<tr>
+					<td>Contact No</td>
+					<td>'.$contact.'</td>
+				</tr>
+				<tr>
+				<td>Comment</td>
+				<td>'.$replay.'</td>
+				</tr>
+			</table>
+		</div><br>
+
+	</div>
+
+	</body>
+	</head>
+	</html>
+        ';
 
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
         $this->email->from('sumit.desai@wwindia.com'); // change it to yours
         $this->email->to('sumit.desai@wwindia.com');// change it to yours
-        $this->email->subject($message);
-        $this->email->message($replay);
+        $this->email->subject($msg);
+        $this->email->message($message);
         if ($this->email->send()) {
 
 
@@ -137,6 +205,7 @@ class Dashboard extends CI_Controller
         $con=$this->input->post('con_id');
         $this->Admin_Insert->delete_signle($con);
         redirect('admin/dashboard/reply');
+        }
     }
     public function logout()                                            //logout
     {

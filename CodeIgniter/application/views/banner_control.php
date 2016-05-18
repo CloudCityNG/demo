@@ -64,7 +64,6 @@
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>
-
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
@@ -81,7 +80,6 @@
 
         </ul>
         <!-- END SIDEBAR MENU -->
-    </div>
     </div>
     <!-- END SIDEBAR -->
     <!-- BEGIN PAGE -->
@@ -149,18 +147,17 @@
                     <!-- END BEGIN STYLE CUSTOMIZER -->
                     <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                     <h3 class="page-title">
-                        Admin Management <small>Admin detail</small>
+                        Banner Details <small>Banner Details</small>
                     </h3>
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="<?php echo base_url('admin/dashboard')?>">Home</a>
+                            <a href="<?php echo site_url('admin/dashboard')?>">Home</a>
                             <i class="icon-angle-right"></i>
                         </li>
 
-                        <li><a href="#">Admin List</a></li>
+                        <li><a href="#">Banner Management </a></li>
                     </ul>
-
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
@@ -171,72 +168,81 @@
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <div class="portlet box blue">
                         <div class="portlet-title">
-                            <div class="caption"><i class="icon-edit"></i>Admin Managenemt</div>
-<!--                            <div class="tools">-->
-<!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
-<!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
-<!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="reload"></a>-->
-<!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
-<!--                            </div>-->
+                            <div class="caption"><i class="icon-edit"></i>Banner Management </div>
+                            <div class="tools">
+                                <a href="<?php echo base_url('#portlet-config')?>" class="collapse"></a>
+                                <a href="<?php echo base_url('#portlet-config')?>" data-toggle="modal" class="config"></a>
+                                <a href="<?php echo base_url('javascript:;')?>" class="reload"></a>
+                                <a href="<?php echo base_url('javascript:;')?>" class="remove"></a>
+                            </div>
                         </div>
                         <div class="portlet-body">
-<!--                            <div class="clearfix">-->
+                            <div class="clearfix">
                                 <div class="btn-group">
-                                            <a href="<?php echo base_url('admin/adminuser/add_admin');?>" id="sample_editable_1_new" class="btn green">
+                                    <!--                                    <button id="sample_editable_1_new" class="btn green">-->
+                                    <a href="<?php echo site_url('admin/banner/add_banner')?>" class="btn green">
                                         Add New <i class="icon-plus"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <form style="height: 30px; " action="<?php echo site_url('admin/adminuser/search_admin')?>" method="post">
+
+                                    <form style="height: 30px; " action="<?php echo site_url('admin/banner/search_banner')?>" method="post">
                                         <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                         <input type="submit" class="btn" name="searchs">Search
                                         </input>
-
                                     </form>
-
                                 </div>
-<!--                            </div>-->
+                            </div>
                             <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
+
+
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-                               <thead>
+                                <thead>
                                 <tr>
-                                    <th>Username   <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_name&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_name&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                    <th>Last Name  <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_lastname&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                    <th>Email      <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_email&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_email&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>Banner view  </th>
+                                    <th>Banner Name <a href='<?php if(empty($sort)){echo site_url('admin/banner?sortby=banner&sortorder='.$sortorder);}else{echo site_url('admin/banner/search_banner?sortby=banner&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
                                     <th>Edit</th>
                                     <th>Delete</th>
+                                    <th>View</th>
                                 </tr>
                                 </thead>
                                 <?php
 
-                                if(empty($customer)){
-                                         echo "No data avalablie";
-                                                }
-                                         else{
 
-                                         foreach($customer as $value)
-                                {$value = (array) $value;
-                                             ?>
-                                <tr>
-                                <td><?php echo $value['admin_name'];?></td>
-                                <td><?php echo $value['admin_lastname'];?></td>
-                                <td><?php echo $value['admin_email'];?></td>
-                                <td><a  href="<?php echo site_url('admin/adminuser/edit_user/'.$value['admin_id']);?>">Edit </a></td>
-                                <td><a onclick="return delete_con()" href="<?php echo site_url('admin/adminuser/delete_user/'.$value['admin_id']);?>">Delete</a></td>
-                                </tr>
-                                <?php } } ?>
+
+                                if(empty($banner)){
+                                    echo "No data avalablie";
+                                }
+                                else{
+
+                                    foreach($banner as $value)
+                                    {
+                                        $value = (array) $value;
+//                                        foreach($image as $item)
+//                                        {
+//                                            $item=(array) $item;
+
+                                        ?>
+                                        <tr>
+                                            <td><img src="<?php echo base_url().'/images/'.$value['banner'];?>" style="width: 20px;height: 20px">
+                                            <td><?php echo $value['banner'];?></td>
+                                            <td><a href="<?php echo site_url('admin/banner/edit_banner?banner_id='.$value['banner_id'])?>">Edit </a></td>
+                                            <td><a onclick="return delete_con()" href="<?php echo site_url('admin/banner/delete_banner?banner_id='.$value['banner_id'])?>">Delete</a></td>
+                                            <td><a href="<?php echo site_url('admin/banner/view_banner_details?banner_id='.$value['banner_id'])?>">View</a></td>
+                                        </tr>
+
+                                    <?php } }?>
                             </table>
-
                         </div>
                     </div>
                     <div class="pagination_listing">
                         <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-                        <?php
-                        foreach($links as $li)
-                        {
-                            echo "<li style=''>" . $li . "</li>";
-                        }
-                        ?>
+                            <?php
+                            foreach($links as $li)
+                            {
+                                echo "<li>" . $li . "</li>";
+                            }
+                            ?>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>

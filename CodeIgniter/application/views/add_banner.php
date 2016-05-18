@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+<script src="<?php echo base_url('js/admin_validation.js');?>"></script>
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -135,19 +137,19 @@
                 <!-- END BEGIN STYLE CUSTOMIZER -->
                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                 <h3 class="page-title">
-                    Update Image <small>Update Image</small>
+                    Banner Management <small>Banner detail</small>
                 </h3>
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="<?php echo site_url('admin/dashboard')?>">Home</a>
+                        <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Home</a>
                         <i class="icon-angle-right"></i>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('admin/banner')?>">Image List</a>
+                        <a href="<?php echo site_url('admin/banner/')?>">Banner List</a>
                         <i class="icon-angle-right"></i>
                     </li>
-                    <li><a href="#">Update Image</a></li>
+                    <li><a href="#">New Banner</a></li>
                 </ul>
 
                 <!-- END PAGE TITLE & BREADCRUMB-->
@@ -160,7 +162,7 @@
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
                     <div class="portlet-title">
-                        <div class="caption"><i class="icon-edit"></i>View Image</div>
+                        <div class="caption"><i class="icon-edit"></i>Banner</div>
                         <!--                            <div class="tools">-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
@@ -168,38 +170,40 @@
                         <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
                         <!--                            </div>-->
                     </div>
-                    <div class="portlet-body">
 
-
-
-
-
-                    <?php
-
-foreach($img as $item)
-{
-    $item=(array)$item;
-
-?>
-
-    <form action="<?php echo site_url('admin/banner/updateed_image?img_id='.$item['img_id'])?>" enctype="multipart/form-data" method="post">
-        <img src="<?php echo base_url().'/images/'.$item['image_name']?>"><BR><BR>
-
-        <input type="file" class="default" name="image_name" size="20"/>
-        <input type="submit" name="Apply" value="Upload">
-</form>
-<?php }?>
-
-
-                    </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
+
+
+
+                <form name="form" onsubmit="return admin_valid()"  action="<?php echo site_url('admin/banner/add')?>" method="post" enctype="multipart/form-data">
+
+
+<!--                    <img src="--><?php //echo base_url().'/images/'.$item['banner_name']?><!--"><BR><BR>-->
+                    <input type="file" class="default" name="banner" size="20"/>
+
+                    <?php if(!empty($msg)){echo "<p style='color: red'>".$msg."<p>";}else{ echo "";}?>
+
             </div>
-            <!-- END PAGE CONTENT -->
+            <a  href="<?php echo site_url('admin/banner')?>" type="button" class="btn">
+                Back
+            </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" id="register-submit-btn" class="btn green" value="Submit">
+
+            </input>
+
         </div>
-        <!-- END PAGE CONTAINER-->
+
+
+        </form>
+
+
     </div>
-    <!-- END PAGE -->
+</div>
+<!-- END PAGE CONTENT -->
+</div>
+<!-- END PAGE CONTAINER-->
+</div>
+<!-- END PAGE -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
@@ -223,4 +227,37 @@ foreach($img as $item)
 </body>
 <!-- END BODY -->
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

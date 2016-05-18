@@ -44,6 +44,12 @@ class Userlist extends CI_Controller
             $data['user'] = $this->Admin_Insert->fetch_user_data($config["per_page"], $page);
             $str_links = $this->pagination->create_links();
             $data["links"] = explode('&nbsp;', $str_links);
+            $sortorder = 'DESC';
+            if($this->input->get('sortorder') == 'DESC')
+                $sortorder = 'ASC';
+
+            $data["sortorder"] = $sortorder;
+
             $this->load->view('header');
             $this->load->view('footer');
             $this->load->view('user_list', $data);
@@ -51,16 +57,35 @@ class Userlist extends CI_Controller
             redirect('admin/login');
         }
     }
+
     public function delete_userlist_data()                                   //delete img
     {
         $this->Admin_Insert->userlist_delete();
         redirect('admin/userlist');
     }
+
     public function view_user_data()
     {
-        $data['user']=$this->Admin_Insert->userlist_data();
+        $data['user'] = $this->Admin_Insert->userlist_data();
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('user_details', $data);
+    }
+
+    public function search_user()
+    {
+        $user_ser=$this->input->post('search');
+        $user_serach=trim($user_ser);
+        $data['user']=$this->Admin_Insert->user_search($user_serach);
+        $sortorder = 'DESC';
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+        $data['sort']="sort";
+        $data["sortorder"] = $sortorder;
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );
+        $this->load->view('header');
+        $this->load->view('footer');
+        $this->load->view('user_list',$data);
     }
 }

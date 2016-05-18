@@ -151,11 +151,13 @@
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
+            <div style="margin-left: 50px">
+
             <form action="<?php echo base_url('admin/dashboard/perpage_change')?>" method="post">
 
 
             <div class="row-fluid">
-                <div class="span12"><lable></lable>
+                <div class="span12">
                     <div>
 
                         <?php if(isset($msg))
@@ -167,8 +169,13 @@
                         }?>
                         <!--" method="post">-->
                         <?php $x=$this->session->userdata('session')?>
-                        <label>User Name</label><BR><input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_id" readonly value='<?php echo $x?>'><br>
+                        <label>Admin Name</label><BR>
+                        <input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_id" readonly value='<?php echo $x?>'><br>
                         <lable> CMS Admin Setting<lable><br>
+                                <select name="page">
+                                    <option value="admin">Admin Page</option>
+                                    <option value="user">Home Page </option>
+                                </select><br>
                                 <select name="perpage">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -176,12 +183,6 @@
                                 <button type="submit" class="btn blue">Apply</button>
                                 <button type="button" class="btn">Cancel</button>
                            </form><br>
-
-
-
-
-
-
 
 
             <form action="<?php base_url('admin/dashboard/change_email')?>" method="post">
@@ -201,6 +202,7 @@
         </div>
         <!-- END PAGE CONTAINER-->
     </div>
+
     <!-- END PAGE -->
 </div>
 <!-- END CONTAINER -->
