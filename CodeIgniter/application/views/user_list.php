@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
@@ -43,24 +55,22 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
-
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
-            </li>
-
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
             <li >
-                <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
-                <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
-
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/cms')?>">
+                    CMS</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
@@ -70,6 +80,7 @@
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>
+    <!-- END SIDEBAR -->
 </div>
 <!-- END SIDEBAR -->
 <!-- BEGIN PAGE -->
@@ -208,7 +219,7 @@
                                         <td><?php echo $value['user_lastname'];?></td>
                                         <td><?php echo $value['user_email'];?></td>
                                         <td><a href="<?php echo site_url('admin/userlist/view_user_data/'.$value['user_id']);?>">View </a></td>
-                                        <td><a href="<?php echo site_url('admin/userlist/delete_userlist_data/'.$value['user_id']);?>">Delete</a></td>
+                                        <td><a onclick="return delete_con()" href="<?php echo site_url('admin/userlist/delete_userlist_data/'.$value['user_id']);?>">Delete</a></td>
                                     </tr>
                                 <?php } } ?>
                         </table>

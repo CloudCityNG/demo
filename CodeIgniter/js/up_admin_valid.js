@@ -5,7 +5,7 @@ function admin_valid()
     var last = document.forms["form"]["admin_lastname"].value;
     var email = document.forms["form"]["admin_email"].value;
 
-    if((first == null || first == "")||(isNaN(first)) || (last == null || last == "")||email==""||
+    if((first == null || first == "")|| (last == null || last == "")||email==""||
         (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email)))
     {
 
@@ -33,6 +33,7 @@ function admin_valid()
         return false;
     }
     else{
+
         return true;
     }
 

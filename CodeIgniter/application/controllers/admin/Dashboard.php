@@ -122,18 +122,7 @@ class Dashboard extends CI_Controller
         $contact=$this->input->post('contact');
         $this->Admin_Insert->replay_admin();
 
-        $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-        $this->form_validation->set_rules('replay', 'Replay', 'required|min_length[3]|max_length[500]');
 
-        if ($this->form_validation->run() == FALSE){
-            $user_id = $this->input->get('contact_id', TRUE);
-
-            $data['view']=$this->Admin_Insert->view_query($user_id);
-            $this->load->view('header');
-            $this->load->view('footer');
-            $this->load->view('view_user_query',$data);
-        }
-        else{
 
         $config = Array(
             'protocol' => 'smtp',
@@ -205,7 +194,6 @@ class Dashboard extends CI_Controller
         $con=$this->input->post('con_id');
         $this->Admin_Insert->delete_signle($con);
         redirect('admin/dashboard/reply');
-        }
     }
     public function logout()                                            //logout
     {

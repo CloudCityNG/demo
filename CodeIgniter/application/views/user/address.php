@@ -23,6 +23,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('images/ico/apple-touch-icon-114-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url('images/ico/apple-touch-icon-72-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url('images/ico/apple-touch-icon-57-precomposed.png')?>">
+
+    <script src="<?php echo base_url('js/user_address.js')?>"></script>
 </head><!--/head-->
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
@@ -156,38 +158,38 @@ foreach($user_address as $value) {
             <div class="col-sm-8 ">
                 <div class="login-form"><!--login form-->
 
-                    <form action="<?php echo site_url('Useraccount/change_address')?>" method="post">
+                    <form name="form" onsubmit="return user_address_valid()" action="<?php echo site_url('Useraccount/change_address')?>" method="post">
 
                         <h2>Your Address</h2>
                         <input type="hidden" name="user_id" value="<?php echo $data?>">
                         <lable>Address</lable>
                         <input type="text" placeholder="Address_1" name="address_1"value="<?php if(isset($user_address)){echo $value['address_1'];}else{echo '';}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="add1" style="display:inline; color: red" >
                             <?php echo form_error('address_1'); ?>
                         </div>
                         <lable>Address</lable><br>
                         <input type="text" placeholder="Address_2" name="address_2"value="<?php if(isset($user_address)){echo $value['address_2'];}else{echo set_value('address_2');}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="add2" style="display:inline; color: red" >
                             <?php echo form_error('address_2'); ?>
                         </div>
                         <lable>City</lable><br>
                         <input type="text" placeholder="City" name="city"value="<?php if(isset($user_address)){echo $value['city'];}else{echo set_value('city');}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="city" style="display:inline; color: red" >
                             <?php echo form_error('city'); ?>
                         </div>
                         <lable>State</lable><br>
                         <input type="text" placeholder="State" name="state"value="<?php if(isset($user_address)){echo $value['state'];}else{echo set_value('state');}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="state" style="display:inline; color: red" >
                             <?php echo form_error('state'); ?>
                         </div>
                         <lable>Country</lable><br>
                         <input type="text" placeholder="Country" name="country"value="<?php if(isset($user_address)){echo $value['country'];}else{echo set_value('country');}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="country" style="display:inline; color: red" >
                             <?php echo form_error('country'); ?>
                         </div>
                         <lable>Zipcode</lable><br>
                         <input type="text" placeholder="Zipcode" name="zipcode"value="<?php if(isset($user_address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="zipcode" style="display:inline; color: red" >
                             <?php echo form_error('zipcode'); ?>
                         </div>
 

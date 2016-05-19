@@ -49,34 +49,22 @@
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
-
             <li >
-                <a href="<?php echo site_url('admin/cms')?>">
-                    CMS</a>
+                <a href="<?php echo site_url('admin/userlist')?>">
+                    User List</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>
             <li >
-                <a href="<?php echo site_url('admin/userlist')?>">
-                    User List</a>
+                <a href="<?php echo site_url('admin/cms')?>">
+                    CMS</a>
             </li>
             <li >
-                <a href="<?php echo site_url('admin/banner')?>">
-                    Banner</a>
+                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                    Setting</a>
             </li>
-
-            <li >
-                        <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
-                        <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
-
-                    </li>
-                    <li >
-                        <a href="<?php echo site_url('admin/dashboard/setting')?>">
-                            Setting</a>
-                    </li>
-
 
         </ul>
         <!-- END SIDEBAR MENU -->

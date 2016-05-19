@@ -137,11 +137,17 @@ class Home extends CI_Controller
         $this->cart->update(array('rowid' => $rowid,'qty' => 0));
         redirect('home/user_cart');
     }
-    public function product_view()
+
+    public function product_view()                  //product details
     {
+        $data['category']=$this->User->home_category();
+        $data['banner']=$this->Bannermgmt->home_banner();
         $data['product']=$this->User->view_product();
+        $x=$this->User->find_recom();
+        echo $x;
+        $data['recommend']=$this->User->select_recom($x);
         $this->load->view('user/headeruser');
-        $this->load->view('user/detail_product',$data);
+        $this->load->view('user/product_details',$data);
         $this->load->view('user/footer_user');
     }
     public function checkout()

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<script src="<?php echo base_url('js/query_validation.js');?>"></script>
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -42,24 +43,22 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
-
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
-            </li>
-
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
             <li >
-                <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
-                <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
-
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/cms')?>">
+                    CMS</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
@@ -69,6 +68,7 @@
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>
+    <!-- END SIDEBAR -->
     <!-- END SIDEBAR -->
     <!-- BEGIN PAGE -->
     <div class="page-content">
@@ -155,38 +155,39 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <?php
+            if(isset($view)){
             foreach($view as $value)
-                    $value=(array)$value
+                    $value=(array)$value;}else {echo "";}
             ?>
-            <form action="<?php echo base_url('admin/dashboard/admin_replay')?>" method="post">
+            <form name="form" onsubmit="return query_valid()" action="<?php echo base_url('admin/dashboard/admin_replay')?>" method="post">
                 <input type="hidden" name="con_id" value="<?php echo $value['contact_id']?>">
                 <div class="row-fluid">
                     <div class="span12"><div style="text-align: center"><lable> <h1>User Query Details<h1></lable></div>
                         <input type="hidden" value="<?php echo $value['contact_no']?>" name="contact">
                         <div>
-                            <h3 style="display: inline">User Name:</h3>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="border: 00px; background-color: transparent;" readonly type="text" value="<?php echo $value['user_name']; ?>" name="username"></h4></h4>
+                            <h3 style="display: inline">User Name:</h3>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="border: 00px; background-color: transparent;" readonly type="text"  value="<?php if(isset($view)){echo $value['user_name'];}else{echo set_value('username');} ?>" name="username"></h4></h4>
                         </div><br>
                         <div>
-                            <h3 style="display: inline">E-mail:</h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="background: transparent;border: 00px;box-shadow: none" readonly type="text"name="email" value="<?php echo $value['user_email']; ?>"></h4></h4>
+                            <h3 style="display: inline">E-mail:</h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="background: transparent;border: 00px;box-shadow: none" readonly type="text"name="email" value="<?php if(isset($view)){echo $value['user_email'];}else{echo set_value('email');} ?>"></h4></h4>
                         </div><br> <div>
-                            <h3 style="display: inline">Subject</h3>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="border: 00px;background-color: transparent;" readonly type="text" name="message" value="<?php echo $value['message']; ?>"></h4></h4>
+                            <h3 style="display: inline">Subject</h3>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="border: 00px;background-color: transparent;" readonly type="text" name="message" value="<?php if(isset($view)){ echo $value['message'];}else{echo set_value('message');} ?>"></h4></h4>
                         </div><br> <div>
-                            <h3 style="display: inline">Details:</h3>   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><?php echo $value['note_admin']; ?></h4></h4>
+                            <h3 style="display: inline">Details:</h3>   &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"><input style="border: 00px;background-color: transparent;" readonly  name="note" type="text" value="<?php if(isset($view)){ echo $value['note_admin'];}else { echo set_value("note");}?>"> </h4></h4>
                         </div><br>
                         <div>
                             <h3 style="display: inline">Replay</h3>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <h4 style="display: inline"> <textarea name='replay' rows="3" style="width: 400px"></textarea></h4></h4>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div id="first" style="display:inline; color: red" >
+                                <?php echo form_error('replay'); ?>
+                            </div>
                         </div>
-
-                        <div id="first" style="display:inline; color: red" >
-                            <?php echo form_error('replay'); ?>
-                        </div>
-
-
                         <button type="submit" class="btn blue">Replay</button>
+            </form>
+
+
                         <a href="<?php echo base_url('admin/dashboard/reply')?>" class="btn">Back</a>
                     </div>
                 </div>
-            </form>
+
             <!-- END PAGE CONTENT-->
         </div>
         <!-- END PAGE CONTAINER-->

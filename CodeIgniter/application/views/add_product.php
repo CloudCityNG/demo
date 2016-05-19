@@ -276,17 +276,18 @@
                 <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
                 <form class="sidebar-search">
                     <div class="input-box">
-                        <a href="javascript:;" class="remove"></a>
+                        <a href="<?php echo base_url('javascript:;')?>" class="remove"></a>
                         <input type="text" placeholder="Search..." />
                         <input type="button" class="submit" value=" " />
                     </div>
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="start ">
-                <a href="index.html">
+            <li class="start active ">
+                <a href="<?php echo base_url('index.html')?>">
                     <i class="icon-home"></i>
                     <span class="title">Dashboard</span>
+                    <span class="selected"></span>
                 </a>
             </li>
             <li >
@@ -304,23 +305,22 @@
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
-            </li>
-
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
             <li >
-                <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
-                <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
-
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/cms')?>">
+                    CMS</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">

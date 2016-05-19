@@ -54,23 +54,22 @@ else
                 <a href="<?php echo site_url('admin/banner')?>">
                     Banner Managment</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
-            </li>
-
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
             <li >
-                <a  href="<?php echo site_url('admin/dashboard/news')?>">news</a>
-                <a  href="<?php echo site_url('admin/dashboard/done')?>">done</a>
-
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <li >
+                <a href="<?php echo site_url('admin/cms')?>">
+                    CMS</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
@@ -80,6 +79,7 @@ else
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>
+    <!-- END SIDEBAR -->
 </div>
 <!-- END SIDEBAR -->
 <!-- BEGIN PAGE -->
@@ -187,7 +187,7 @@ else
             <?php $a_id=$this->session->userdata('id')?>
                 <form  name="form" onsubmit="return admin_valid()" action="<?php echo site_url('admin/adminuser/update/');?>" method="post">
 
-                    <input type="HIDDEN" value="<?php echo $a_id?>" name="hidden">
+                    <input type="HIDDEN" value="<?php echo $value['admin_id']?>" name="hidden">
 
                         <div class="control-group">
                             <label style="display: inline">Username</label>
@@ -210,26 +210,6 @@ else
                                 <div id="last" style="display:inline; color: red" >
                                     <?php echo form_error('admin_lastname'); ?>
                                 </div>
-
-
-
-
-<!--                        <div class="control-group">-->
-<!--                            <label style="display: inline" >Password</label>-->
-<!--                                 <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" id="register_password" placeholder="Password" value="--><?php //if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?><!--" name="admin_password"/>-->
-<!--                                </div>-->
-<!--                                <div style="display:inline;color: red ">-->
-<!--                                    --><?php //echo form_error('admin_password'); ?>
-<!--                                </div>-->
-<!---->
-<!--                        <div class="control-group">-->
-<!--                            <label style="display: inline" >Confirm</label>-->
-<!--                            &nbsp;-->
-<!--                                    <input class="span6 m-wrap" style="display: inline ;width: 250px" type="password" placeholder="Re-type Your Password" name="admin_compass" value="--><?php //if(isset($edit_userdata)){echo $value['admin_password'];}else echo set_value('admin_password');?><!-- "/>-->
-<!--                                </div>-->
-<!--                                <div style="display:inline;color: red">-->
-<!--                                    --><?php //echo form_error('admin_compass'); ?>
-<!--                                </div>-->
 
                         <div class="control-group">
                             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->

@@ -227,7 +227,7 @@ class User extends CI_Model
         $this->db->where('wishlist_id',$wish_id);
         $this->db->delete('user_wish_list');
     }
-    public function view_product()
+    public function view_product()                  //view product details
     {
         $prod_id=$this->uri->segment(3);
         $this->db->select('*');
@@ -235,6 +235,24 @@ class User extends CI_Model
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->where('product.product_id',$prod_id);
         return $this->db->get()->result_array();
+    }
+    public function select_recom($x)                //display in recommeded section
+    {
+        $this->db->select('*');
+        $this->db->from('product_category');
+        $this->db->join('product','product.product_id=product_category.product_id');
+        $this->db->join('category','category.category_id=product_category.category_id');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->where('category.category_id',$x);
+        return $this->db->get()->result_array();
+    }
+    public function find_recom()                    //find category id for recommend section
+    {
+        $prod_id=$this->uri->segment(3);
+        $this->db->select('category_id');
+        $this->db->from('product_category');
+        $this->db->where('product_id',$prod_id);
+        return $this->db->get()->row()->category_id;
     }
     public function chekout_data($id)
     {

@@ -28,6 +28,7 @@ if(isset($user_data)){
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('images/ico/apple-touch-icon-114-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url('images/ico/apple-touch-icon-72-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url('images/ico/apple-touch-icon-57-precomposed.png')?>">
+    <script src="<?php echo base_url('js/user_account.js')?>"></script>
 </head><!--/head-->
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
@@ -162,26 +163,26 @@ if(isset($user_data)){
                     <?php if(isset($msg)){
                         echo '<p style="color: #00aa00;">'.$msg.'</p>';
                     }?>
-                        <form action="<?php echo site_url('Useraccount/update_user')?>" method="post">
+                        <form name="form" onsubmit="return user_valid()" action="<?php echo site_url('Useraccount/update_user')?>" method="post">
                         <h2>Personal Details</h2>
                         <label>Name</label>
                         <input type="text" placeholder="Name" name="user_name" value="<?php if(isset($user_data)){echo $value['user_name'];}else{echo set_value('user_name');};?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="first" style="display:inline; color: red" >
                             <?php echo form_error('user_name'); ?>
                         </div><br>
                         <label>Lastname</label>
                         <input type="text" placeholder="Lastname" name="user_lastname"value="<?php if(isset($user_data)){ echo $value['user_lastname'];}else{echo set_value('user_lastname');};?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="last" style="display:inline; color: red" >
                             <?php echo form_error('user_lastname'); ?>
                         </div><br>
                         <label>Email Address</label>
                         <input type="email" placeholder="Email Address" name="user_email"value="<?php if(isset($user_data)){echo $value['user_email'];}else{echo set_value('user_email');};?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="email"  style="display:inline; color: red" >
                             <?php echo form_error('user_email'); ?>
                         </div><br>
                         <label>Password</label>
                         <input readonly type="password" placeholder="Password" name="user_password"value="<?php if(isset($user_data)){ echo $value['user_password'];}else{echo set_value('user_email');};?>"/>
-                        <div style="display:inline; color: red" >
+                        <div id="pass" style="display:inline; color: red" >
                             <?php echo form_error('user_password'); ?>
                         </div><br>
                         <label>

@@ -64,9 +64,6 @@
 <body style="bgcolor:red">
 
 <div class="gallery" align="center">
-
-<!--    <p>Created by <a target="_blank" href="http://html-tuts.com/">HTML-TUTS.com</a>. View full tutorial <a href="http://html-tuts.com/?p=2337" target="_blank">here</a>.</p>-->
-
     <br/>
     <div class="thumbnails">
 

@@ -100,7 +100,7 @@ class Adminuser extends CI_Controller
         }
         else
         {
-                         //email session
+
             $id = $this->session->userdata('id');
             $data= array(
 
@@ -110,7 +110,7 @@ class Adminuser extends CI_Controller
                 'modified_by_data'=>$id,
                 'modified_by_data'=>date('Y/m/d')
             );
-
+            var_dump($data);
             $a_id=$this->input->post('hidden');
 
             $this->Admin_Insert->update_admin($a_id,$data);
