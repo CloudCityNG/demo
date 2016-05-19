@@ -22,6 +22,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('images/ico/apple-touch-icon-114-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url('images/ico/apple-touch-icon-72-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url('images/ico/apple-touch-icon-57-precomposed.png')?>">
+    <script src="<?php echo base_url('js/user_registration.js')?>"></script>
 </head><!--/head-->
 <body >
 <header id="header"><!--header-->
@@ -56,6 +57,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4 col-sm-offset-1">
+                <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
                 <div class="login-form"><!--login form-->
                     <h2>Login to your account</h2>
                     <form action="<?php echo site_url('Userlogin/login_user')?>" method="post">
@@ -82,22 +84,22 @@
             <div class="col-sm-4">
                 <div class="signup-form"><!--sign up form-->
                     <h2>New User Signup!</h2>
-                    <form action="<?php echo base_url('Userlogin/registration')?>" method="post">
+                    <form name="form" onsubmit="return registration_user()" action="<?php echo base_url('Userlogin/registration')?>" method="post">
 
                         <input type="text" placeholder="Name" name="user_name"/>
-                        <div style="display:inline; color: red" >
+                        <div id="first" style="display:inline; color: red" >
                             <?php echo form_error('user_name'); ?>
                         </div>
                         <input type="text" placeholder="Name" name="user_lastname"/>
-                        <div style="display:inline; color: red" >
+                        <div id="last" style="display:inline; color: red" >
                             <?php echo form_error('user_lastname'); ?>
                         </div>
                         <input type="email" placeholder="Email Address" name="user_email"/>
-                        <div style="display:inline; color: red" >
+                        <div id="email" style="display:inline; color: red" >
                             <?php echo form_error('user_email'); ?>
                         </div>
                         <input type="password" placeholder="Password" name="user_password"/>
-                        <div style="display:inline; color: red" >
+                        <div id="pass" style="display:inline; color: red" >
                             <?php echo form_error('user_password'); ?>
                         </div><br>
                         <label><input type="radio" name="user_status" value="1" style="display: inline;width: 20px">Male</label>

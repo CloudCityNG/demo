@@ -112,10 +112,8 @@
 									<span><?php echo $value['price']?></span>
 									<label>Quantity:</label>
 									<input type="text" value="<?php echo $value['quntity']?>" />
-									<button type="button" class="btn btn-fefault cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        Add to cart
-                                    </button>
+                                    <br><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
 								</span>
                             <p><b>Availability:</b> In Stock</p>
                             <p><b>Condition:</b> New</p>

@@ -180,11 +180,6 @@ class Userlogin extends CI_Controller
 </body>
 </head>
 </html>
-
-
-
-
-
             ';
 
             $this->email->initialize($config);
@@ -199,6 +194,7 @@ class Userlogin extends CI_Controller
             } else {
                 show_error($this->email->print_debugger());
             }
+            $this->session->set_flashdata('msg','Registration Successfull');
             redirect('Userlogin/login');
         }
     }

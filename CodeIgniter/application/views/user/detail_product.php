@@ -1,32 +1,3 @@
-
-<!---->
-<!--<table>-->
-<!--    <tr style="column-span: 5">-->
-<!--        <td>-->
-<!--            <img src="--><?php //echo base_url('./images/'.$value['image_name'])?><!--">-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <td>-->
-<!--            <tr></tr>-->
-<!--            <tr></tr>-->
-<!--        </td>-->
-<!--        <td>-->
-<!--            <tr></tr>-->
-<!--            <tr></tr>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--</table>-->
-
-
-
 <html>
 <head>
     <title>Simple HTML Photo Gallery with JavaScript</title>

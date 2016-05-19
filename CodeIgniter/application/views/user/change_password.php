@@ -86,8 +86,8 @@
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="<?php if(!empty($data)){ echo site_url('home/user_cart');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="<?php echo site_url('home/checkout/'.$data)?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <li><a href="<?php echo site_url('home/user_cart');?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                             <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
                             <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
                             <?php }?>
