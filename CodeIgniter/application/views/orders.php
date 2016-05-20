@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -51,6 +64,7 @@
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
+
             <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
@@ -72,6 +86,8 @@
         <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
+</div>
+<!-- END SIDEBAR -->
 <!-- BEGIN PAGE -->
 <div class="page-content">
     <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
@@ -137,19 +153,16 @@
                 <!-- END BEGIN STYLE CUSTOMIZER -->
                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                 <h3 class="page-title">
-                    Admin Management <small>Admin detail</small>
+                    Order Management <small>Order detail</small>
                 </h3>
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Home</a>
+                        <a href="<?php echo base_url('Order/dashboard')?>">Home</a>
                         <i class="icon-angle-right"></i>
                     </li>
-                    <li>
-                        <a href="<?php echo site_url('admin/adminuser/')?>">Admin List</a>
-                        <i class="icon-angle-right"></i>
-                    </li>
-                    <li><a href="#">New Admin</a></li>
+
+                    <li><a href="#">Order List</a></li>
                 </ul>
 
                 <!-- END PAGE TITLE & BREADCRUMB-->
@@ -162,7 +175,7 @@
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
                     <div class="portlet-title">
-                        <div class="caption"><i class="icon-edit"></i>Category Managenemt</div>
+                        <div class="caption"><i class="icon-edit"></i>Order Managenemt</div>
                         <!--                            <div class="tools">-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
@@ -170,54 +183,70 @@
                         <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
                         <!--                            </div>-->
                     </div>
-
-                </div>
-
-
-
-                <form action="<?php echo site_url('admin/category/update_category')?>" method="post">
-
-                    <div class="control-group">
-                        <label class="control-label">Category</label>
-                        <div class="controls">
-                            <select name="category" class="category" id='category'>
-                                <option value="not" selected >Not Select</option>
-                                <?php
-                                foreach($category as $value)
-                                {
-                                    ?>
-                                    <option  value="<?php echo $value['category_name']?>"><?php echo $value['category_name']?></option>
-
-                                <?php }?>
-
-                            </select>
-                            <br>
+                    <div class="portlet-body">
+                        <!--                            <div class="clearfix">-->
+                        <div class="btn-group">
+<!--                            <a href="--><?php //echo base_url('admin/adminuser/add_admin');?><!--" id="sample_editable_1_new" class="btn green">-->
+<!--                                Add New <i class="icon-plus"></i>-->
+<!--                            </a>-->
                         </div>
-                    </div>
-                    <?php
-                    if(isset($categor)){
-                    foreach($categor as $value)
-                    $value=(array)$value;}
-                    else{echo "";}
-                    ?>
-                    <input type="hidden" value="<?php echo $value['category_id']?>" name="hidden">
-                    <div class="control-group">
-                        <label >Category Name</label>
-                        <input class="span6 m-wrap"  style=" display: inline;width:220px;"type="text" placeholder="Category_name" name="category_name" value="<?php if(isset($categor)){echo $value['category_name'];}else{ echo set_value('category_name');}?>"/>
-                    </div>
-                    <div style="display:inline; color: red" >
-                        <?php echo form_error('category_name'); ?>
-                    </div>
-                    <br>
+                        <div class="btn-group pull-right">
+                            <form style="height: 30px; " action="<?php echo site_url('admin/orders/search_order')?>" method="post">
+                                <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
+                                <input type="submit" class="btn" name="searchs">Search
+                                </input>
 
-                    <a  href="<?php echo site_url('admin/category')?>" type="button" class="btn">
-                        Back
-                    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" id="register-submit-btn" class="btn green" value="Submit">
-                    </input>
-                </form>
+                            </form>
 
+                        </div>
+                        <!--                            </div>-->
+<!--                        <center>--><?php //echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?><!--</center>-->
+                        <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                            <thead>
+                            <tr>
+                                <th>Order ID   <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=order_id&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=order_id&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Customer  <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=user_name&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=user_name&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Status        <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=status&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=status&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Grand Total     <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=grand_total&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=grand_total&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>View</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <?php
 
+                            if(empty($order)){
+                                echo "No data avalablie";
+                            }
+                            else{
+
+                                foreach($order as $value)
+                                {$value = (array) $value;
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $value['order_id'];?></td>
+                                        <td><?php echo $value['user_name'];?></td>
+                                        <td><?php echo $value['status'];?></td>
+                                        <td><?php echo $value['grand_total'];?></td>
+                                        <td><a  href="<?php echo site_url('admin/orders/view_order/'.$value['order_id']);?>">View </a></td>
+                                        <td><a  href="<?php echo site_url('admin/orders/edit_order/'.$value['order_id']);?>">Edit </a></td>
+                                        <td><a onclick="return delete_con()" href="<?php echo site_url('admin/orders/delete_order/'.$value['order_id']);?>">Delete</a></td>
+                                    </tr>
+                                <?php } } ?>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="pagination_listing">
+                    <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+                        <?php
+                        foreach($links as $li)
+                        {
+                            echo "<li style=''>" . $li . "</li>";
+                        }
+                        ?>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
             </div>
         </div>
         <!-- END PAGE CONTENT -->
@@ -248,37 +277,3 @@
 </body>
 <!-- END BODY -->
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

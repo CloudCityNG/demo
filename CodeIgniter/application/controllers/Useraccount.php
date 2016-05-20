@@ -262,4 +262,22 @@ class Useraccount extends CI_Controller
         $this->load->view('user/query_ans',$data);
         $this->load->view('user/footer_user');
     }
+    public function login_order()
+    {
+        $email=$this->input->post('user_email');
+        $id=$this->input->post('order_id');
+
+        $this->User->verify_order_id($email,$id);
+
+        $data['status']=$this->User->fetch_status($id);
+        $this->load->view('user/login_order',$data);
+        $this->load->view('user/footer_user');
+    }
+    public function track_order()
+    {
+        $id=$this->session->userdata('user_session');
+        $data['status']=$this->User->fetch_status($id);
+        $this->load->view('user/track_order',$data);
+        $this->load->view('user/footer_user');
+    }
 }

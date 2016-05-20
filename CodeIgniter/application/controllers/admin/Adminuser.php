@@ -18,7 +18,6 @@ class Adminuser extends CI_Controller
     {
         if($this->session->userdata('session')) {
 
-
             $x = $this->session->userdata('id');
 
             $perpage = $this->Admin_Insert->fetch_perpage($x);
@@ -181,7 +180,7 @@ class Adminuser extends CI_Controller
     }
     function add_admin()                                        //insert admin
     {
-        //$this->load->view('header');
+
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('add_admin');

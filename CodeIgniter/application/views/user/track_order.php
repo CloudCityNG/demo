@@ -2,8 +2,8 @@
 <?php
 if(isset($user_data)){
     foreach($user_data as $value)
-{
-    $value =(array)$value;}}else{echo "";}
+    {
+        $value =(array)$value;}}else{echo "";}
 ?>
 <html lang="en">
 <head>
@@ -134,8 +134,7 @@ if(isset($user_data)){
                                     <li><a href="blog-single.html">Blog Single</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/track_order/'.$data);}else{echo site_url('Userlogin/login');}?>">Track Order</a></li>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/login/'.$data);}else{echo site_url('Userlogin/login');}?>">Track Order</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/track/'.$data);}else{echo site_url('Userlogin/login');}?>">Track Order</a></li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/contact/'.$data);}else{echo site_url('Userlogin/login');}?>"> Contact</a></li>                        </ul>
                         </ul>
                     </div>
@@ -160,50 +159,35 @@ if(isset($user_data)){
             <div class="col-sm-8 ">
                 <div class="login-form"><!--login form-->
 
+<!--                    --><?php //foreach($status as $statu)
+//                        $statu=(array)$statu?>
+<!--                    --><?php //if($statu['status']=='Shipped'){?>
+<!--                    <center><h1>1- - - -    2- - - -3- - - -4</h1>-->
+<!--                                <h5>Shipped- - >   Processed- - > Processing- - > Completed</h5></center>-->
+<!--                            --><?php //}elseif($statu['status']=='Processed'){?>
+<!--                    <center><h1>1- - - -    2- - - -3- - - -4</h1>-->
+<!--                        <h5>Shipped- - >   Processed- - > Processing- - > Completed</h5></center>-->
+<!--                    --><?php //}elseif($statu['status']=='Processed'){?>
+<!--                    <center><h1>1- - - -    2- - - -3- - - -4</h1>-->
+<!--                        <h5>Shipped- - >   Processed- - > Processing- - > Completed</h5></center>-->
+
                     <?php if(isset($msg)){
                         echo '<p style="color: #00aa00;">'.$msg.'</p>';
                     }?>
-                        <form name="form" onsubmit="return user_valid()" action="<?php echo site_url('Useraccount/update_user')?>" method="post">
-                        <h2>Personal Details</h2>
-                        <label>Name</label>
-                        <input type="text" placeholder="Name" name="user_name" value="<?php if(isset($user_data)){echo $value['user_name'];}else{echo set_value('user_name');};?>"/>
-                        <div id="first" style="display:inline; color: red" >
-                            <?php echo form_error('user_name'); ?>
-                        </div><br>
-                        <label>Lastname</label>
-                        <input type="text" placeholder="Lastname" name="user_lastname"value="<?php if(isset($user_data)){ echo $value['user_lastname'];}else{echo set_value('user_lastname');};?>"/>
-                        <div id="last" style="display:inline; color: red" >
-                            <?php echo form_error('user_lastname'); ?>
-                        </div><br>
-                        <label>Email Address</label>
-                        <input type="email" placeholder="Email Address" name="user_email"value="<?php if(isset($user_data)){echo $value['user_email'];}else{echo set_value('user_email');};?>"/>
-                        <div id="email"  style="display:inline; color: red" >
-                            <?php echo form_error('user_email'); ?>
-                        </div><br>
-                        <label>Password</label>
-                        <input readonly type="password" placeholder="Password" name="user_password"value="<?php if(isset($user_data)){ echo $value['user_password'];}else{echo set_value('user_email');};?>"/>
-                        <div id="pass" style="display:inline; color: red" >
-                            <?php echo form_error('user_password'); ?>
-                        </div><br>
-                        <label>
-                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="<?php if(isset($user_data)){ echo $value['user_status'];}else{echo set_value('user_status');}?>">
-                            Male
-                        </label>
-                        <label>
-                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="<?php if(isset($user_data)){ echo $value['user_status'];}else{echo set_value('user_status');}?>">
-                            Female
-                        </label>
-                        <div></div>
+                    <form action="<?php echo site_url('Useraccount/login_order')?>" method="post">
+                        <input type="text" placeholder="e-mail" name="user_email"/>
                         <div style="display:inline; color: red" >
-                            <?php echo form_error('user_status'); ?>
-                        </div><br>
-
-                        <a href="<?php echo site_url('Useraccount/back_form_account')?>" style="display: inline" class="btn btn-default col-sm-4">Back</a>
-                        <button type="submit" style="margin-left: 125px;display:inline; margin-top: 00%" class="btn btn-default col-sm-4">Submit</button>
+                            <?php if(isset($email)){echo "Invalid User Email";}else{echo "";} ?>
+                        </div>
+                        <input type="text" placeholder="Order Id" name="order_id" />
+                        <div style="display:inline; color: red" >
+                            <?php if(isset($pass)){echo "Invalid Password";}else{echo "";} ?>
+                        </div><div>
+                        </div>
+                        <center><button type="submit" class="btn btn-default">Login</button></center>
                     </form>
                 </div><!--/login form-->
             </div>
-<?php  ?>
 
         </div>
     </div>

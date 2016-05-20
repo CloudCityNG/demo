@@ -56,10 +56,15 @@
                     Complints Book</a>
             </li>
             <li >
+                <a href="<?php echo site_url('admin/orders')?>">
+                    Orders</a>
+            </li>
+            <li >
                 <a href="<?php echo site_url('admin/cms')?>">
                     CMS</a>
             </li>
             <li >
+
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
                     Setting</a>
             </li>

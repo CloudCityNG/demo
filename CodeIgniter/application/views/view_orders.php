@@ -72,6 +72,8 @@
         <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
+</div>
+<!-- END SIDEBAR -->
 <!-- BEGIN PAGE -->
 <div class="page-content">
     <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
@@ -137,19 +139,19 @@
                 <!-- END BEGIN STYLE CUSTOMIZER -->
                 <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                 <h3 class="page-title">
-                    Admin Management <small>Admin detail</small>
+                    Order Details <small>Order Details</small>
                 </h3>
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="<?php echo site_url('admin/dashboard/back_dashbord')?>">Home</a>
+                        <a href="<?php echo site_url('admin/dashboard')?>">Home</a>
                         <i class="icon-angle-right"></i>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('admin/adminuser/')?>">Admin List</a>
+                        <a href="<?php echo site_url('admin/order')?>">Order list</a>
                         <i class="icon-angle-right"></i>
                     </li>
-                    <li><a href="#">New Admin</a></li>
+                    <li><a href="#">Order Details</a></li>
                 </ul>
 
                 <!-- END PAGE TITLE & BREADCRUMB-->
@@ -162,7 +164,7 @@
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet box blue">
                     <div class="portlet-title">
-                        <div class="caption"><i class="icon-edit"></i>Category Managenemt</div>
+                        <div class="caption"><i class="icon-edit"></i>Order Details</div>
                         <!--                            <div class="tools">-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" class="collapse"></a>-->
                         <!--                                <a href="--><?php //echo base_url('#portlet-config')?><!--" data-toggle="modal" class="config"></a>-->
@@ -170,61 +172,81 @@
                         <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
                         <!--                            </div>-->
                     </div>
+                    <div class="portlet-body">
 
+
+
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <td class="text-left">Date Added</td>
+                                <td class="text-left">Comment</td>
+                                <td class="text-left">Status</td>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php if(!empty($status)){foreach($status as $statu)
+                                $statu=(array)$statu?>
+                            <tr>
+                                <td class="text-center"><?php echo $statu['modify_date']?></td>
+                                <td class="text-center"><?php echo $statu['comment']?></td>
+                                <td class="text-center"><?php echo $statu['status']?></td>
+                                <?php }else{?> <td class="text-center" colspan="3"><?php echo"NO data ";}?></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                            <legend>Add Order History</legend>
+
+                        <form action="<?php echo base_url('admin/orders/update_order')?>" method="post">
+                            <input type="hidden" name="hidden" value="<?php echo $id?>">
+
+                            <div class="form-group">
+                                    <label style="display: inline"><h4 style="display: inline">Order Status</h4</label>
+
+                                        <select style=" display: inline;width: 500px; margin-left: 75px" name="order_status" id="input-order-status" >
+                                            <option value="Canceled">Canceled</option>
+                                            <option value="Complete">Complete</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Processed">Processed</option>
+                                            <option value="Processing">Processing</option>
+                                            <option value="Shipped">Shipped</option>
+                                        </select>
+                            </div><br>
+                                <div class="form-group">
+                                    <label style="display: inline"><h4 style="display: inline;width: 200px" >Comment</h4</label>
+
+                                        <textarea  style=" display: inline;width: 500px; margin-left: 95px" name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+
+                                </div>
+
+                            <div class="text-right">
+                                <a  href="<?php echo site_url('admin/orders')?>" type="button" class="btn">
+                                    Back
+                                </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="submit" id="register-submit-btn" class="btn green" value="Submit">
+
+                                </input>
+                            </div>
+
+</form>
+
+
+
+
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
-
-
-
-                <form action="<?php echo site_url('admin/category/update_category')?>" method="post">
-
-                    <div class="control-group">
-                        <label class="control-label">Category</label>
-                        <div class="controls">
-                            <select name="category" class="category" id='category'>
-                                <option value="not" selected >Not Select</option>
-                                <?php
-                                foreach($category as $value)
-                                {
-                                    ?>
-                                    <option  value="<?php echo $value['category_name']?>"><?php echo $value['category_name']?></option>
-
-                                <?php }?>
-
-                            </select>
-                            <br>
-                        </div>
-                    </div>
-                    <?php
-                    if(isset($categor)){
-                    foreach($categor as $value)
-                    $value=(array)$value;}
-                    else{echo "";}
-                    ?>
-                    <input type="hidden" value="<?php echo $value['category_id']?>" name="hidden">
-                    <div class="control-group">
-                        <label >Category Name</label>
-                        <input class="span6 m-wrap"  style=" display: inline;width:220px;"type="text" placeholder="Category_name" name="category_name" value="<?php if(isset($categor)){echo $value['category_name'];}else{ echo set_value('category_name');}?>"/>
-                    </div>
-                    <div style="display:inline; color: red" >
-                        <?php echo form_error('category_name'); ?>
-                    </div>
-                    <br>
-
-                    <a  href="<?php echo site_url('admin/category')?>" type="button" class="btn">
-                        Back
-                    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="submit" id="register-submit-btn" class="btn green" value="Submit">
-                    </input>
-                </form>
-
-
             </div>
+            <!-- END PAGE CONTENT -->
         </div>
-        <!-- END PAGE CONTENT -->
+        <!-- END PAGE CONTAINER-->
     </div>
-    <!-- END PAGE CONTAINER-->
-</div>
-<!-- END PAGE -->
+    <!-- END PAGE -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
@@ -248,37 +270,4 @@
 </body>
 <!-- END BODY -->
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

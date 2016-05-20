@@ -264,7 +264,7 @@ class User extends CI_Model
     }
     public function all_search($search)
     {
-        echo 'df'.$search;
+
 
         $this->db->select('*');
         $this->db->from('product');
@@ -274,6 +274,33 @@ class User extends CI_Model
 
         return $this->db->get()->result_array();
     }
+    public function verify_order_id($email,$id)
+    {
 
+
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->join('user_order','user_order.user_id=user.user_id');
+        $this->db->where('user_email', $email);
+        $this->db->where('order_id', $id);
+        $this->db->limit(1);
+        $query = $this->db->get();
+        if ($query->num_rows() == 1)
+        {
+            $q = $query->result();
+            return $q;
+        }
+        else
+        {
+
+            redirect('Useraccount/track_order');
+        }
+    }
+    public function fetch_status($id)
+    {
+
+        $this->db->where('user_id',$id);
+        return $this->db->get('user_order')->result_array();
+    }
 }
 ?>
