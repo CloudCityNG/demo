@@ -22,6 +22,20 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('images/ico/apple-touch-icon-114-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url('images/ico/apple-touch-icon-72-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url('images/ico/apple-touch-icon-57-precomposed.png')?>">
+
+
+    <script>
+        function delete_con()
+        {
+            {
+                var x = confirm("Are you sure you want to delete?");
+                if (x)
+                    return true;
+                else
+                    return false;
+            }
+        }
+    </script>
 </head><!--/head-->
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
@@ -171,7 +185,7 @@
                 <td><?php echo $value['name'];?></td>
 
                 <td><?php echo $value['price'];?></td>
-                <td><a href="<?php echo site_url('Userwishlist/delete_from_wishlist/'.$value['wishlist_id'])?>">Delete</a></td>
+                <td><a onclick="return delete_con()" href="<?php echo site_url('Userwishlist/delete_from_wishlist/'.$value['wishlist_id'])?>">Delete</a></td>
                 <td><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id'])?>">Add</a></td>
             </tr>
         <?php } } ?>

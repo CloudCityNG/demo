@@ -203,4 +203,14 @@ class Dashboard extends CI_Controller
 
             redirect('admin/login');
     }
+    public function search_query()
+    {
+        $ser=$this->input->post('search');
+        $search=trim($ser);
+        $data['query']=$this->Admin_Insert->query_search($search);
+        $this->load->view('header');
+        $this->load->view('footer');
+        $this->load->view('user_query',$data);
+
+    }
 }

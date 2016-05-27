@@ -1,752 +1,103 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	function __construct()
-	{
-		parent:: __construct();
-		$this->load->model('Admin_Insert');
-		$this->load->library('form_validation');
-		$this->load->library('email');
-		$this->load->library('upload');
-		$this->load->helper(array('form', 'url'));
-		//$this->load->helper('form');
-		//$this->load->library('session');
-	}
-	public function css()
-	{
-		$this->load->view('header');
-	}
-	public function index()
-	{
-		$this->load->view('login');
-	}
-	public function links()
-	{
-		$this->load->view('login');
+	public function __construct(){
+		parent::__construct();
+
+        // To use site_url and redirect on this controller.
+        $this->load->helper('url');
+        $this->load->model('User');
 	}
 
-	function insert()
-	{
+	public function login(){
 
-		$this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-		$this->form_validation->set_rules('admin_name', 'Firstname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('admin_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
-		$this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
-		$this->form_validation->set_rules('tnc','TNC','required');
-		$this->form_validation->set_rules('status','Status','required');
-		if ($this->form_validation->run() == FALSE){
-			//$data['cut']=$this->Admin_Insert->fetch();
-			$this->load->view('admin_registration');
-		}
-		else
-		{
-			$data= array(
+		$this->load->library('facebook'); // Automatically picks appId and secret from config
 
-				'admin_name' => $this->input->post('admin_name'),
-				'admin_lastname' => $this->input->post('admin_lastname'),
-				'admin_password' => $this->input->post('admin_password'),
-				'admin_email' => $this->input->post('admin_email'),
-				'status' => $this->input->post('status')
-			);
-			$this->Admin_Insert->insert_admin($data);
+        // OR
+        // You can pass different one like this
+        //$this->load->library('facebook', array(
+        //    'appId' => 'APP_ID',
+        //    'secret' => 'SECRET',
+        //    ));
 
-			$this->load->view('login');
-		}
-	}
-	//public function asd(){}
-	function add()
-	{
-		$perpage_value=$this->input->post('perpage');
-		$this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-		$this->form_validation->set_rules('admin_name', 'Firstname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('admin_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
-		$this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
-		$this->form_validation->set_rules('tnc', 'TNC', 'required');
-		$this->form_validation->set_rules('status', 'Status', 'required');
-		if ($this->form_validation->run() == FALSE) {
-			//$data['cut']=$this->Admin_Insert->add_fetch();
-			$this->load->view('add_admin');
-		} else {
-			$perpage_value=$this->input->post('perpage');
-			$data = array(
+		$user = $this->facebook->getUser();
+        
+        if ($user) {
+            try {
 
-				'admin_name' => $this->input->post('admin_name'),
-				'admin_lastname' => $this->input->post('admin_lastname'),
-				'admin_password' => $this->input->post('admin_password'),
-				'admin_email' => $this->input->post('admin_email'),
-				'status' => $this->input->post('status')
-			);
-			$this->Admin_Insert->insert_admin($data);
-			//$perpage_value=$this->input->post('perpage');
+                //echo "hello";die;
+                $data['user_profile'] = $this->facebook->api('/me?fields=id,name,email');
+                $data['scope'] = array('email');
+                $me = $this->facebook->api('/me');
+                $f_id=$me['id'];
+                $fb_data=array(
+                    'scope' => array('email'),
+                    'user_name' => $me['name'],
+                    'fb_token' => $me['id'],
+               );
 
-			$config = array();
-			$config["base_url"] = base_url()."welcome/view_user";
-			$total_row = $this->Admin_Insert->record_count();
-			$config["total_rows"] = $total_row;
-			$config["per_page"] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['num_links'] = $total_row;
-			$config['cur_tag_open'] = '&nbsp;<a class="current">';
-			$config['cur_tag_close'] = '</a>';
-			$config['next_link'] = 'Next';
-			$config['prev_link'] = 'Previous';
-			$this->pagination->initialize($config);
-			if($this->uri->segment(3))
-			{
-				$page = ($this->uri->segment(3));
-			}
-			else
-			{
-				$page = 1;
-			}
-			$data["customer"] = $this->Admin_Insert->fetch_data($config["per_page"], $page);
-			$str_links = $this->pagination->create_links();
-			$data["links"] = explode('&nbsp;',$str_links );
-			$this->load->view('header');
-			$this->load->view('footer');
-			$this->load->view('view_user',$data);
-		}
-	}
-	function forget()
-	{
-		$this->load->view('forget');
-	}
-	function add_admin()
-	{
-		//$this->load->view('header');
+               // $fb_id=$this->User->insert_fbuser($fb_data,$f_id);
+               // redirect('Userlogin/ids/'.$fb_id);
 
-		$this->load->view('add_admin');
-		$this->load->view('footer');
+            } catch (FacebookApiException $e) {
+                $user = null;
+            }
+        }else {
 
-	}
-	public function admin_dashboard()
-	{
-		if($this->session->userdata('session')){
-		$this->load->view('footer');
-		$this->load->view('header');
-		$count['admin_count']=$this->Admin_Insert->record_count();
-		$count['product_count']=$this->Admin_Insert->product_count();
-		$this->load->view('dashboard',$count);}
-		else{
-			$this->load->view('login');
-		}
-	}
-	function registration()
-	{
-		if($this->session->userdata('session')) {
-			$this->load->view('admin_registration');
-		}else{
-			$this->load->view('login');
-		}
-	}
-	function admin_login()
-	{
-		$this->Admin_Insert->login();
-		$username=$this->input->post('admin_name');
-		$this->session->set_userdata('session',$username);
-		if($this->session->userdata('session')){
-		redirect('welcome/admin_dashboard');}
-		else{
-			$this->load->view('login');
-		}
-	}
-	public function back_dashbord()
-	{
-		if($this->session->userdata('session')){
-			redirect('welcome/admin_dashboard');}
-		else{
-			$this->load->view('login');
-		}
-	}
-	function verify_email()
-	{
-		$data['userdata']=$this->Admin_Insert->verify();
-		$this->load->view('login',$data);
-	}
-	public function error()
-	{
-		$data['user']="Invalid Username";
-		$data['pass']="Invalid Password";
-		$this->load->view('login',$data);
-	}
-	public function email_error()
-	{
-		$data['error']="Invalid Email";
-		$this->load->view('forget',$data);
-	}
+            $this->facebook->destroySession();
+        }
 
-	function sendMail()
-	{
-		$config = Array(
-			'protocol' => 'smtp',
-			'smtp_host' => 'mail.wwindia.com',
-			'smtp_port' => 25,
-			'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
-			'smtp_pass' => 'nb=np2^89mKn', // change it to yours
-			'mailtype' => 'html',
-			//'charset' => 'iso-8859-1',
-			'charset' => 'utf-8',
-			'wordwrap' => TRUE
-		);
-		$message = 'Mail Done';
+        if ($user) {
 
-		$this->email->initialize($config);
-		$this->email->set_newline("\r\n");
-		$this->email->from('sumit.desai@wwindia.com'); // change it to yours
-		$this->email->to('sumitdesai80@gmail.com');// change it to yours
-		$this->email->subject('Resume from JobsBuddy for your Job posting');
-		$this->email->message($message);
-		if($this->email->send())
-		{
+            $data['logout_url'] = site_url('welcome/logout'); // Logs off application
+            $data['user_profile'] = $this->facebook->api('/me?fields=id,name,email');
+            $data['scope'] = array('email');
+            $me = $this->facebook->api('/me?fields=id,name,email');
+            $f_id=$me['id'];
+            $fb_data=array(
+                //'scope' => array('email'),
+                'user_name' => $me['name'],
+                'fb_token' => $me['id'],
+                'user_email' => $me['email'],
+            );
 
-			echo 'Email sent.';
-		}
-		else
-		{
-			show_error($this->email->print_debugger());
-		}
+            $fb_id=$this->User->insert_fbuser($fb_data,$f_id);
+            redirect('Userlogin/ids/'.$fb_id);
+
+            // OR
+            // Logs off FB!
+            // $data['logout_url'] = $this->facebook->getLogoutUrl();
+
+        } else {
+            echo "hello";
+            $data['login_url'] = $this->facebook->getLoginUrl(array(
+                'redirect_uri' => site_url('/welcome/login'),
+                'scope' => array("email") // permissions here
+
+            ));
+
+        }
+//        $this->session->set_userdata('user_session',$fb_id);
+
+
+        $this->load->view('user/headeruser');
+        $this->load->view('fblogin',$data);
+        $this->load->view('user/footer_user');
 
 	}
 
-	public function view_user()
-	{
-		if($this->session->userdata('session')){
+    public function logout(){
 
+        $this->load->library('facebook');
 
-		$data['customer']=$this->Admin_Insert->list_user();
+        // Logs off session from website
+        $this->facebook->destroySession();
 
-		$config = array();
-		$config["base_url"] = base_url()."welcome/view_user";
-		$total_row = $this->Admin_Insert->record_count();
-		$config["total_rows"] = $total_row;
-		$config["per_page"] = 2;
-		$config['use_page_numbers'] = TRUE;
-		$config['num_links'] = $total_row;
-		$config['cur_tag_open'] = '&nbsp;<a class="current">';
-		$config['cur_tag_close'] = '</a>';
-		$config['next_link'] = 'Next';
-		$config['prev_link'] = 'Previous';
-		$this->pagination->initialize($config);
-		if($this->uri->segment(3))
-		{
-			$page = ($this->uri->segment(3));
-		}
-		else
-		{
-			$page = 1;
-		}
-		$data["customer"] = $this->Admin_Insert->fetch_data($config["per_page"], $page);
-		$str_links = $this->pagination->create_links();
-		$data["links"] = explode('&nbsp;',$str_links );
-			$this->load->view('header');
-			$this->load->view('footer');
-		$this->load->view('view_user',$data);
-		}
-		else{
-			$this->load->view('login');
-		}
-	}
-	public  function view_product()
-	{
-		if($this->session->userdata('session')){
+        // Make sure you destory website session as well.
 
-
-			$data['product']=$this->Admin_Insert->list_product();
-
-			//$data['image']=$this->Admin_Insert->select_img();
-			$config = array();
-			$config["base_url"] = base_url()."welcome/view_product";
-			$total_row = $this->Admin_Insert->record_count_product();
-			$config["total_rows"] = $total_row;
-			$config["per_page"] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['num_links'] = $total_row;
-			$config['cur_tag_open'] = '&nbsp;<a class="current">';
-			$config['cur_tag_close'] = '</a>';
-			$config['next_link'] = 'Next';
-			$config['prev_link'] = 'Previous';
-			$this->pagination->initialize($config);
-		if($this->uri->segment(3))
-		{
-			$page = ($this->uri->segment(3));
-		}
-		else
-		{
-			$page = 1;
-		}
-		$data['products'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
-		$str_links = $this->pagination->create_links();
-		$data["links"] = explode('&nbsp;',$str_links );
-			$this->load->view('header');
-			$this->load->view('footer');
-		//	$data['product']=$this->Admin_Insert->list_product();
-		$this->load->view('view_product',$data);
-		}
-		else{
-			$this->load->view('login');
-		}
-	}
-	public function add_product()
-	{
-		if($this->session->userdata('session')){
-			$this->load->view('add_product');}
-		else{
-			$this->load->view('login');
-		}
-
-	}
-	public function delete_user()
-	{
-		if($this->session->userdata('session'))
-		{
-		$this->Admin_Insert->user_delete();
-		redirect('welcome/view_user');
-		}
-		else
-		{
-			$this->load->view('login');
-		}
-	}
-	public function edit_user()
-	{
-		$data['edit_userdata']=$this->Admin_Insert->user_edit();
-
-		$this->load->view('update_admin',$data);
-	}
-	function update()
-	{
-
-		$this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-		$this->form_validation->set_rules('admin_name', 'Firstname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('admin_email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('admin_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
-		$this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
-		$this->form_validation->set_rules('tnc','TNC','required');
-		$this->form_validation->set_rules('status','Status','required');
-		if ($this->form_validation->run() == FALSE){
-			//$data['cut']=$this->insert_admin->fetch();
-			$this->load->view('admin_registration');
-		}
-		else
-		{
-			$id = $this->input->get('admin_id', TRUE);
-			$data= array(
-
-				'admin_name' => $this->input->post('admin_name'),
-				'admin_lastname' => $this->input->post('admin_lastname'),
-				'admin_password' => $this->input->post('admin_password'),
-				'admin_email' => $this->input->post('admin_email'),
-				'status' => $this->input->post('status')
-			);
-			$this->Admin_Insert->update_admin($id,$data);
-			redirect('welcome/view_user');
-		}
-	}
-	public function sort()
-	{
-		if($this->session->userdata('session')){
-			$var=$this->input->get('sortby');
-			$data['customer']=$this->Admin_Insert->sort_data($var);
-			$config = array();
-			$config["base_url"] = base_url()."welcome/view_user";
-			$total_row = $this->Admin_Insert->record_count();
-			$config["total_rows"] = $total_row;
-			$config["per_page"] = 2;
-			$config['use_page_numbers'] = TRUE;
-			$config['num_links'] = $total_row;
-			$config['cur_tag_open'] = '&nbsp;<a class="current">';
-			$config['cur_tag_close'] = '</a>';
-			$config['next_link'] = 'Next';
-			$config['prev_link'] = 'Previous';
-			$this->pagination->initialize($config);
-			if($this->uri->segment(3))
-			{
-				$page = ($this->uri->segment(3));
-			}
-			else
-			{
-				$page = 1;
-			}
-			//$data['customer'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
-			$str_links = $this->pagination->create_links();
-			$data["links"] = explode('&nbsp;',$str_links );
-			$this->load->view('header');
-			$this->load->view('footer');
-			//	$data['product']=$this->Admin_Insert->list_product();
-			$this->load->view('view_user',$data);
-		}
-		else{
-			$this->load->view('login');
-		}
-
-
-	}
-//	public function sort_product()
-//	{
-//		if($this->session->userdata('session')){
-//			$var=$this->input->get('sortby');
-//			$data['products']=$this->Admin_Insert->sort_prod($var);
-//			$config = array();
-//			$config["base_url"] = base_url()."welcome/view_product";
-//			$total_row = $this->Admin_Insert->record_count_product();
-//			$config["total_rows"] = $total_row;
-//			$config["per_page"] = 2;
-//			$config['use_page_numbers'] = TRUE;
-//			$config['num_links'] = $total_row;
-//			$config['cur_tag_open'] = '&nbsp;<a class="current">';
-//			$config['cur_tag_close'] = '</a>';
-//			$config['next_link'] = 'Next';
-//			$config['prev_link'] = 'Previous';
-//			$this->pagination->initialize($config);
-//		if($this->uri->segment(3))
-//		{
-//			$page = ($this->uri->segment(3));
-//		}
-//		else
-//		{
-//			$page = 1;
-//		}
-//		$data['products'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
-//		$str_links = $this->pagination->create_links();
-//		$data["links"] = explode('&nbsp;',$str_links );
-//		$this->load->view('header');
-//		$this->load->view('footer');
-//		//	$data['product']=$this->Admin_Insert->list_product();
-//		$this->load->view('view_product',$data);
-//		}
-//		else{
-//				$this->load->view('login');
-//			}
-//
-//
-//	}
-
-	public function insert_product()
-	{
-		$this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-		$this->form_validation->set_rules('name', 'Firstname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('sku', 'SKU', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('short_description', 'Short_Description', 'required');
-		$this->form_validation->set_rules('long_description', 'Breif Description', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required');
-		$this->form_validation->set_rules('special_price', 'Special Price', 'required');
-		$this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
-		$this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
-		$this->form_validation->set_rules('status','Status','required');
-		$this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/');
-		$this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
-		$this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
-		$this->form_validation->set_rules('product_status','Status','required');
-
-		if ($this->form_validation->run() == FALSE){
-
-			$this->load->view('add_product');
-		}
-		else
-		{
-
-						$data= array(
-							//'category_name'=>$this->input->post('category'),
-							'name' => $this->input->post('name'),
-							'sku' => $this->input->post('sku'),
-							'short_description' => $this->input->post('short_description'),
-							'long_description' => $this->input->post('long_description'),
-							'price' => $this->input->post('price'),
-							'special_price' => $this->input->post('special_price'),
-							'special_price_form' => $this->input->post('special_price_from'),
-							'special_price_to' => $this->input->post('special_price_to'),
-							'status' => $this->input->post('status'),
-							'quntity' => $this->input->post('quntity'),
-							'meta_title' => $this->input->post('meta_title'),
-							'meta_description' => $this->input->post('meta_description'),
-							'meta_keywords' => $this->input->post('meta_keywords'),
-							'product_status' => $this->input->post('product_status'),
-
-			);
-			$prod=$this->Admin_Insert->product_insert($data);
-
-			$cat= array(
-				'category_name'=>$this->input->post('category')
-
-			);
-			$catid=$this->Admin_Insert->select_category($cat);
-
-			$pro_cat=array(
-				'category_id'=>$catid,
-				'product_id'=>$prod
-			);
-			$this->Admin_Insert->product_category($pro_cat);
-
-			$path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
-
-			if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path ))
-			{
-				$uploed = $_FILES['image_name']['name'];
-				$img = array(
-					'image_name' => $uploed,
-					'product_id'=>$prod
-				);
-				$this->Admin_Insert->upload_img($img);
-				redirect('welcome/view_product');
-			}
-			else
-			{
-				echo 'Error';
-			}
-		}
-	}
-	public function delete_product()
-	{
-		$this->Admin_Insert->product_delete();
-		redirect('welcome/view_product');
-	}
-	public function edit_product()
-	{
-		$data['edit_productdata']=$this->Admin_Insert->product_edit();
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('update_product',$data);
-	}
-	public function product_update()
-	{
-
-		$this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
-		$this->form_validation->set_rules('name', 'Firstname', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('sku', 'SKU', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('short_description', 'Short_Description', 'required');
-		$this->form_validation->set_rules('long_description', 'Breif Description', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required');
-		$this->form_validation->set_rules('special_price', 'Special Price', 'required');
-		$this->form_validation->set_rules('special_price_from', 'special_price_from', 'required');
-		$this->form_validation->set_rules('special_price_to', 'special_price_to', 'required');
-		$this->form_validation->set_rules('status','Status','required');
-		$this->form_validation->set_rules('quntity', 'Quntity', 'required|regex_match[/^[0-9]{2}$/);');
-		$this->form_validation->set_rules('meta_title', 'Title', 'required|min_length[3]|max_length[15]');
-		$this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
-		$this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
-		$this->form_validation->set_rules('product_status','Status','required');
-
-		if ($this->form_validation->run() == FALSE){
-			//$data['cut']=$this->insert_admin->fetch();
-			$this->load->view('add_product');
-		}
-		else
-		{
-			$id = $this->input->get('id', TRUE);
-			$data= array(
-
-				'name' => $this->input->post('name'),
-				'sku' => $this->input->post('sku'),
-				'short_description' => $this->input->post('short_description'),
-				'long_description' => $this->input->post('long_description'),
-				'price' => $this->input->post('price'),
-				'special_price' => $this->input->post('special_price'),
-				'special_price_form' => $this->input->post('special_price_from'),
-				'special_price_to' => $this->input->post('special_price_to'),
-				'status' => $this->input->post('status'),
-				'quntity' => $this->input->post('quntity'),
-				'meta_title' => $this->input->post('meta_title'),
-				'meta_description' => $this->input->post('meta_description'),
-				'meta_keywords' => $this->input->post('meta_keywords'),
-				'product_status' => $this->input->post('product_status'),
-			);
-			$this->Admin_Insert->update($id,$data);
-			redirect('welcome/view_product');
-		}
-	}
-	public function search_admin()
-	{
-		$admin_serach=$this->input->post('search');
-		$data['customer']=$this->Admin_Insert->search($admin_serach);
-		$str_links = $this->pagination->create_links();
-		$data["links"] = explode('&nbsp;',$str_links );
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('view_user',$data);
-	}
-	public function search_product()
-	{
-		$product_serach=$this->input->post('search');
-		$data['product']=$this->Admin_Insert->product_search($product_serach);
-		$str_links = $this->pagination->create_links();
-		$data["links"] = explode('&nbsp;',$str_links );
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('view_product',$data);
-	}
-	public function setting()
-	{
-		$this->load->view('setting');
-	}
-	public function news()
-	{
-		$data['img']=$this->Admin_Insert->select_img();
-		$this->load->view('new_link',$data);
-	}
-	public function banner()
-	{
-		if($this->session->userdata('session')) {
-
-			$data['banner'] = $this->Admin_Insert->view_banner();
-			$this->load->view('header');
-			$this->load->view('footer');
-			$this->load->view('banner_mgmt', $data);
-		}
-		else{
-			$this->load->view('login');
-		}
-	}
-	public function edit_img()
-	{
-		$data['img']=$this->Admin_Insert->img_edit();
-		$this->load->view('update_banner',$data);
-	}
-	public function updateed_image()
-	{
-		//$id=$this->input->get();
-		$path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
-
-		if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path )) {
-			$uploed = $_FILES['image_name']['name'];
-			$img = array(
-				'image_name' => $uploed,
-				//'product_id'=>$prod
-			);
-			$this->Admin_Insert->image_update($img);
-			redirect('welcome/banner');
-		}
-	}
-	public function done()
-	{
-		$data['image']=$this->Admin_Insert->show_image();
-		$this->load->view('done_image',$data);
-	}
-	public function delete_img()
-	{
-		$this->Admin_Insert->img_delete();
-		redirect('welcome/banner');
-	}
-	public function view_img_details()
-	{
-		$data['image']=$this->Admin_Insert->img_detalis();
-		$this->load->view('img_details',$data);
-	}
-	public function view_product_details()
-	{
-		$id = $this->input->get('product_id', TRUE);
-		$data['details']=$this->Admin_Insert->product_details($id);
-		$this->load->view('product_details',$data);
-	}
-	public function reply()
-	{
-		if($this->session->userdata('session')) {
-		$data['query']=$this->Admin_Insert->user_query();
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('user_query',$data);}
-		else{
-			$this->load->view('login');
-		}
-	}
-	public function replay_user()
-	{
-		if($this->session->userdata('session')) {
-		$user_id = $this->input->get('contact_id', TRUE);
-		$data['view']=$this->Admin_Insert->view_query($user_id);
-		$this->load->view('header');
-		$this->load->view('footer');
-		$this->load->view('view_user_query',$data);
-		$this->load->view('add_product');}
-		else{
-		$this->load->view('login');
-			}
-	}
-	public function admin_replay()
-	{
-
-		$this->Admin_Insert->replay_admin();
-		redirect('replay_user');
-	}
-	public function logout()
-	{
-		if($this->session->unset_userdata('session'));
-		{
-			$this->load->view('login');
-
-		}
-	}
-
-
-
-
-
-
-//	function do_upload()
-//	{
-//		$path =$_SERVER['DOCUMENT_ROOT'].'/images/';
-//		$config = array(
-//
-//			'upload_path' => $path,
-//			'allowed_types' => "gif|jpg|png|jpeg|pdf",
-//			'overwrite' => TRUE,
-//			'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-//			'max_height' => "768",
-//			'max_width' => "1024"
-//		);
-//		$this->load->library('upload', $config);
-////	}
-//	//public function img_upload(){
-//
-//		if ( ! $this->upload->do_upload())
-//		{
-//			echo $_SERVER['DOCUMENT_ROOT'].'/CodeIgniter-3.0.6/images/';
-//			$error = array('error' => $this->upload->display_errors());
-//			$this->load->view('new_link', $error);
-//		}
-//		else
-//		{
-//			$data = array('upload_data' => $this->upload->data());
-//
-//			$this->load->view('done_image', $data);
-//		}
-//	}
-
-
-
-
-
-	public function img()
-	{
-		$path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
-
-		if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path ))
-		{
-			$uploed=$_FILES['image_name']['name'];
-			//$data=$uploed;
-			$data= array(
-
-				'image_name' => $uploed
-			);
-			$this->Admin_Insert->upload_img($data);
-			redirect('welcome/news');
-		}
-		else
-		{
-			echo "Error";
-		}
-
-	}
-
-
-
-
+        redirect('welcome/login');
+    }
 
 }
+

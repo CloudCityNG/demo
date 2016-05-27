@@ -109,9 +109,9 @@
                             <p>Web ID: <?php echo $value['product_id']?></p>
                             <img src="<?php echo base_url('./images/product-details/rating.png')?>" alt="" />
 								<span>
-									<span><?php echo $value['price']?></span>
+									<span>Price<?php echo $value['price']?></span>
 									<label>Quantity:</label>
-									<input type="text" value="<?php echo $value['quntity']?>" />
+									<input readonly type="text" value="<?php echo $value['quntity']?>" />
                                     <br><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
 								</span>
@@ -178,11 +178,10 @@
                             <td>Meta-Keywords</td>
                             <td><?php echo $value['meta_keywords']?></td>
                         </tr>
-                    </table>
+                      </table>
 
 
 
-<!--
 
                 <div class="recommended_items"><!-- recommended_items-->
                     <h2 class="title text-center">recommended items</h2>

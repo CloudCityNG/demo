@@ -136,10 +136,11 @@ class Orders extends CI_Controller
     }
     public function edit_order()
     {
-        $u_id=$this->session->userdata('user_session');
         $o_id=$this->uri->segment(4);
+        $u_id=$this->orderadmin->u_id($o_id);
 
         $data['customer']=$this->orderadmin->user_data($u_id);
+
         $data['order']=$this->orderadmin->order_data($o_id);
 
 

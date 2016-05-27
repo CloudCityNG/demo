@@ -11,8 +11,6 @@ class Bannermgmt extends CI_Model
 
     public function fetch_banner_data($limit, $page)           //pagignation images
     {
-
-
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'banner';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
 

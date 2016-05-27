@@ -203,12 +203,11 @@ class Userlogin extends CI_Controller
     {
         $user_data['id'] = $this->User->user_login();
         $this->load->view('user/empty', $user_data);
-
     }
-
     public function ids()                      // set sesssion
     {
         $user_data = $this->uri->segment(3);
+        echo $user_data;
         $this->session->set_userdata('user_session', $user_data);
         redirect('home');
     }

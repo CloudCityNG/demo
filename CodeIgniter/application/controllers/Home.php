@@ -46,6 +46,7 @@ class Home extends CI_Controller
         $data['category']=$this->User->home_category();
         $data['banner']=$this->Bannermgmt->home_banner();
         $data['categorys']="";
+        $data['recommend']=$this->Admin_Insert->recommend();
 
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
@@ -99,7 +100,8 @@ class Home extends CI_Controller
 
         foreach($product as $value) {
             $value = (array)$value;
-            $name = $value['image_name'];
+            $iname = $value['image_name'];
+            $name = $value['name'];
             $price = $value['price'];
 
             $data = array(
@@ -107,6 +109,7 @@ class Home extends CI_Controller
                 'qty' => 1,
                 'price' => $price,
                 'name' => $name,
+                'image_name' => $iname
             );
             $this->cart->insert($data);
 
@@ -152,7 +155,8 @@ class Home extends CI_Controller
     }
     public function checkout()
     {
-        $id=$this->uri->segment(3);
+        $id=$this->session->userdata('user_session');
+
         if(empty($id)) {
             $this->load->view('user/headeruser');
             $this->load->view('user/checkout');
@@ -164,7 +168,6 @@ class Home extends CI_Controller
             $this->load->view('user/headeruser');
             $this->load->view('user/checkout',$data);
             $this->load->view('user/footer_user');
-
         }
     }
     public function search_all()
@@ -187,6 +190,10 @@ class Home extends CI_Controller
     {
         $this->cart->destroy();
         $this->session->unset_userdata('user_session');
+        $this->load->library('facebook');
+
+        // Logs off session from website
+        $this->facebook->destroySession();
         redirect('Userlogin/login');
     }
 }

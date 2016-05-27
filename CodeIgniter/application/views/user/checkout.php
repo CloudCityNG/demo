@@ -8,7 +8,30 @@ else{
     echo "";
 }
 ?>
-<section id="cart_items">
+
+<script>
+    function get_discount()
+    {
+
+        var code=document.getElementById('discount').value;
+
+        $.ajax({ url: '<?php echo site_url('admin/coupon/discount');?>',
+            data: {code: code},
+            type: 'post',
+
+            //alert('code');
+            success: function(output) {
+                document.getElementById('total').value=output;
+            }
+        });
+    }
+</script>
+
+
+
+
+<script src="<?php echo base_url('js/checkout_validation.js')?>"></script>
+<section id="cart_items" xmlns="http://www.w3.org/1999/html">
     <div class="container">
         <div class="breadcrumbs">
             <ol class="breadcrumb">
@@ -25,9 +48,12 @@ else{
             <p>Checkout options</p>
             <ul class="nav">
                 <li>
+
+
                     <label><input onclick="return register()" type="radio" name="checkout"> Register Account</label>
                 </li>
                 <li>
+
                     <label><input type="radio" name="checkout"> Guest Checkout</label>
                 </li>
                 <li>
@@ -41,83 +67,105 @@ else{
         </div><!--/register-req-->
 
         <div class="shopper-informations">
+
+<!--                <div class="tab-pane" id="tab-payment">-->
             <div class="row">
                 <div class="col-sm-3">
                     <div class="shopper-info">
                         <p>Shopper Information</p>
-                        <form>
-                            <input type="text" placeholder="Display Name">
-                            <input type="text" placeholder="User Name">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm password">
+                        <form action="<?php echo site_url('admin/coupon/discount')?>" method="post">
+                            <input type="text" placeholder="Discount" name="percent_off">
+                        <input type="submit" class="btn btn-primary" value="Continue" >
                         </form>
-                        <a class="btn btn-primary" href="">Get Quotes</a>
-                        <a class="btn btn-primary" href="">Continue</a>
                     </div>
                 </div>
-                <div class="col-sm-5 clearfix">
+                <div class="col-sm-6 clearfix">
                     <div class="bill-to">
                         <p>Bill To</p>
                         <div class="form-one">
-                            <form>
-                                <input value="<?php if(!empty($userdata)){echo $item['user_name'];}else{echo "";}?>" type="text" placeholder="Company Name">
-                                <input value="<?php if(!empty($userdata)){echo $item['user_email'];}else{echo "";}?>" type="text" placeholder="Email*">
-<!--                                <input value="--><?php //if(!empty($userdata)){echo $item['meta_title'];}else{echo "";}?><!--" type="text" placeholder="Title">-->
-                                <input value="<?php if(!empty($userdata)){echo $item['user_name'];}else{echo "";}?>" type="text" placeholder="First Name *">
-<!--                                <input type="text" placeholder="Middle Name">-->
-                                <input value="<?php if(!empty($userdata)){echo $item['user_lastname'];}else{echo "";}?>" type="text" placeholder="Last Name *">
-                                <input value="<?php if(!empty($userdata)){echo $item['address_1'];}else{echo "";}?>" type="text" placeholder="Address 1 *">
-                                <input value="<?php if(!empty($userdata)){echo $item['address_2'];}else{echo "";}?>"type="text" placeholder="Address 2">
-                            </form>
+                            <form name="form" onsubmit="return submit_form()" action="<?php echo site_url('products/product_data')?>" method="post"><!--                            <form action="--><?php //base_url('products/product_data')?><!--" method="post">-->
+
+                                <input name="user_name" value="<?php if(!empty($userdata)){echo $item['user_name'];}else{echo "";}?>" type="text" placeholder="Company Name">
+                                <div id="first" style="display:inline; color: red" >
+                                <?php echo form_error('user_name'); ?>
+                                </div><br>
+                                <input name="user_lastname" value="<?php if(!empty($userdata)){echo $item['user_lastname'];}else{echo "";}?>" type="text" placeholder="Last Name *">
+                                <div id="last" style="display:inline; color: red" >
+                                    <?php echo form_error('user_lastname'); ?>
+                                </div><br>
+                                <input name="user_email" value="<?php if(!empty($userdata)){echo $item['user_email'];}else{echo "";}?>" type="text" placeholder="Email*">
+                                <div id="email" style="display:inline; color: red" >
+                                    <?php echo form_error('user_email'); ?>
+                                </div><br>
+                                <input name="user_password" value="<?php if(!empty($userdata)){echo $item['user_password'];}else{echo "";}?>" type="password" placeholder="Password">
+                                <div id="pass" style="display:inline; color: red" >
+                                    <?php echo form_error('user_password'); ?>
+                                </div><br>
+
+                                <input name="address_1" value="<?php if(!empty($userdata)){echo $item['address_1'];}else{echo "";}?>" type="text" placeholder="Address 1 *">
+                                <div id="add1" style="display:inline; color: red" >
+                                    <?php echo form_error('address_1'); ?>
+                                </div><br>
+                                <input name="address_2" value="<?php if(!empty($userdata)){echo $item['address_2'];}else{echo "";}?>"type="text" placeholder="Address 2">
+                                <div id="add2" style="display:inline; color: red" >
+                                    <?php echo form_error('address_2'); ?>
+                                </div><br>
+                                <input name="zipcode" value="<?php if(!empty($userdata)){echo $item['zipcode'];}else{echo "";}?>" type="text" placeholder="Zip / Postal Code *">
+                                <div id="zipcode" style="display:inline; color: red" >
+                                    <?php echo form_error('zipcode'); ?>
+                                </div><br>
                         </div>
-                        <div class="form-two">
-                            <form>
-                                <input value="<?php if(!empty($userdata)){echo $item['zipcode'];}else{echo "";}?>" type="text" placeholder="Zip / Postal Code *">
-                                <select>
-                                    <option>-- Country --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <select>
-                                    <option>-- State / Province / Region --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <input type="password" placeholder="Confirm password">
-                                <input type="text" placeholder="Phone *">
-                                <input type="text" placeholder="Mobile Phone">
-                                <input type="text" placeholder="Fax">
-                            </form>
-                        </div>
+
+<!--                        <div class="form-two">-->
+<!---->
+<!--                                <input value="--><?php //if(!empty($userdata)){echo $item['zipcode'];}else{echo "";}?><!--" type="text" placeholder="Zip / Postal Code *">-->
+<!--                                <select>-->
+<!--                                    <option>-- Country --</option>-->
+<!--                                    <option>United States</option>-->
+<!--                                    <option>Bangladesh</option>-->
+<!--                                    <option>UK</option>-->
+<!--                                    <option>India</option>-->
+<!--                                    <option>Pakistan</option>-->
+<!--                                    <option>Ucrane</option>-->
+<!--                                    <option>Canada</option>-->
+<!--                                    <option>Dubai</option>-->
+<!--                                </select>-->
+<!--                                <select>-->
+<!--                                    <option>-- State / Province / Region --</option>-->
+<!--                                    <option>United States</option>-->
+<!--                                    <option>Bangladesh</option>-->
+<!--                                    <option>UK</option>-->
+<!--                                    <option>India</option>-->
+<!--                                    <option>Pakistan</option>-->
+<!--                                    <option>Ucrane</option>-->
+<!--                                    <option>Canada</option>-->
+<!--                                    <option>Dubai</option>-->
+<!--                                </select>-->
+<!--                                <input type="password" placeholder="Confirm password">-->
+<!--                                <input type="text" placeholder="Phone *">-->
+<!--                                <input type="text" placeholder="Mobile Phone">-->
+<!--                                <input type="text" placeholder="Fax">-->
+<!---->
+<!--                        </div>-->
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="order-message">
-                        <p>Shipping Order</p>
-                        <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-                        <label><input type="checkbox"> Shipping to bill address</label>
-                    </div>
-                </div>
+<!--                <div class="col-sm-4">-->
+<!--                    <div class="order-message">-->
+<!--                        <p>Shipping Order</p>-->
+<!--                        <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>-->
+<!--                        <label><input type="checkbox"> Shipping to bill address</label>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
-        </div>
+            </div>
+
         <div class="review-payment">
             <h2>Review & Payment</h2>
         </div>
 
         <div class="table-responsive cart_info">
-            <form action="<?php echo site_url('home/update_cart')?>" method="post">
+<!--            <form action="--><?php //echo site_url('home/update_cart')?><!--" method="post">-->
+<!--            <form onsubmit="return submit_form()" action="--><?php //echo site_url('products/product_data')?><!--" method="post">-->
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
@@ -136,37 +184,49 @@ else{
                             <?php echo form_hidden($i.'[rowid]', $items['rowid']); ?>
                             <tr>
                                 <td class="cart_product">
-                                    <img src="<?php echo base_url().'/images/'.$items['name'];?>" style="width: 100px;height: 100px">                    </td>
+                                    <img src="<?php echo base_url().'/images/'.$items['image_name'];?>" style="width: 100px;height: 100px">                    </td>
                                 <td class="cart_description">
-                                    <?php echo $items['name']; ?>
-                                    <p><?php echo $items['id']?></p>
+                                    <input name="product_name" readonly type="text" style="border: 0px" value="<?php echo $items['name'];?>">
+                                    <p> <input name="product_id" readonly type="hidden" style="border: 0px" value="<?php echo $items['id']?>"></p>
                                 </td>
                                 <td class="cart_price">
-                                    <p><?php echo $this->cart->format_number($items['price']); ?></p>
+                                    <p> <input type="text" style="border: 0px" readonly name="product_price"  value="<?php echo $this->cart->format_number($items['price']);?>"></p>
                                 </td>
                                 <td class="cart_quantity">
                                     <div class="cart_quantity_button">
-                                        <?php echo form_input(array('name' => 'qty'.$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5')); ?>
+                                        <?php echo form_input(array( 'name' => 'qty'.$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5',));?>
+                                        <?php if(isset($quantity)){echo "<p style='color: red'>".$quantity."</p>";}else{echo "";}?>
                                     </div>
+                                    <?php if(isset($quantity)){echo "<p style='color: red'>".$quantity."</p>";}else{echo "";}?>
+
                                 </td>
                                 <td class="cart_total">
                                     <p class="cart_total_price"><?php echo $this->cart->format_number($items['subtotal']); ?></p>
                                 </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="<?php echo base_url('home/delete_cart/'.$items['rowid'])?>"><i class="fa fa-times"></i></a>
-                                </td>
+<!--                                <td class="cart_delete">-->
+<!--                                    <a class="cart_quantity_delete" href="--><?php //echo base_url('home/delete_cart/'.$items['rowid'])?><!--"><i class="fa fa-times"></i></a>-->
+<!--                                </td>-->
                             </tr>
                             <?php $i++; ?>
+
                         <?php endforeach; ?>
                         <tr>
                             <td colspan="3"> </td>
+                            <td class="right"><strong>Coupon Code</strong> <?php if(isset($msg)){echo "<p style='color: red'>".$msg."</p>";}else{echo "";}?></td>
+
+                            <td class="right"><input onblur="get_discount()" name="code" id="discount"  value="<?php echo set_value('code'); ?>"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"> </td>
                             <td class="right"><strong>Total</strong></td>
-                            <td class="right">$<?php echo $this->cart->format_number($this->cart->total()); ?></td>
+                            <td class="right">$<input id="total" name="total" style="border: 0px" readonly value="<?php echo $this->cart->format_number($this->cart->total());?>"></td>
                         </tr>
 
                     </table>
-        </div>
-        <div class="payment-options">
+
+<!--        </div>-->
+<!--        <div class="payment-options">-->
+                </div>
 					<span>
 						<label><input type="checkbox"> Direct Bank Transfer</label>
 					</span>
@@ -174,9 +234,10 @@ else{
 						<label><input type="checkbox"> Check Payment</label>
 					</span>
 					<span>
-						<label><input type="checkbox"> Paypal</label>
+						<label><input type="submit" value="submit"> Paypal</label>
 					</span>
-        </div>
+
+                </form>
     </div>
 </section> <!--/#cart_items-->
 

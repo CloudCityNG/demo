@@ -31,7 +31,7 @@
                 <?php echo form_hidden($i.'[rowid]', $items['rowid']); ?>
                 <tr>
                     <td class="cart_product">
-                        <img src="<?php echo base_url().'/images/'.$items['name'];?>" style="width: 100px;height: 100px">                    </td>
+                        <img src="<?php echo base_url().'/images/'.$items['image_name'];?>" style="width: 100px;height: 100px">                    </td>
                     <td class="cart_description">
                         <?php echo $items['name']; ?>
                         <p><?php echo $items['id']?></p>

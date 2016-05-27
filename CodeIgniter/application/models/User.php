@@ -37,11 +37,8 @@ class User extends CI_Model
 
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
-
-
                 $data[] = $row;
             }
-
             return $data;
         }
         else return false;
@@ -55,6 +52,23 @@ class User extends CI_Model
     public function insert_user($data)              //insert user data
     {
         $this->db->insert('user', $data);
+    }
+    public function insert_fbuser($data,$f_id)
+    {
+        $this->db->where('fb_token',$f_id);
+        $query=$this->db->get('user')->num_rows();
+
+        if($query == 0) {
+
+            $this->db->insert('user', $data);
+          $id=$this->db->insert_id();
+            return $id;
+        }
+        else{
+            $this->db->select('user_id');
+            $this->db->where('fb_token',$f_id);
+           return $this->db->get('user')->row()->user_id;
+        }
     }
     public function update_user($data,$id)
     {
@@ -95,6 +109,13 @@ class User extends CI_Model
         {
             redirect('Userlogin/error');
         }
+    }
+    public function google_search_id($g_id)
+    {
+        $this->db->select('user_id');
+        $this->db->from('user');
+        $this->db->where('google_token',$g_id);
+        return $this->db->get()->row()->user_id;
     }
     public function user_forget()                       //email verifiacction
     {
@@ -296,11 +317,40 @@ class User extends CI_Model
             redirect('Useraccount/track_order');
         }
     }
+
+    /*
+     *
+     */
     public function fetch_status($id)
     {
 
         $this->db->where('user_id',$id);
         return $this->db->get('user_order')->result_array();
+    }
+    public function google_id($google_id)
+    {
+        $this->db->select('user_id');
+        $this->db->where('google_token',$google_id);
+        $query=$this->db->get('user')->row()->user_id;
+        return $query;
+    }
+    public function checkout_user($data,$address_data,$user_email)
+    {
+        $this->db->where('user_email',$user_email);
+        $query=$this->db->get('user')->num_rows();
+        if($query == 0)
+        {
+            $this->db->insert('user_address',$address_data);
+            $this->db->insert('user',$data);
+            return $this->db->insert_id();
+        }
+        else
+        {
+            $this->db->select('user_id');
+            $this->db->from('user');
+            $this->db->where('user_email',$user_email);
+            return $this->db->get()->row()->user_id;
+        }
     }
 }
 ?>

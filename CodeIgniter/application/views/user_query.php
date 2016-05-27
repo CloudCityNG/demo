@@ -175,7 +175,7 @@
 <!--                                </a>-->
 <!--                            </div>-->
                             <div class="btn-group pull-right">
-                                <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_admin')?>" method="post">
+                                <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_query')?>" method="post">
                                     <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                     <input type="submit" class="btn" name="searchs">Search
                                     </input>

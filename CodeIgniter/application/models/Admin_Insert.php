@@ -364,6 +364,16 @@ class Admin_insert extends CI_Model
         }
         else return false;
     }
+    public function recommend()
+    {
+        $this->db->select('*');
+        $this->db->from('product');
+        $this->db->join('product_images','product_images.product_id=product.product_id');
+        $this->db->group_by('product_images.product_id');
+        $this->db->limit(3);
+        $this->db->order_by('product.product_id', "decs");
+        return $this->db->get()->result_array();
+    }
 
     public function product_details($id)                //product_detalis
     {
@@ -670,5 +680,14 @@ class Admin_insert extends CI_Model
     public function compliant_count()
     {
         return $this->db->count_all("contact_us");
+    }
+    public function query_search($search)
+    {
+        $this->db->like('user_name',$search);
+        $this->db->or_like('user_email',$search);
+        $this->db->or_like('message',$search);
+        $query = $this->db->get('contact_us');
+        $x=$query->result_array();
+        return $x;
     }
 }

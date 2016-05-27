@@ -58,6 +58,10 @@
                     Orders</a>
             </li>
             <li >
+                <a href="<?php echo site_url('admin/coupon')?>">
+                    Coupon Management</a>
+            </li>
+            <li >
                 <a href="<?php echo site_url('admin/dashboard/reply')?>">
                     Complints Book</a>
             </li>

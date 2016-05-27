@@ -69,6 +69,13 @@ class Orderadmin extends CI_Model
         $this->db->where('order_id',$o_id);
         return $this->db->get('order_status')->result_array();
     }
+    public function u_id($o_id)
+    {
+        $this->db->select('user_id');
+        $this->db->from('user_order');
+        $this->db->where('order_id',$o_id);
+        return $this->db->get()->row()->user_id;
+    }
     public function user_data($u_id)
     {
         $this->db->select('*');
