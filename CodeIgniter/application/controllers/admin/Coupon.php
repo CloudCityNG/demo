@@ -100,17 +100,31 @@ class Coupon extends CI_Controller
             redirect('admin/coupon');
         }
     }
+    public function view_coupons()
+    {
+        $data['coupon']=$this->couponmgmt->show_coupon();
+        $this->load->view('header');
+        $this->load->view('footer');
+        $this->load->view('view_coupon',$data);
+    }
     public function discount()
     {
         $off=$this->input->post('code');
-
         $disc=$this->couponmgmt->discount_off($off);
+        if($disc != null) {
+            $x = "";
+            foreach ($this->cart->contents() as $items):
 
-        $x="";
-         foreach ($this->cart->contents() as $items):
             endforeach;
-          $x=$this->cart->format_number($this->cart->total());
-        echo $z=$x-$disc;
+            $x = $this->cart->format_number($this->cart->total());
+
+            echo $z = $x - $disc;
+        }
+        else{
+
+            echo $x = $this->cart->format_number($this->cart->total());
+
+        }
     }
 
 }

@@ -164,10 +164,13 @@
 
             <?php
             foreach($user as $value)
-            {
-
             $value=(array)$value;
-            ?>     </div>
+            ?>
+                <?php
+                foreach($user_address as $item)
+                    $item=(array)$item;
+                ?>
+        </div>
 
         <tr>
         <div class="control-group">
@@ -175,7 +178,7 @@
                 <label style="display: inline">Username</label>
             </td>
             <td>
-              <?php echo $value['user_name']?>
+              <?php if(isset($user)){echo $value['user_name'];}else { echo "";}?>
             </td>
         </div>
         </tr>
@@ -185,7 +188,7 @@
                 <label style="display: inline">Lastname</label>
             </td>
             <td>
-                <?php echo $value['user_lastname']?>
+                <?php if(isset($user)){ echo $value['user_lastname'];}else { echo "";}?>
             </td>
         </div>
         </tr>
@@ -194,24 +197,24 @@
         <tr>
     <div class="control-group">
         <td><label style="display: inline" >E-mail</label></td>
-        <td><?php echo $value['user_email']?></td>
+        <td><?php if(isset($user)){echo $value['user_email'];}else { echo "";}?></td>
     </div>
         </tr>
         <tr>
         <div class="control-group">
             <td><label style="display: inline" >address_1</label>
-            </td><td><?php echo $value['address_1']?>
+            </td><td><?php  if(!empty($user_address)){ echo $item['address_1'];}else { echo "";}?>
         </td></div>
             </tr>
         <tr>
         <div class="control-group">
             <td><label style="display: inline" >address_2</label></td>
-            <td><?php echo $value['address_2']?>
+            <td><?php if(!empty($user_address)){ echo $item['address_2'];}else { echo "";}?>
             </td></div>
             <tr><td>
         <div class="control-group">
             <label style="display: inline" >city</label>
-            </td><td><?php echo $value['city']?></td>
+            </td><td><?php if(!empty($user_address)){ echo $item['city'];}else { echo "";}?></td>
         </div>
         </tr>
         <tr>
@@ -220,25 +223,23 @@
                 <label style="display: inline" >state</label>
             </td>
             <td>
-                <?php echo $value['state']?>
+                <?php if(!empty($user_address)){ echo $item['state'];}else { echo "";}?>
             </td>
         </div>
         </tr>
         <tr>
         <div class="control-group">
             <td><label style="display: inline" >country</label></td>
-            <td><?php echo $value['country']?></td>
+            <td><?php if(!empty($user_address)){ echo $item['country'];}else { echo "";}?></td>
         </div>
         </tr>
         <tr>
         <div class="control-group">
             <td><label style="display: inline" >zipcode</label>
-            </td><td><?php echo $value['zipcode']?>
+            </td><td><?php if(!empty($user_address)){echo $item['zipcode'];}else { echo "";}?>
         </td></div></tr>
 
-        <?php
-        }
-        ?>
+
     </div>
 </table>
 </div>

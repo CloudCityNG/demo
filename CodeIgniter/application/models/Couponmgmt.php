@@ -3,8 +3,7 @@
 class Couponmgmt extends CI_Model
 {
 
-
-    public function record_count_coupon()                      //count images
+    public function record_count_coupon()                      //count coupons
     {
         return $this->db->count_all("coupon");
     }
@@ -37,31 +36,62 @@ class Couponmgmt extends CI_Model
     }
     public function discount_off($off)
     {
+
         $this->db->select('percent_off');
         $this->db->where('code',$off);
-        return $this->db->get('coupon')->row()->percent_off;
+        $query=$this->db->get('coupon')->num_rows();
+        if($query > 0 )
+        {
+            $this->db->select('percent_off');
+            $this->db->where('code',$off);
+            return $this->db->get('coupon')->row()->percent_off;
+        }
+        else{
+            return null;
+        }
     }
     public function code_id($off)
     {
         $this->db->select('coupon_id');
         $this->db->where('code',$off);
-        return $this->db->get('coupon')->row()->coupon_id;
+        $query=$this->db->get('coupon')->num_rows();
+        if($query > 0 ) {
+            $this->db->select('coupon_id');
+            $this->db->where('code', $off);
+            return $this->db->get('coupon')->row()->coupon_id;
+        }
+        else{
+            return null;
+        }
     }
 
     public function uses($c_id,$user_id,$coupon_data)
     {
         $this->db->where('coupons_id',$c_id);
         $this->db->where('user_id',$user_id);
-echo $c_id;
-       echo  $query=$this->db->get('coupons_used')->num_rows();
+
+        $query=$this->db->get('coupons_used')->num_rows();
         if($query == 0)
         {
-            echo "iffff";
+
             $this->db->insert('coupons_used',$coupon_data);
             return $this->db->insert_id();
         }
         else{
             return 0;
         }
+    }
+    public function update_used_coupon($order_id,$c_id)
+    {
+        $this->db->where('coupons_id',$c_id);
+        $this->db->update('coupons_used',$order_id);
+    }
+    public function show_coupon()
+    {
+        $this->db->select('*');
+        $this->db->from('coupons_used');
+        $this->db->join('coupon','coupon.coupon_id=coupons_used.coupons_id');
+        return $this->db->get()->result_array();
+        var_dump($query);
     }
 }

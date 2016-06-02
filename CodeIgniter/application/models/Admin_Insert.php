@@ -335,6 +335,7 @@ class Admin_insert extends CI_Model
         $x=$query->result_array();
         return $x;
     }
+
     public function record_home_count()
     {
         $this->db->select('*');
@@ -652,15 +653,18 @@ class Admin_insert extends CI_Model
         $this->db->where('user_id',$getid);
         $this->db->delete('user');
     }
+
     public function userlist_data()                         //delete userlist data
     {
         $getid=$this->uri->segment(4);
-        $this->db->where('user.user_id',$getid);
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->join('user_address','user_address.user_id=user.user_id');
-        $query=$this->db->get();
-        return $query->result_array();
+        $this->db->where('user_id',$getid);
+        return $this->db->get('user')->result_array();
+    }
+    public function useraddress_data()
+    {
+        $getid=$this->uri->segment(4);
+        $this->db->where('user_id',$getid);
+        return $this->db->get('user_address')->result_array();
     }
     public function user_search($user_search)
     {

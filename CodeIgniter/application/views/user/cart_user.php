@@ -133,13 +133,33 @@
                 <div class="total_area">
                     <ul>
                         <?php $totals=$this->cart->format_number($this->cart->total());
-                        echo $totals;
+//                        echo $totals;
+//                        $x=500;
+//                        echo $total += ($totals + $x);
+//                        $items += $val['qty']
+                        $x=explode(',',$totals);
+//                        var_dump($x);
+                        $total="";
+                        foreach($x as $value)
+                        {
+                            $total.=$value;
+//                            $value;
+//                            array_push($total,$value);
+                        }
+                        echo $total;
 
                         //$grand_total=$totals+$eco?>
                         <li>Cart Sub Total <span><?php echo $this->cart->format_number($this->cart->total());?></span></li>
                         <li>Eco Tax <span>$2</span></li>
-                        <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span><?php echo $this->cart->format_number($this->cart->total());?></span></li>
+                        <?php if($total > 500){
+                            $shipping_charge = 50;
+                        }else{
+                            $shipping_charge = 0;
+                        }
+                        ?>
+                        <li>Shipping Cost <span><?php echo "$".$shipping_charge;?></span></li>
+
+                        <li>Total <span ><?php echo $total_with_charge=$total+$shipping_charge;?></span></li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
                     <a class="btn btn-default check_out" href="<?php echo site_url('home/checkout')?>">Check Out</a>

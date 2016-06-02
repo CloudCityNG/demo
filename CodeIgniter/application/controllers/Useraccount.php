@@ -266,9 +266,7 @@ class Useraccount extends CI_Controller
     {
         $email=$this->input->post('user_email');
         $id=$this->input->post('order_id');
-
         $this->User->verify_order_id($email,$id);
-
         $data['status']=$this->User->fetch_status($id);
         $this->load->view('user/login_order',$data);
         $this->load->view('user/footer_user');

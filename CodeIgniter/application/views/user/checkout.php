@@ -8,6 +8,32 @@ else{
     echo "";
 }
 ?>
+<?php
+if(!empty($address)){
+    foreach($address as $value)
+        $value=(array)$value;}
+else{
+    echo "";
+}
+?>
+
+<script>
+    function get_discount()
+    {
+
+        var code=document.getElementById('discount').value;
+
+        $.ajax({ url: '<?php echo site_url('admin/coupon/discount');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output) {
+               // alert(output);
+                   document.getElementById('total').value = output;
+               }
+
+        });
+    }
+</script>
 
 <script>
     function get_discount()
@@ -26,6 +52,8 @@ else{
         });
     }
 </script>
+
+
 
 
 
@@ -102,15 +130,15 @@ else{
                                     <?php echo form_error('user_password'); ?>
                                 </div><br>
 
-                                <input name="address_1" value="<?php if(!empty($userdata)){echo $item['address_1'];}else{echo "";}?>" type="text" placeholder="Address 1 *">
+                                <input name="address_1" value="<?php if(!empty($address)){echo $value['address_1'];}else{echo "";}?>" type="text" placeholder="Address 1 *">
                                 <div id="add1" style="display:inline; color: red" >
                                     <?php echo form_error('address_1'); ?>
                                 </div><br>
-                                <input name="address_2" value="<?php if(!empty($userdata)){echo $item['address_2'];}else{echo "";}?>"type="text" placeholder="Address 2">
+                                <input name="address_2" value="<?php if(!empty($address)){echo $value['address_2'];}else{echo "";}?>"type="text" placeholder="Address 2">
                                 <div id="add2" style="display:inline; color: red" >
                                     <?php echo form_error('address_2'); ?>
                                 </div><br>
-                                <input name="zipcode" value="<?php if(!empty($userdata)){echo $item['zipcode'];}else{echo "";}?>" type="text" placeholder="Zip / Postal Code *">
+                                <input name="zipcode" value="<?php if(!empty($address)){echo $value['zipcode'];}else{echo "";}?>" type="text" placeholder="Zip / Postal Code *">
                                 <div id="zipcode" style="display:inline; color: red" >
                                     <?php echo form_error('zipcode'); ?>
                                 </div><br>
@@ -212,9 +240,10 @@ else{
                         <?php endforeach; ?>
                         <tr>
                             <td colspan="3"> </td>
-                            <td class="right"><strong>Coupon Code</strong> <?php if(isset($msg)){echo "<p style='color: red'>".$msg."</p>";}else{echo "";}?></td>
+                            <td class="right"><strong>Coupon Code</strong> <?php if(isset($msg)){echo "<p style='color: red'>".$msg."</p>";}else{echo "";}?><?php if(isset($invalid)){echo "<p style='color: red'>".$invalid."</p>";}else{echo "";}?></td>
 
-                            <td class="right"><input onblur="get_discount()" name="code" id="discount"  value="<?php echo set_value('code'); ?>"></td>
+                            <td class="right"><input onblur="get_discount()" name="code" id="discount"  value="<?php echo set_value('code');?>"></td>
+                            <span style="color: red" id="error"></span>
                         </tr>
                         <tr>
                             <td colspan="3"> </td>
@@ -223,15 +252,14 @@ else{
                         </tr>
 
                     </table>
-
 <!--        </div>-->
 <!--        <div class="payment-options">-->
                 </div>
 					<span>
-						<label><input type="checkbox"> Direct Bank Transfer</label>
+						<label><input type="radio" name="payment_type" value="paypal"> paypal</label>
 					</span>
 					<span>
-						<label><input type="checkbox"> Check Payment</label>
+						<label><input type="radio" name="payment_type" value="cosh_payment" > Check Payment</label>
 					</span>
 					<span>
 						<label><input type="submit" value="submit"> Paypal</label>

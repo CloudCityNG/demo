@@ -67,6 +67,7 @@ class Userlist extends CI_Controller
     public function view_user_data()
     {
         $data['user'] = $this->Admin_Insert->userlist_data();
+        $data['user_address'] = $this->Admin_Insert->useraddress_data();
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('user_details', $data);

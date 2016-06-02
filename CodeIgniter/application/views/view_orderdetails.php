@@ -231,35 +231,33 @@
                                             $cust=(array)$cust;?>
                                             <tr>
                                                 <td>First Name:</td>
-                                                <td><?php echo $cust['user_name']?></td>
+                                                <td><?php if(!empty($customer)){echo $cust['user_name'];}else{echo "";}?></td>
                                             </tr>
                                             <tr>
                                                 <td>Last Name:</td>
-                                                <td><?php echo $cust['user_lastname']?></td>
+                                                <td><?php if(!empty($customer)){echo $cust['user_lastname'];}else{echo "";}?></td>
                                             </tr>
+                                            <?php foreach($address as $add)
+                                                $add=(array)$add;?>
                                             <tr>
                                                 <td>Address 1:</td>
-                                                <td><?php echo $cust['address_1']?></td>
+                                                <td><?php if(!empty($address)){echo $add['address_1'];}else{echo "";}?></td>
                                             </tr>
                                             <tr>
                                                 <td>City:</td>
-                                                <td><?php echo $cust['city']?></td>
+                                                <td><?php if(!empty($address)){echo $add['city'];}else{echo "";}?></td>
                                             </tr>
                                             <tr>
                                                 <td>State</td>
-                                                <td><?php echo $cust['state']?></td>
+                                                <td><?php if(!empty($address)){echo $add['state'];}else{echo "";}?></td>
                                             </tr>
                                             <tr>
                                                 <td>Zipcode</td>
-                                                <td><?php echo $cust['zipcode']?></td>
+                                                <td><?php if(!empty($address)){echo $add['zipcode'];}else{echo "";}?></td>
                                             </tr>
                                             <tr>
                                                 <td>Country:</td>
-                                                <td><?php echo $cust['country']?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Payment Method:</td>
-                                                <td>Cash On Delivery</td>
+                                                <td><?php if(!empty($address)){echo $add['country'];}else{echo "";}?></td>
                                             </tr>
                                             </tbody></table>
                                     </div>
@@ -311,41 +309,32 @@
                                 <div id="content3">
                                     <div class="tab-pane" id="tab-payment">
                                         <table style="color: black" class="table table-bordered">
-                                            <tbody><tr>
+                                            <tbody>
+                                            <?php foreach($shipping as $ship)
+                                                $ship=(array)$ship;?>
+                                            <tr>
                                                 <td>First Name:</td>
-                                                <td>Test</td>
+                                                <td><?php echo $ship['user_name']?></td>
                                             </tr>
                                             <tr>
                                                 <td>Last Name:</td>
-                                                <td>Test</td>
+                                                <td><?php echo $ship['user_lastname']?></td>
                                             </tr>
                                             <tr>
                                                 <td>Address 1:</td>
-                                                <td>Test</td>
+                                                <td><?php echo $ship['address_1']?></td>
                                             </tr>
                                             <tr>
                                                 <td>City:</td>
-                                                <td>Test</td>
+                                                <td><?php echo $ship['city']?></td>
                                             </tr>
                                             <tr>
                                                 <td>Postcode:</td>
-                                                <td>000000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Region / State:</td>
-                                                <td>Aberdeen</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Region / State Code:</td>
-                                                <td>ABN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Country:</td>
-                                                <td>United Kingdom</td>
+                                                <td><?php echo $ship['zipcode']?></td>
                                             </tr>
                                             <tr>
                                                 <td>Payment Method:</td>
-                                                <td>Cash On Delivery</td>
+                                                <td><?php echo $ship['shopping_method']?></td>
                                             </tr>
                                             </tbody></table>
                                     </div>
@@ -354,51 +343,33 @@
                                 <div id="content4">
                                     <div class="tab-pane" id="tab-payment">
                                         <table style="color: black" class="table table-bordered">
-                                            <tbody><tr>
-                                                <td>First Name:</td>
-                                                <td>Test</td>
+                                            <tbody><?php foreach($payment as $pay)
+                                                $pay=(array)$pay;?>
+                                            <tr>
+                                                <td>Payment Method</td>
+                                                <td><?php echo $pay['shopping_method']?></td>
                                             </tr>
                                             <tr>
-                                                <td>Last Name:</td>
-                                                <td>Test</td>
+                                                <td>Payment getway Id</td>
+                                                <td><?php echo $pay['payment_getway_id']?></td>
                                             </tr>
                                             <tr>
-                                                <td>Address 1:</td>
-                                                <td>Test</td>
+                                                <td>Transcation Id</td>
+                                                <td><?php echo $pay['transaction_id']?></td>
                                             </tr>
                                             <tr>
-                                                <td>City:</td>
-                                                <td>Test</td>
+                                                <td>Created Data</td>
+                                                <td><?php echo $pay['created_date']?></td>
                                             </tr>
                                             <tr>
-                                                <td>Postcode:</td>
-                                                <td>000000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Region / State:</td>
-                                                <td>Aberdeen</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Region / State Code:</td>
-                                                <td>ABN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Country:</td>
-                                                <td>United Kingdom</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Payment Method:</td>
-                                                <td>Cash On Delivery</td>
+                                                <td>Grand Total:</td>
+                                                <td><?php echo $pay['grand_total']?></td>
                                             </tr>
                                             </tbody></table>
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>

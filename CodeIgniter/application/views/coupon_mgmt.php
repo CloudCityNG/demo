@@ -189,12 +189,16 @@
                                 Add New <i class="icon-plus"></i>
                             </a>
                         </div>
+                        <div class="btn-group">
+                            <a href="<?php echo base_url('admin/coupon/view_coupons');?>" id="sample_editable_1_new" class="btn green">
+                                Used Coupon <i class="icon-plus"></i>
+                            </a>
+                        </div>
                         <div class="btn-group pull-right">
                             <form style="height: 30px; " action="<?php echo site_url('admin/coupon/search_admin')?>" method="post">
                                 <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                 <input type="submit" class="btn" name="searchs">Search
                                 </input>
-
                             </form>
 
                         </div>
@@ -205,6 +209,7 @@
                             <tr>
                                 <th>Code   <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_name&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_name&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                 <th>Discount  <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_lastname&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+
                                 <th>Delete</th>
                             </tr>
                             </thead>
