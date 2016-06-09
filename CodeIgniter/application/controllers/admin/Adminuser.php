@@ -14,7 +14,7 @@ class Adminuser extends CI_Controller
         $this->load->helper(array('form', 'url'));
 
     }
-    /*
+    /**
      * set perpage data for front end
      * apply pagination on table
      * set both side sorting
@@ -73,7 +73,7 @@ class Adminuser extends CI_Controller
             }
 
     }
-    /*
+    /**
      * delete signle adminuser form database
      * getting admin id from url
      */
@@ -93,9 +93,9 @@ class Adminuser extends CI_Controller
             redirect('admin/login');
         }
     }
-    /*
+    /**
      * fetch single admin_user data
-     * redirect to update page with admin_iuser data
+     * redirect to update page with admin_user data
      */
     public function edit_user()                             //edit_admin_user data
     {
@@ -106,7 +106,7 @@ class Adminuser extends CI_Controller
         $this->load->view('update_admin',$data);
 
     }
-    /*
+    /**
      * check validation on update form
      * update admin_user records
      */
@@ -186,7 +186,7 @@ class Adminuser extends CI_Controller
     }
     */
 
-    /*
+    /**
      * @admin_ser-keyword enter from front end
      * @admin_search-trim keyword
      * search admin_user related data using keyword
@@ -222,7 +222,7 @@ class Adminuser extends CI_Controller
         $this->load->view('new_link',$data);
     }
 
-    /*
+    /**
      * redirect to add_admin page
      */
     function add_admin()                                        //new admin page
@@ -233,7 +233,7 @@ class Adminuser extends CI_Controller
         $this->load->view('add_admin');
     }
 
-    /*
+    /**
      * add new admin_user in database
      * validation of inserted data
      * insert validted data in databse
@@ -260,7 +260,7 @@ class Adminuser extends CI_Controller
             $data = array(
                 'admin_name' => $this->input->post('admin_name'),
                 'admin_lastname' => $this->input->post('admin_lastname'),
-                'admin_password' => $this->input->post('admin_password'),
+                'admin_password' => md5($this->input->post('admin_password')),
                 'admin_email' => $this->input->post('admin_email'),
             );
             //insert admin_user data in e-commers table

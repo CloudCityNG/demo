@@ -85,9 +85,9 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/'.$data);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="<?php echo site_url('home/checkout/'.$data)?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
+                            <li><a href="<?php echo site_url('home/checkout/')?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href="<?php echo site_url('home/user_cart');?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                             <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
                             <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
@@ -113,23 +113,23 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a href="<?php echo base_url('home')?>" >Home</a></li>
-                            <li ><a href="<?php echo site_url('useraccount/address_update/'.$data)?>">Address Book</a>
-                                <ul role="menu" class="sub-menu">
+                            <li ><a href="<?php echo site_url('useraccount/address_update/')?>">Address Book</a>
+                                <!--<ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
                                     <li><a href="product-details.html">Product Details</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="cart.html">Cart</a></li>
                                     <li><a href="login.html">Login</a></li>
-                                </ul>
+                                </ul>-->
                             </li>
-                            <li><a href="<?php echo site_url('useraccount/password_change/'.$data)?>">Chnage Password<i></i></a>
-                                <ul role="menu" class="sub-menu">
+                            <li><a href="<?php echo site_url('useraccount/password_change/')?>">Chnage Password<i></i></a>
+                                <!--<ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
+                                </ul>-->
                             </li>
-                            <li><a href="<?php echo site_url('useraccount/admin_replay/'.$data)?>">Admin Replay</a></li>
-                            <li><a href="<?php echo site_url('useraccount/contact')?>" class="active">Contact</a></li>
+                            <li><a href="<?php echo site_url('useraccount/admin_replay/')?>">Admin Replay</a></li>
+<!--                            <li><a href="--><?php //echo site_url('useraccount/contact')?><!--" class="active">Contact</a></li>-->
                         </ul>
                     </div>
                 </div>

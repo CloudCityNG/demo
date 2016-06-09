@@ -20,9 +20,9 @@ else{
 <script>
     function get_discount()
     {
-
+        alert('hello');
         var code=document.getElementById('discount').value;
-
+        alert(code);
         $.ajax({ url: '<?php echo site_url('admin/coupon/discount');?>',
             data: {code: code},
             type: 'post',
@@ -30,7 +30,6 @@ else{
                // alert(output);
                    document.getElementById('total').value = output;
                }
-
         });
     }
 </script>
@@ -68,77 +67,77 @@ else{
             </ol>
         </div><!--/breadcrums-->
 
-        <div class="step-one">
-            <h2 class="heading">Step1</h2>
-        </div>
-        <div class="checkout-options">
-            <h3>New User</h3>
-            <p>Checkout options</p>
-            <ul class="nav">
-                <li>
-
-
-                    <label><input onclick="return register()" type="radio" name="checkout"> Register Account</label>
-                </li>
-                <li>
-
-                    <label><input type="radio" name="checkout"> Guest Checkout</label>
-                </li>
-                <li>
-                    <a href="<?php echo site_url('home')?>"><i class="fa fa-times"></i>Cancel</a>
-                </li>
-            </ul>
-        </div><!--/checkout-options-->
-
-        <div class="register-req">
-            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-        </div><!--/register-req-->
+<!--        <div class="step-one">-->
+<!--            <h2 class="heading">Step1</h2>-->
+<!--        </div>-->
+<!--        <div class="checkout-options">-->
+<!--            <h3>New User</h3>-->
+<!--            <p>Checkout options</p>-->
+<!--            <ul class="nav">-->
+<!--                <li>-->
+<!---->
+<!---->
+<!--                    <label><input onclick="return register()" type="radio" name="checkout"> Register Account</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!---->
+<!--                    <label><input type="radio" name="checkout"> Guest Checkout</label>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="--><?php //echo site_url('home')?><!--"><i class="fa fa-times"></i>Cancel</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div><!--/checkout-options-->
+<!---->
+<!--        <div class="register-req">-->
+<!--            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>-->
+<!--        </div><!--/register-req-->
 
         <div class="shopper-informations">
 
 <!--                <div class="tab-pane" id="tab-payment">-->
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="shopper-info">
-                        <p>Shopper Information</p>
-                        <form action="<?php echo site_url('admin/coupon/discount')?>" method="post">
-                            <input type="text" placeholder="Discount" name="percent_off">
-                        <input type="submit" class="btn btn-primary" value="Continue" >
-                        </form>
-                    </div>
-                </div>
+<!--                <div class="col-sm-3">-->
+<!--                    <div class="shopper-info">-->
+<!--                        <p>Shopper Information</p>-->
+<!--                        <form action="--><?php //echo site_url('admin/coupon/discount')?><!--" method="post">-->
+<!--                            <input type="text" placeholder="Discount" name="percent_off">-->
+<!--                        <input type="submit" class="btn btn-primary" value="Continue" >-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="col-sm-6 clearfix">
                     <div class="bill-to">
                         <p>Bill To</p>
                         <div class="form-one">
                             <form name="form" onsubmit="return submit_form()" action="<?php echo site_url('products/product_data')?>" method="post"><!--                            <form action="--><?php //base_url('products/product_data')?><!--" method="post">-->
 
-                                <input name="user_name" value="<?php if(!empty($userdata)){echo $item['user_name'];}else{echo "";}?>" type="text" placeholder="Company Name">
+                                <input name="user_name" value="<?php if(!empty($userdata)){echo $item['user_name'];}else{echo set_value('user_name');}?>" type="text" placeholder="Company Name">
                                 <div id="first" style="display:inline; color: red" >
                                 <?php echo form_error('user_name'); ?>
                                 </div><br>
-                                <input name="user_lastname" value="<?php if(!empty($userdata)){echo $item['user_lastname'];}else{echo "";}?>" type="text" placeholder="Last Name *">
+                                <input name="user_lastname" value="<?php if(!empty($userdata)){echo $item['user_lastname'];}else{echo set_value('user_lastname');}?>" type="text" placeholder="Last Name *">
                                 <div id="last" style="display:inline; color: red" >
                                     <?php echo form_error('user_lastname'); ?>
                                 </div><br>
-                                <input name="user_email" value="<?php if(!empty($userdata)){echo $item['user_email'];}else{echo "";}?>" type="text" placeholder="Email*">
+                                <input name="user_email" value="<?php if(!empty($userdata)){echo $item['user_email'];}else{echo set_value('user_email');}?>" type="text" placeholder="Email*">
                                 <div id="email" style="display:inline; color: red" >
                                     <?php echo form_error('user_email'); ?>
                                 </div><br>
-                                <input name="user_password" value="<?php if(!empty($userdata)){echo $item['user_password'];}else{echo "";}?>" type="password" placeholder="Password">
+                                <input name="user_password" value="<?php if(!empty($userdata)){echo $item['user_password'];}else{echo set_value('user_password');}?>" type="password" placeholder="Password">
                                 <div id="pass" style="display:inline; color: red" >
                                     <?php echo form_error('user_password'); ?>
                                 </div><br>
 
-                                <input name="address_1" value="<?php if(!empty($address)){echo $value['address_1'];}else{echo "";}?>" type="text" placeholder="Address 1 *">
+                                <input name="address_1" value="<?php if(!empty($address)){echo $value['address_1'];}else{echo set_value('address_1');}?>" type="text" placeholder="Address 1 *">
                                 <div id="add1" style="display:inline; color: red" >
                                     <?php echo form_error('address_1'); ?>
                                 </div><br>
-                                <input name="address_2" value="<?php if(!empty($address)){echo $value['address_2'];}else{echo "";}?>"type="text" placeholder="Address 2">
+                                <input name="address_2" value="<?php if(!empty($address)){echo $value['address_2'];}else{echo set_value('address_2');}?>"type="text" placeholder="Address 2">
                                 <div id="add2" style="display:inline; color: red" >
                                     <?php echo form_error('address_2'); ?>
                                 </div><br>
-                                <input name="zipcode" value="<?php if(!empty($address)){echo $value['zipcode'];}else{echo "";}?>" type="text" placeholder="Zip / Postal Code *">
+                                <input name="zipcode" value="<?php if(!empty($address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>" type="text" placeholder="Zip / Postal Code *">
                                 <div id="zipcode" style="display:inline; color: red" >
                                     <?php echo form_error('zipcode'); ?>
                                 </div><br>
@@ -222,7 +221,7 @@ else{
                                 </td>
                                 <td class="cart_quantity">
                                     <div class="cart_quantity_button">
-                                        <?php echo form_input(array( 'name' => 'qty'.$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5',));?>
+                                        <?php echo form_input(array( 'name' => 'qty'.$i, 'value' => $items['qty'], 'maxlength' => '3', 'size' => '5', 'readonly' => 'readonly'));?>
                                         <?php if(isset($quantity)){echo "<p style='color: red'>".$quantity."</p>";}else{echo "";}?>
                                     </div>
                                     <?php if(isset($quantity)){echo "<p style='color: red'>".$quantity."</p>";}else{echo "";}?>
@@ -248,21 +247,21 @@ else{
                         <tr>
                             <td colspan="3"> </td>
                             <td class="right"><strong>Total</strong></td>
-                            <td class="right">$<input id="total" name="total" style="border: 0px" readonly value="<?php echo $this->cart->format_number($this->cart->total());?>"></td>
+                            <td class="right">$<input id="total" name="total" style="border: 0px" readonly value="<?php echo $this->cart->format_number($this->cart->total());?>"><?php if(isset($amount_total)){echo "<p style='color: red'>".$amount_total."</p>";}else{echo "";}?></td>
                         </tr>
-
                     </table>
+
 <!--        </div>-->
 <!--        <div class="payment-options">-->
                 </div>
-					<span>
-						<label><input type="radio" name="payment_type" value="paypal"> paypal</label>
+					<span style="margin-left: 400px;display: inline">
+						<label><input type="radio" name="payment_type" value="paypal"> Paypal Payment</label>
 					</span>
-					<span>
-						<label><input type="radio" name="payment_type" value="cosh_payment" > Check Payment</label>
-					</span>
-					<span>
-						<label><input type="submit" value="submit"> Paypal</label>
+					<span style="margin-left: 50px;display: inline">
+						<label><input type="radio" name="payment_type" value="cash_payment" > Cash Payment</label>
+					</span><br>
+					<span style="margin-left: 525px">
+						<input type="submit" value="submit">
 					</span>
 
                 </form>

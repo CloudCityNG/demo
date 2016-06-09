@@ -4,25 +4,42 @@ class Admin_insert extends CI_Model
 {
 
 
+    /**
+     * insert new admin_data in database
+     * @param $data = admin_name,admin_lastname,admin_id
+     *                admin_email,admin_password
+     */
     function insert_admin($data)                    //insert admin
     {
         $this->db->insert('e-commers',$data);
     }
+
+    /**
+     * update admin personal information
+     * @param $id = admin_id use for match data
+     * @param $data = admin_name,admin_lastname,admin_id
+     *                admin_email,admin_password
+     */
     function update_admin($id,$data)
     {
         $this->db->where('admin_id',$id);
         $this->db->update('e-commers',$data);
     }
 
+    /**
+     * verify admin admin name adn respective password
+     * for login admin
+     * @return mixed | admin_id
+     */
     function login()                                //admin login
     {
        // $query['count']=$this->db->count_all("e-commers");
         $username=$this->input->post('admin_name');
-        $password=$this->input->post('admin_password');
+        $password=md5($this->input->post('admin_password'));
         $this->db->select('admin_id');
         $this->db->from('e-commers');
         $this->db->where('admin_name',$username);
-        $this->db->where('admin_password',$password);
+        $this->db->where ('admin_password',$password);
         $this->db->limit(1);
         $search=$this->db->get();
         $se=$search->row()->admin_id;
@@ -36,8 +53,9 @@ class Admin_insert extends CI_Model
         }
     }
 
-
-
+    /**
+     * verify data for login and get respective action on that
+     */
     function verify()                               //verify e-mail
     {
         $email=$this->input->get('admin_email');
@@ -46,24 +64,83 @@ class Admin_insert extends CI_Model
         $this->db->where('admin_email',$email);
         $this->db->limit(1);
         $verify=$this->db->get();
+        //if verificaition is sccussfull send mail to admin
         if($verify->num_rows()==1)
         {
+            /*
+            $this->db->select('admin_password');
+            $this->db->from('e-commers');
+            $this->db->where('admin_email',$email);
+            $pass=$this->db->get()->row()->admin_password;
+            */
 
-            redirect('admin/login/sendMail');
+            //generate different password
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < 6; $i++) {
+                $randomString .= $characters[rand(1,$charactersLength-1)];
+            }
+            //updte new password in respective userid
+            $data = array(
+                'admin_password' => md5($randomString)
+            );
+            $this->db->where('admin_email',$email);
+            $this->db->update('e-commers',$data);
+
+            //send mail to user with new regenrated password
+            $config = Array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'mail.wwindia.com',
+                'smtp_port' => 25,
+                'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
+                'smtp_pass' => 'nb=np2^89mKn', // change it to yours
+                'mailtype' => 'html',
+                //'charset' => 'iso-8859-1',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+
+            $message = 'Your Password ='.$randomString;
+            $this->email->initialize($config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+            $this->email->to('sumit.desai@wwindia.com');// change it to yours
+            $this->email->subject('Your Password');
+            $this->email->message($message);
+
+            if($this->email->send())
+            {
+                $data['newemail']="Please Check E-mail";
+                $this->load->view('login',$data);
+            }
+            else
+            {
+                show_error($this->email->print_debugger());
+            }
         }
-        else{
+        //else display error msg
+        else
+        {
             redirect('admin/login/email_error');
         }
     }
 
-
-
+    /**
+     * display list of user admin
+     * @return mixed |array
+     */
     public function list_user()                         //admin_list
     {
         $query = $this->db->get('e-commers');
         $query_result = $query->result_array();
         return $query_result;
     }
+
+    /**
+     * display list of total product with product images
+     * @return mixed|array
+     */
     public function list_product()                      //prduct list
     {
         $this->db->select('*');
@@ -73,12 +150,22 @@ class Admin_insert extends CI_Model
         $query_result = $query->result_array();
         return $query_result;
     }
+
+    /**
+     * delete adminuser from database
+     * get admin_id by url
+     */
     public function user_delete()                       //delete admin
     {
         $getid=$this->uri->segment(4);
         $this->db->where('admin_id',$getid);
         $this->db->delete('e-commers');
     }
+
+    /**
+     * go to the edit page with perticular user information
+     * @return mixed | array
+     */
     public function user_edit()                         //edit admin
     {
         $getid=$this->uri->segment(4);
@@ -88,6 +175,12 @@ class Admin_insert extends CI_Model
         $query_result=$query->result();
         return $query_result;
     }
+
+    /**
+     * sort user list
+     * @param $var = order by recommented column
+     * @return mixed|array
+     */
     function sort_data($var)                            //sort admin
     {
         $this->db->from('e-commers');
@@ -96,6 +189,11 @@ class Admin_insert extends CI_Model
         $q=$query->result_array();
         return $q;
     }
+
+    /**
+     * fetch data of user fro validation
+     * @return mixed
+     */
     public function fetch()
     {
         $data['admin_name']=$this->input->post('admin_name');
@@ -105,6 +203,11 @@ class Admin_insert extends CI_Model
         $data['admin_email']=$this->input->post('admin_name');
         return $data;
     }
+
+    /**
+     * fetch data of user fro validation
+     * @return mixed|array
+     */
     public function add_fetch()
     {
         $data['admin_name']=$this->input->post('admin_name');
@@ -114,11 +217,22 @@ class Admin_insert extends CI_Model
         $data['admin_email']=$this->input->post('admin_name');
         return $data;
     }
+
+    /**
+     * count total admin user in table
+     * @return mixed|numbers of row
+     */
     public function record_count()                      //count admin
     {
         return $this->db->count_all("e-commers");
     }
-    public function fetch_data($limit, $page)           //pagignation admin
+
+    /**
+     * @param $limit = limit of pagination
+     * @param $page = selecterd page
+     * @return array|bool
+     */
+    public function fetch_data($limit, $page)           //pagination admin
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'admin_name';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
@@ -135,12 +249,21 @@ class Admin_insert extends CI_Model
         }
         return false;
     }
-    //PRODUCT
 
+    //PRODUCT
+    /**
+     * count total product in database
+     * @return mixed|numbers of tatol product
+     */
     public function product_count()                            //count product
     {
         return $this->db->count_all("product");
     }
+
+    /**
+     * count total product in database from both tables image and products
+     * @return mixed|numbers of tatol product
+     */
     public function record_count_product()                     //product_count
     {
         $this->db->select('*');
@@ -149,6 +272,12 @@ class Admin_insert extends CI_Model
         $this->db->group_by('product_images.product_id');
         return $this->db->get()->num_rows();
     }
+
+    /**
+     * @param $limit = limit of data perpage
+     * @param $page = selected page
+     * @return array|bool
+     */
     public function fetch_product_data($limit, $page)           //pagignation product
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'name';
@@ -161,7 +290,7 @@ class Admin_insert extends CI_Model
         $this->db->group_by('product_images.product_id');
         $this->db->order_by('product.'.$var, $order);
         $query = $this->db->get()->result_array();
-
+        //if count is more than zero
         if (count($query)> 0)
         {
             foreach ($query as $row)
@@ -172,24 +301,33 @@ class Admin_insert extends CI_Model
         }
         return false;
     }
+
+    /**
+     * insert product data in database
+     * @param $data = name,meta_description,keywords,title,images,ect;
+     * @return mixed|product_id
+     */
     public function product_insert($data)                    //insert product
     {
         $this->db->insert('product',$data);
         $prod_id= $this->db->insert_id();
-
-    return $prod_id;
-
+        return $prod_id;
     }
 
-
+    /**
+     * insert img in database
+     * @param $uploed=image_name
+     */
     public function upload_img($uploed)                      //insert img
     {
         $this->db->insert('product_images',$uploed);
     }
-
-
-            //CATEGORY
-
+    //CATEGORY
+    /**
+     * seelect category name and return category id to user
+     * @param $category_name = selectd category name
+     * @return mixed|category_id
+     */
     public function select_category($category_name)          //select category
     {
         $this->db->insert('category',$category_name);
@@ -197,19 +335,39 @@ class Admin_insert extends CI_Model
         return $cat_id;
     }
 
+    /**
+     * @param $pro_cat =category id
+     */
     public function product_category($pro_cat)              //insert category
     {
         $this->db->insert('product_category',$pro_cat);
     }
+
+    /**
+     * update product_id in database
+     * @param $prod_id = product_id
+     * @param $data =  name,meta_description,keywords,title,images,ect;
+     */
     public function update_product_category($prod_id,$data)
     {
         $this->db->where('category_id',$prod_id);
         $this->db->update('category',$data);
     }
+
+    /**
+     * count numbers of category in database
+     * @return mixed
+     */
     public function category_list()
     {
         return $this->db->count_all('category');
     }
+
+    /**
+     * @param $limit = limit of perpage data
+     * @param $page = selected paeg
+     * @return array|bool
+     */
     public function fetch_data_from_category($limit,$page)
     {
 
@@ -220,23 +378,36 @@ class Admin_insert extends CI_Model
             $this->db->limit($limit, $offset);
             $this->db->order_by($var, $order);
             $query = $this->db->get("category");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $row) {
-                    $data[] = $row;
-                }
-
-                return $data;
+        //if data is avalaibale
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
             }
-           else return false;
+                return $data;
+        }
+        else return false;
     }
+
+    /**
+     * search category id
+     * @param $category_name search id using category name
+     * @return mixed|category_id
+     */
     public function cat($category_name)
     {
         $this->db->select('category_id');
         $this->db->from('category');
         $this->db->where('category_name',$category_name);
         return $this->db->get()->row()->category_id;
-
     }
+
+    /**
+     * select category related data matching category id
+     * @param $id=category_id
+     * @return mixed|array
+     */
     public function category_edit($id)
     {
         $this->db->select('*');
@@ -244,11 +415,21 @@ class Admin_insert extends CI_Model
         $this->db->where('category_id',$id);
         return $this->db->get()->result_array();
     }
+
+    /**
+     * get catagory table details
+     * @return mixed|array
+     */
     public function categoryall()
     {
         $query=$this->db->get('category')->result_array();
         return $query;
     }
+
+    /**
+     * @param $category_search(string) search keywaord
+     * @return mixed
+     */
     public function category_search($category_search)
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'category_name';
@@ -260,24 +441,44 @@ class Admin_insert extends CI_Model
         $x=$query->result_array();
         return $x;
     }
+
+    /**
+     * insert data in category table
+     * @param $data = category_id(int)
+     *                parent_id(int),category_name(string)
+     */
     public function category_insert($data)
     {
         $this->db->insert('category',$data);
     }
+
+    /**
+     * update incategory table
+     * @param $data = category_id(int)
+     *                parent_id(int),category_name(string)
+     * @param $cate_id(int) category id for match id in database
+     */
     public function category_update($data,$cate_id)
     {
         $this->db->where('category_id',$cate_id);
         $this->db->update('category',$data);
     }
 
-
-
+    /**
+     * delete product from product table
+     * base on selected product_id
+     */
     public function product_delete()                         //delete product
     {
         $getid=$this->uri->segment(4);
         $this->db->where('product_id',$getid);
         $this->db->delete('product');
     }
+
+    /**
+     * go to product edit page
+     * @return mixed
+     */
     public function product_edit()                          //edit product
     {
         $getid=$this->uri->segment(4);
@@ -290,18 +491,28 @@ class Admin_insert extends CI_Model
         $query_result=$query->result();
         return $query_result;
     }
+
+    /**
+     * @param $id - product id fro match selectd id percent in data bse or not
+     * @param $data = product_id(int),product_name(string)
+     *                title(string),metadata(string),keywords(string)
+     *                quantity(int),price(float)
+     */
     function update($id,$data)                             //update product
     {
         $this->db->where('product_id',$id);
         $this->db->update('product',$data);
     }
+
+    /**
+     * search data in table
+     * @param $admin_serach(string) = searach admin in admin list using relative data in all columns
+     * @return mixed
+     */
     public function search($admin_serach)                 //serach admin
     {
-
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'admin_name';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
-
-
         $this->db->like('admin_name',$admin_serach);
         $this->db->or_like('admin_email',$admin_serach);
         $this->db->or_like('admin_lastname',$admin_serach);
@@ -311,11 +522,15 @@ class Admin_insert extends CI_Model
         return $x;
     }
 
+    /**
+     * search data in table
+     * @param $admin_serach(string) = searach admin in product list using relative data in all columns
+     * @return mixed
+     */
     public function product_search($product_serach)        //search product
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'name';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
-
         $this->db->select('*');
         $this->db->from('product');
         $this->db->join('product_images','product_images.product_id=product.product_id');
@@ -329,6 +544,10 @@ class Admin_insert extends CI_Model
         return $x;
     }
 
+    /**
+     * select images from product iamge table
+     * @return mixed
+     */
     public function select_img()                         //search img
     {
         $query=$this->db->get('product_images');
@@ -336,6 +555,10 @@ class Admin_insert extends CI_Model
         return $x;
     }
 
+    /**
+     * count all product precent in database
+     * @return mixed
+     */
     public function record_home_count()
     {
         $this->db->select('*');
@@ -345,26 +568,38 @@ class Admin_insert extends CI_Model
         return $this->db->get()->num_rows();
     }
 
+    /**
+     * display product data on home page
+     * @param $limit limit of data precent in perpage
+     * @param $page selected page
+     * @return array|bool
+     */
     public function home($limit,$page)
     {
-
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
         $this->db->select('*');
         $this->db->from('product');
+        $this->db->where('quntity !=','0');
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->group_by('product_images.product_id');
         $this->db->order_by('product.product_id', "decs");
         $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
                 $data[] = $row;
             }
-
             return $data;
         }
         else return false;
     }
+
+    /**
+     * show recommened items on recommred section on home page
+     * @return mixed
+     */
     public function recommend()
     {
         $this->db->select('*');
@@ -376,6 +611,11 @@ class Admin_insert extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    /**
+     * display product details
+     * @param $id - product_id
+     * @return mixed
+     */
     public function product_details($id)                //product_detalis
     {
         $this->db->select('product.*,product_images.*,product_category.*');
@@ -388,36 +628,55 @@ class Admin_insert extends CI_Model
         return $x;
     }
 
+    /**
+     * fetch product category data
+     * @param $id(int) product category id
+     * @return mixed
+     */
     public function product_details_cat($id)            //product category
     {
-
         //$id = $this->input->get('id', TRUE);
         $this->db->where('category_id',$id);
         $query=$this->db->get('category');
         $x=$query->result_array();
         return $x;
     }
+
+    /**
+     * show banner details to user
+     * @return mixed
+     */
     public function view_banner()                       //banner
     {
         $query=$this->db->get('product_images');
         return $query->result_array();
     }
 
+    /**
+     * update product image
+     * @param $prod_id - product_id
+     * @param $data image(img)
+     */
     public function from_image_update($prod_id,$data)                  //uppdate img
     {
-
         $this->db->where('product_id',$prod_id);
         $this->db->update('product_images',$data);
-
     }
 
+    /**
+     * show product image to admin
+     * @return mixed
+     */
     public function show_image()                         //show img
     {
-
         $query=$this->db->get('product_images');
         return $query->result_array();
     }
 
+    /**
+     * show all user query to admin on admin panel
+     * @return mixed
+     */
     public function user_query()                        //user query
     {
         $this->db->select('*');
@@ -489,9 +748,11 @@ class Admin_insert extends CI_Model
 //    }
 
 
-
-
-
+    /**
+     * fetch query of user data to display on admin panel
+     * @param $user_id(int) admin-id
+     * @return mixed
+     */
     public function view_query($user_id)                //view query
     {
         $this->db->select('*');
@@ -500,6 +761,12 @@ class Admin_insert extends CI_Model
         $query=$this->db->get();
         return $query->result_array();
     }
+
+    /**
+     * give repaly to user query
+     * all data save in database
+     * and show on user accounts
+     */
     public function replay_admin()                      //replay on query
     {
         $replay['admin_replay']=$this->input->post('replay');
@@ -507,6 +774,11 @@ class Admin_insert extends CI_Model
         $this->db->where('contact_id',$con);
         $this->db->update('contact_us',$replay);
     }
+
+    /**
+     * delete replay data from databse
+     * @param $con delete replay data from databse
+     */
     public function delete_signle($con)
     {
         $this->db->where('contact_id',$con);
@@ -629,13 +901,11 @@ class Admin_insert extends CI_Model
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
-
-
-
         $offset = ($page - 1) * $limit;
         $this->db->limit($limit, $offset);
         $this->db->order_by($var,$order);
         $query = $this->db->get("user");
+        //if data is avalible in databse
         if ($query->num_rows() > 0)
         {
             foreach ($query->result() as $row)
@@ -647,6 +917,11 @@ class Admin_insert extends CI_Model
         }
         return false;
     }
+
+    /**
+     * delete user from user list
+     * using select id
+     */
     public function userlist_delete()                         //delete userlist data
     {
         $getid=$this->uri->segment(4);
@@ -654,25 +929,38 @@ class Admin_insert extends CI_Model
         $this->db->delete('user');
     }
 
+    /**
+     * fetch user personal data from table
+     * @return mixed
+     */
     public function userlist_data()                         //delete userlist data
     {
         $getid=$this->uri->segment(4);
         $this->db->where('user_id',$getid);
         return $this->db->get('user')->result_array();
     }
+
+    /**
+     * fetch user address data from table
+     * @return mixed
+     */
     public function useraddress_data()
     {
         $getid=$this->uri->segment(4);
         $this->db->where('user_id',$getid);
         return $this->db->get('user_address')->result_array();
     }
+
+
+    /**
+     * search userd query in query list
+     * @param $user_search(string) keyword which enter from front end
+     * @return mixed
+     */
     public function user_search($user_search)
     {
-
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
-
-
         $this->db->like('user_name',$user_search);
         $this->db->or_like('user_email',$user_search);
         $this->db->or_like('user_lastname',$user_search);
@@ -681,10 +969,21 @@ class Admin_insert extends CI_Model
         $x=$query->result_array();
         return $x;
     }
+
+    /**
+     * user compliant count from databse
+     * @return mixed
+     */
     public function compliant_count()
     {
         return $this->db->count_all("contact_us");
     }
+
+    /**
+     * search userd query in query list
+     * @param $search keyword which enter from front end
+     * @return mixed
+     */
     public function query_search($search)
     {
         $this->db->like('user_name',$search);

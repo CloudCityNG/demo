@@ -15,7 +15,6 @@ class Userwishlist extends CI_Controller
         $this->load->library('cart');
         $this->load->helper(array('form', 'url'));
         $this->load->helper('form');
-
     }
     /*
      * display user wishlist

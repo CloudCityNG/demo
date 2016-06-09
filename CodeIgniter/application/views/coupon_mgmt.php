@@ -40,42 +40,52 @@
                     <span class="selected"></span>
                 </a>
             </li>
+            <!--      List of Admin      -->
             <li >
                 <a href="<?php echo site_url('admin/adminuser/')?>">
-                    Coupon Managment</a>
+                    Admin Management</a>
             </li>
-
+            <!--      List of Product      -->
             <li >
                 <a href="<?php echo site_url('admin/product/')?>">
-                    Product Managment</a>
+                    Product Management</a>
             </li>
-
-
+            <!--      List of Banner      -->
             <li >
                 <a href="<?php echo site_url('admin/banner')?>">
-                    Banner Managment</a>
+                    Banner Management</a>
             </li>
-
+            <!--      List of Category      -->
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
+            <!--      List of Users      -->
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
-            </li>
+            <!--      List of Orders      -->
             <li >
                 <a href="<?php echo site_url('admin/orders')?>">
                     Orders</a>
             </li>
+            <!--      List of Coupons      -->
+            <li >
+                <a href="<?php echo site_url('admin/coupon')?>">
+                    Coupon Management</a>
+            </li>
+            <!--      List of Complints      -->
+            <li >
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <!--      CMS Details      -->
             <li >
                 <a href="<?php echo site_url('admin/cms')?>">
                     CMS</a>
             </li>
+            <!--      Admin setting      -->
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
                     Setting</a>
@@ -195,7 +205,7 @@
                             </a>
                         </div>
                         <div class="btn-group pull-right">
-                            <form style="height: 30px; " action="<?php echo site_url('admin/coupon/search_admin')?>" method="post">
+                            <form style="height: 30px; " action="<?php echo site_url('admin/coupon/search_coupon')?>" method="post">
                                 <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                 <input type="submit" class="btn" name="searchs">Search
                                 </input>
@@ -207,8 +217,8 @@
                         <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                             <thead>
                             <tr>
-                                <th>Code   <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_name&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_name&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Discount  <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_lastname&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Code   <a href='<?php if(empty($sort)){echo site_url('admin/coupon?sortby=code&sortorder='.$sortorder);}else{echo site_url('admin/coupon/search_coupon?sortby=code&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Discount  <a href='<?php if(empty($sort)){echo site_url('admin/coupon?sortby=percent_off&sortorder='.$sortorder);}else{echo site_url('admin/coupon/search_coupon?sortby=percent_off&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
 
                                 <th>Delete</th>
                             </tr>

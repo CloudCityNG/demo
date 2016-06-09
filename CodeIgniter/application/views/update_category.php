@@ -27,42 +27,53 @@
                     <span class="selected"></span>
                 </a>
             </li>
+
+            <!--      List of Admin      -->
             <li >
                 <a href="<?php echo site_url('admin/adminuser/')?>">
-                    Admin Managment</a>
+                    Admin Management</a>
             </li>
-
+            <!--      List of Product      -->
             <li >
                 <a href="<?php echo site_url('admin/product/')?>">
-                    Product Managment</a>
+                    Product Management</a>
             </li>
-
-
+            <!--      List of Banner      -->
             <li >
                 <a href="<?php echo site_url('admin/banner')?>">
-                    Banner Managment</a>
+                    Banner Management</a>
             </li>
-
+            <!--      List of Category      -->
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
+            <!--      List of Users      -->
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
-            </li>
+            <!--      List of Orders      -->
             <li >
                 <a href="<?php echo site_url('admin/orders')?>">
                     Orders</a>
             </li>
+            <!--      List of Coupons      -->
+            <li >
+                <a href="<?php echo site_url('admin/coupon')?>">
+                    Coupon Management</a>
+            </li>
+            <!--      List of Complints      -->
+            <li >
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <!--      CMS Details      -->
             <li >
                 <a href="<?php echo site_url('admin/cms')?>">
                     CMS</a>
             </li>
+            <!--      Admin setting      -->
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
                     Setting</a>

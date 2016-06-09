@@ -1,4 +1,9 @@
-<div style="text-align: center">
+<div style="text-align: center">+
+   <h2 style="text-align: center; font-family: 'quicksandbold'; font-size:16px; color:#313131; padding-bottom:8px;">Dear Member</h2>
+   <h4 style="text-align: center;  color: #646464; ">Thank you for purchase</h4><br/>
+
+   Your Product Details are below:
+
    <table align="center" border="1">
       <tr>
          <th>Product Name</th>

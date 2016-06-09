@@ -23,8 +23,8 @@ class Google_app extends CI_Controller
 			redirect('auth/login/');
 		} else {
 
-//			$data['user_id']	= $this->tank_auth->get_user_id();
-//			$data['username']	= $this->tank_auth->get_username();
+			//	$data['user_id']	= $this->tank_auth->get_user_id();
+			//  $data['username']	= $this->tank_auth->get_username();
 			$user_data = $this->Users->get_user_by_id($this->tank_auth->get_user_id(),1);
 			$data['firstname'] = $user_data->firstname;
 			$data['lastname'] = $user_data->lastname;
@@ -34,7 +34,6 @@ class Google_app extends CI_Controller
 			}else{
 			$data['image'] = '/images/blank_man.gif';
 			}
-
 			$this->load->view('welcome', $data);
 			//echo $this->session->userdata('user_id');
 		}

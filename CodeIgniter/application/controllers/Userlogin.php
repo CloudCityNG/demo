@@ -14,29 +14,44 @@ class Userlogin extends CI_Controller
         $this->load->library('cart');
         $this->load->helper(array('form', 'url'));
         $this->load->helper('form');
-
     }
+
+    /**
+     * go to user login
+     */
     public function login()                 // login and registration
     {
-
         $this->load->view('user/login_user');
         $this->load->view('user/footer_user');
     }
+
+    /**
+     * user registration
+     * validation on registration from
+     * insert new user data in table
+     * send mail to admin about new user regester
+     * send new mail to user after registration with email and password
+     */
     function registration()                 //user registration
     {
+        //server side validation
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
         $this->form_validation->set_rules('user_name', 'Firstname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('user_lastname', 'Lastname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('user_email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('user_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
         $this->form_validation->set_rules('user_status', 'Status', 'required');
-        if ($this->form_validation->run() == FALSE) {
+        //if error occurs
+        if ($this->form_validation->run() == FALSE)
+        {
             //$this->load->view('user/headeruser');
             $this->load->view('user/login_user');
             $this->load->view('user/footer_user');
-        } else {
+        }
+        //validation successfull
+        else
+        {
             $data = array(
-
                 'user_name' => $this->input->post('user_name'),
                 'user_lastname' => $this->input->post('user_lastname'),
                 'user_password' => $this->input->post('user_password'),
@@ -47,6 +62,8 @@ class Userlogin extends CI_Controller
             $email=$this->input->post('user_email');
             $pass=$this->input->post('user_password');
 
+            //send mail to user about welcome to shopping card
+            //with email and password
             $config = Array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'mail.wwindia.com',
@@ -58,6 +75,12 @@ class Userlogin extends CI_Controller
                 'charset' => 'utf-8',
                 'wordwrap' => TRUE
             );
+            $ep=array(
+                'email' => $email,
+                'pass' => $pass,
+            );
+            $this->load->library('email', $config);
+/*
             $message = '
 
             <html>
@@ -113,20 +136,21 @@ class Userlogin extends CI_Controller
 </body>
 </head>
 </html>';
-
+*/
             $this->email->initialize($config);
             $this->email->set_newline("\r\n");
             $this->email->from('sumit.desai@wwindia.com'); // change it to yours
             $this->email->to('sumit.desai@wwindia.com');// change it to yours
             $this->email->subject('Welcome to E-Shopping');
-            $this->email->message($message);
+            //call template from email template
+            $body = $this->load->view('email/welcome_admin',$ep,TRUE);
+            $this->email->message($body);
             if ($this->email->send()) {
-
 
             } else {
                 show_error($this->email->print_debugger());
             }
-
+/*
             $message = '
 
 <html>
@@ -180,17 +204,17 @@ class Userlogin extends CI_Controller
 </body>
 </head>
 </html>
-            ';
+            ';*/
 
             $this->email->initialize($config);
             $this->email->set_newline("\r\n");
             $this->email->from('sumit.desai@wwindia.com'); // change it to yours
             $this->email->to('sumit.desai@wwindia.com');// change it to yours
             $this->email->subject('New User Add');
-            $this->email->message($message);
+            //call template from email template
+            $body = $this->load->view('email/welcome_user',$ep,TRUE);
+            $this->email->message($body);
             if ($this->email->send()) {
-
-
             } else {
                 show_error($this->email->print_debugger());
             }
@@ -199,11 +223,18 @@ class Userlogin extends CI_Controller
         }
     }
 
+    /**
+     * fetch user id
+     */
     public function login_user()               // get id
     {
         $user_data['id'] = $this->User->user_login();
         $this->load->view('user/empty', $user_data);
     }
+
+    /**
+     * set id in session
+     */
     public function ids()                      // set sesssion
     {
         $user_data = $this->uri->segment(3);
@@ -212,6 +243,9 @@ class Userlogin extends CI_Controller
         redirect('home');
     }
 
+    /**
+     * show errro if email and password not match in database
+     */
     public function error()                    // login error
     {
         $data['email'] = "Invalid E-mail ";
@@ -220,6 +254,9 @@ class Userlogin extends CI_Controller
         $this->load->view('user/footer_user');
     }
 
+    /**
+     * go to forget password page
+     */
     public function forget()                     //forgot e-mail
     {
 
@@ -227,21 +264,31 @@ class Userlogin extends CI_Controller
         $this->load->view('user/footer_user');
     }
 
+    /**
+     * match data with database
+     */
     public function forget_user()                 // e-mail validation
     {
         $this->User->user_forget();
     }
 
+    /**
+     * if foeget password email not match
+     */
     public function email_error()                  //e-mail error
     {
         $data['email'] = 'Invalid E-mail';
-
         $this->load->view('user/forget_pass', $data);
         $this->load->view('user/footer_user');
     }
 
+    /**
+     * send email to user with new password
+     * @param $id = user_id
+     */
     public function sendmail($id)                  //send mail to user e-mail id
     {
+        //generate new password
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -249,11 +296,9 @@ class Userlogin extends CI_Controller
             $randomString .= $characters[rand(1,$charactersLength-1)];
         }
         $newpass = $randomString;
-
         $data=array(
             'user_password' => $newpass
         );
-
         $this->User->newpassword($data,$id);
 
         $config = Array(
@@ -274,14 +319,18 @@ class Userlogin extends CI_Controller
         $this->email->to('sumitdesai80@gmail.com');// change it to yours
         $this->email->subject('Resume from JobsBuddy for your Job posting');
         $this->email->message($message);
-        if ($this->email->send()) {
+        //mail send successfully
+        if ($this->email->send())
+        {
+            //show success msg to user view
             $data['verify_email'] = 'Mail Successfully send on Your Respect E-mail Id';
             //$this->load->view('user/headeruser');
             $this->load->view('user/login_user', $data);
             $this->load->view('user/footer_user');
-
-        } else {
-            show_error($this->email->print_debugger());
         }
-    }
-}
+        else
+        {
+            show_error($this->email->print_debugger());
+        }//end else
+    }//end sendmail function
+}//end controller

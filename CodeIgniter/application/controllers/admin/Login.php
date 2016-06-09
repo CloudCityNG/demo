@@ -14,10 +14,18 @@ class Login extends CI_Controller
         $this->load->helper(array('form', 'url'));
 
     }
+
+    /**
+     * adminuser login page
+     */
     public function index()                                          //login page
     {
         $this->load->view('login');
     }
+
+    /**
+     * validation on admin form
+     */
     function insert()                                               //admin registration
     {
 
@@ -29,14 +37,15 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
         $this->form_validation->set_rules('tnc','TNC','required');
         $this->form_validation->set_rules('status','Status','required');
+        //if error is occur
         if ($this->form_validation->run() == FALSE){
             //$data['cut']=$this->Admin_Insert->fetch();
             $this->load->view('admin_registration');
         }
+        //otherwise insert admin data in table
         else
         {
             $data= array(
-
                 'admin_name' => $this->input->post('admin_name'),
                 'admin_lastname' => $this->input->post('admin_lastname'),
                 'admin_password' => md5($this->input->post('admin_password')),
@@ -48,6 +57,12 @@ class Login extends CI_Controller
         }
     }
 
+    /**
+     * add new admin by super admin
+     * validation apply on form
+     * display admin list
+     * apply pagination on display admin list
+     */
     function add()                                      //add new admin
     {
         $perpage_value=$this->input->post('perpage');
@@ -59,13 +74,17 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('admin_compass', 'Confirm Password', 'matches[admin_password]');
         $this->form_validation->set_rules('tnc', 'TNC', 'required');
         $this->form_validation->set_rules('status', 'Status', 'required');
-        if ($this->form_validation->run() == FALSE) {
+        //if server side validation error occurs
+        if ($this->form_validation->run() == FALSE)
+        {
             //$data['cut']=$this->Admin_Insert->add_fetch();
             $this->load->view('add_admin');
-        } else {
+        }
+        //else insert data in database
+        else
+        {
             $perpage_value=$this->input->post('perpage');
             $data = array(
-
                 'admin_name' => $this->input->post('admin_name'),
                 'admin_lastname' => $this->input->post('admin_lastname'),
                 'admin_password' => $this->input->post('admin_password'),
@@ -103,58 +122,93 @@ class Login extends CI_Controller
             $this->load->view('view_user',$data);
         }
     }
+
+    /**
+     * go to forget password page
+     */
     function forget()                                           //forget password
     {
         $this->load->view('forget');
     }
+
+    /**
+     * go to add admin page
+     */
     function add_admin()                                        //new admin add
     {
         //$this->load->view('header');
-
         $this->load->view('add_admin');
         $this->load->view('footer');
-
     }
+
+    /**
+     * go to the admin_registration page
+     */
     function registration()                                     //registraion page view
     {
-
-            $this->load->view('admin_registration');
-
+        $this->load->view('admin_registration');
     }
+
+    /**
+     * admin login
+     * verify user name and password
+     * and send him to respective pages
+     */
     function admin_login()                                      //admin login
     {
         $userid=$this->Admin_Insert->login();
-        echo $userid;
+        //  echo $userid;
         $username=$this->input->post('admin_name');
         $x=$this->session->set_userdata('id',$userid);
-        echo $x;
+        //  echo $x;
         $this->session->set_userdata('session',$username);
-
-        if($this->session->userdata('session')){
+        //if login successfully done
+        if($this->session->userdata('session'))
+        {
             redirect('admin/dashboard');
         }
-        else{
+        //else redirect to login page with error msg
+        else
+        {
             $this->load->view('login');
         }
     }
+
+    /**
+     * verify email id
+     * for forget password
+     */
     function verify_email()                                         //email validation
     {
         $data['userdata']=$this->Admin_Insert->verify();
         $this->load->view('login',$data);
     }
+
+    /**
+     * if login is unsccuessfull then show this msg
+     */
     public function error()                                          //invalid login data
     {
         $data['user']="Invalid Username";
         $data['pass']="Invalid Password";
         $this->load->view('login',$data);
     }
+
+    /**
+     * if email is not valid
+     */
     public function email_error()                                    //invalid email
     {
         $data['error']="Invalid Email";
         $this->load->view('forget',$data);
     }
 
-    function sendMail()                                                //send password
+    /**
+     * if user forget password
+     * then send  password using mail
+     */
+
+   /* function sendMail()                                                //send password
     {
         $config = Array(
             'protocol' => 'smtp',
@@ -167,32 +221,40 @@ class Login extends CI_Controller
             'charset' => 'utf-8',
             'wordwrap' => TRUE
         );
+
         $message = 'Mail Done';
 
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
         $this->email->from('sumit.desai@wwindia.com'); // change it to yours
         $this->email->to('sumitdesai80@gmail.com');// change it to yours
-        $this->email->subject('Resume from JobsBuddy for your Job posting');
+        $this->email->subject('Your Password');
         $this->email->message($message);
+
         if($this->email->send())
         {
-            echo 'Email sent.';
+            redirect('admin/login');
         }
         else
         {
             show_error($this->email->print_debugger());
         }
     }
+    */
+    //login done successfully redirect to dashboard page
     public function admin_dashboard()                                   //admin_dashboard
     {
-        if($this->session->userdata('session')){
+        //session is activated
+        if($this->session->userdata('session'))
+        {
             $this->load->view('footer');
             $this->load->view('header');
             $count['admin_count']=$this->Admin_Insert->record_count();
             $count['product_count']=$this->Admin_Insert->product_count();
-            $this->load->view('dashboard',$count);}
-        else{
+            $this->load->view('dashboard',$count);
+        }
+        else
+        {
             redirect('admin/login');
         }
     }

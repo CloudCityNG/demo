@@ -8,7 +8,7 @@ function registration()
     var str=pass.length;
     var com = document.forms["form"]["admin_compass"].value;
 
-    if((first == null || first == "")||(isNaN(first)) || (last == null || last == "")||email==""||
+    if((first == null || first == "")|| (last == null || last == "")||email==""||
         (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email))||pass == null ||
         pass == "" ||(str < 6 || str > 8)||((/[^a-zA-Z0-9\-\/]/.test(pass)))||(com == "")||
         (com != pass))
@@ -55,10 +55,10 @@ function registration()
         {
             document.getElementById('com').innerHTML="Confirm Password Not match";
         }
-
         return false;
     }
     else{
+        alert('hello');
         return true;
     }
 

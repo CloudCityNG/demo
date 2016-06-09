@@ -1,0 +1,33 @@
+create new branch 
+
+example : current branch is master branch
+
+git branch
+
+*master
+
+
+to create a new branch 
+
+git checkout -b development
+
+
+
+
+let's say you have to merge development branch to master branch or the branch form which you have created development brnach
+
+switch to master or branch or origin branch by using 
+
+git checkout master
+
+take a pull 
+
+git pull origin development 
+
+
+pull is also merge
+
+
+either git pull origin master
+
+or git merge development 

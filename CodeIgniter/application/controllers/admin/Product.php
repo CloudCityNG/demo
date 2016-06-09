@@ -13,6 +13,15 @@ class Product extends CI_Controller
         $this->load->library('upload');
         $this->load->helper(array('form', 'url'));
     }
+
+    /**
+     * display all product list whitch are avaliable in database
+     * apply pagination on product list
+     * apply both side sorting on all columns
+     * @data = product_id
+     *         product_name
+     *         product_status
+     */
     public  function index()
     {
         if($this->session->userdata('session'))
@@ -40,11 +49,11 @@ class Product extends CI_Controller
             {
                 $page = 1;
             }
-            $data['product'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page);
+            $data['product'] = $this->Admin_Insert->fetch_product_data($config["per_page"], $page); //fetch product details
             $str_links = $this->pagination->create_links();
-            $data["links"] = explode('&nbsp;',$str_links );
+            $data["links"] = explode('&nbsp;',$str_links );                     //generate product links for pagination
 
-            $sortorder = 'DESC';
+            $sortorder = 'DESC';                                                //apply sorting
             if($this->input->get('sortorder') == 'DESC')
                 $sortorder = 'ASC';
 
@@ -58,20 +67,29 @@ class Product extends CI_Controller
             redirect('admin/login');
         }
     }
-    public function add_product()                     //new product
+
+    /**
+     * go to add product page
+     * display all categorys are avaliable
+     */
+    public function add_product()                                   //new product
     {
         if($this->session->userdata('session')){
 
-            $data['category']=$this->Admin_Insert->categoryall();
+            $data['category']=$this->Admin_Insert->categoryall();   //fetch all categorys whitch are present
 
             $this->load->view('header');
             $this->load->view('footer');
             $this->load->view('add_product',$data);}
         else{
-
             redirect('admin/login');
         }
     }
+
+    /**
+     * insert new product in database
+     * server side validation apply on add new product from
+     */
     public function insert_product()                    //insert_product
     {
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
@@ -90,7 +108,7 @@ class Product extends CI_Controller
         $this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
         $this->form_validation->set_rules('product_status','Status','required');
 
-
+        //if validation error is occur
         if ($this->form_validation->run() == FALSE){
 
             $this->load->view('header');
@@ -98,11 +116,11 @@ class Product extends CI_Controller
             $data['category']=$this->Admin_Insert->categoryall();
             $this->load->view('add_product',$data);
         }
+        //if form validtion successfully done
         else
         {
             $id = $this->session->userdata('id');
             $data= array(
-
                 'name' => $this->input->post('name'),
                 'sku' => $this->input->post('sku'),
                 'short_description' => $this->input->post('short_description'),
@@ -120,19 +138,21 @@ class Product extends CI_Controller
                 'created_by'=>$id
 
             );
+            //insert data product table
+            //@prod = fetch last inserted id
             $prod=$this->Admin_Insert->product_insert($data);
-
+            //fetch category name
             $category_name=$this->input->post('category');
-
+            //fetch category id on basis of category name
             $catid=$this->Admin_Insert->cat($category_name);
-
+            //insert data in product_category table
             $pro_cat=array(
                 'category_id'=>$catid,
                 'product_id'=>$prod
             );
             $this->Admin_Insert->product_category($pro_cat);
 
-
+            //insert image in image table
             foreach($_FILES['image_name']['tmp_name'] as $key => $tmp_name ) {
                 $file_name = $key . $_FILES['image_name']['name'][$key];
                 //  $file_size =$_FILES['files']['size'][$key];
@@ -141,33 +161,45 @@ class Product extends CI_Controller
 
                 $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $file_name;
 
-
                 //  $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
 
                 if (move_uploaded_file($file_tmp, $path))
                 {
-
                     $uploed = $file_name;
                     $img = array(
                         'image_name' => $uploed,
                         'product_id' => $prod
                     );
                     $this->Admin_Insert->upload_img($img);
-
+                    //show ms about new product added
                     $this->session->set_flashdata('msg', 'New Product Added Successfully');
-
                 }
-                else{
+                else
+                {
                     echo "Error";
                 }
             }redirect('admin/product/');
         }
     }
-    public function delete_product()                    //delet product
+
+    /**
+     * delete product from product table
+     * on the basis of product id
+     * comes from url
+     */
+    public function delete_product()                      //delete product
     {
         $this->Admin_Insert->product_delete();
         redirect('admin/product/');
     }
+
+    /**
+     * go to the edit particular product page
+     * with respective data
+     * @data = product_id
+     *         product_name
+     *         title,metadata,keywords,description,etc
+     */
     public function edit_product()                        //edit_product
     {
         $data['edit_productdata']=$this->Admin_Insert->product_edit();
@@ -175,9 +207,14 @@ class Product extends CI_Controller
         $this->load->view('footer');
         $this->load->view('update_product',$data);
     }
+
+    /**
+     * validation for update product form
+     * insert images in image table product data in product table
+     */
     public function product_update()                        //update product
     {
-
+        //server side validtion
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
         $this->form_validation->set_rules('name', 'Firstname', 'required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('sku', 'SKU', 'required|min_length[3]|max_length[15]');
@@ -193,15 +230,15 @@ class Product extends CI_Controller
         $this->form_validation->set_rules('meta_description', 'Meta_Description', 'required');
         $this->form_validation->set_rules('meta_keywords', 'Meta_keywords', 'required');
         $this->form_validation->set_rules('product_status','Status','required');
-
+        //if validtion error comes
         if ($this->form_validation->run() == FALSE){
             //$data['cut']=$this->insert_admin->fetch();
-
             $p_id=$this->uri->segment(3);
             $this->load->view('header');
             $this->load->view('footer');
             $this->load->view('update_product',$p_id);
         }
+        //if validtion successfully done
         else
         {
             $id = $this->session->userdata('id');
@@ -225,47 +262,54 @@ class Product extends CI_Controller
                 'modified_date'=>date('Y/m/d'),
                 'modified_by'=>$id
             );
+            //update product data
             $this->Admin_Insert->update($prod_id,$data);
-
+            //update image in product image table
             $x=$_FILES['image_name']['name'];
-            if(!empty($x)){
-            $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
-
-            if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path )) {
-                $upload = $_FILES['image_name']['name'];
-
-                $img = array(
-                    'image_name' => $upload,
-                    'modify_date'=>date('Y/m/d'),
-                    'modify_by'=>$id
-                );
-
-                $this->Admin_Insert->from_image_update($prod_id,$img);
-                redirect('admin/product/');
-             }
-
+            if(!empty($x))
+            {
+                $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['image_name']['name'];
+                //if image is update
+                if(move_uploaded_file($_FILES['image_name']['tmp_name'], $path ))
+                {
+                    $upload = $_FILES['image_name']['name'];
+                    $img = array(
+                        'image_name' => $upload,
+                        'modify_date'=>date('Y/m/d'),
+                        'modify_by'=>$id
+                    );
+                    $this->Admin_Insert->from_image_update($prod_id,$img);
+                    redirect('admin/product/');
+                }
             }
+            //if oly data updated image not
             else{
                 $img = array(
-
                     'modify_date'=>date('Y/m/d'),
                     'modify_by'=>$id
                 );
-
                 $this->Admin_Insert->from_image_update($prod_id,$img);
                 redirect('admin/product/');
             }
         }
     }
+
+    /**
+     * search product from table
+     * search keywords comes from front end
+     * match with all columns
+     */
     public function search_product()                        //serach product
     {
+        //keywords comes from front end
         $product_ser=$this->input->post('search');
+        //trim keyword
         $product_serach=trim($product_ser);
+        //search data in database
         $data['product']=$this->Admin_Insert->product_search($product_serach);
-
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
-
+        //apply sorting on columns
         $sortorder = 'DESC';
         if($this->input->get('sortorder') == 'DESC')
             $sortorder = 'ASC';
@@ -276,6 +320,11 @@ class Product extends CI_Controller
         $this->load->view('footer');
         $this->load->view('view_product',$data);
     }
+
+    /**
+     * view product details to admin
+     * select product on the basis of product_id
+     */
     public function view_product_details()                  //product_details
     {
         $id=$this->uri->segment(4);

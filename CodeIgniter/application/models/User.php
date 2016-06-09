@@ -3,6 +3,11 @@
 class User extends CI_Model
 {
 
+    /**
+     * display major category list
+     * each major category have parent id = 0
+     * @return array
+     */
     public function home_category()
     {
         $p_id=0;
@@ -11,6 +16,11 @@ class User extends CI_Model
         return $this->db->get('category')->result_array();
     }
 
+    /**
+     * fetch total numbers of rows of selected category data
+     * @param $category = category_id this category related product rows counted
+     * @return mixed | number
+     */
     public function record_cat_count($category)
     {
         $this->db->select('*');
@@ -20,9 +30,14 @@ class User extends CI_Model
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->where('category.category_id',$category);
         $x= $this->db->get()->num_rows();
-
         return $x;
     }
+
+    /**
+     * display only selected category data
+     * @param $category = category_id only this category related product display
+     * @return array|bool
+     */
     public function data($category)
     {
         $this->db->select('*');
@@ -32,84 +47,150 @@ class User extends CI_Model
         $this->db->join('product_images','product_images.product_id=product.product_id');
         $this->db->where('product_category.category_id',$category);
         $this->db->order_by('product.product_id', "decs");
-
         $query= $this->db->get();
-
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
+        //if data is persent in array
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
                 $data[] = $row;
             }
             return $data;
         }
         else return false;
     }
+
+    /**
+     * select related sub category of this categpry id
+     * @param $category category_id select related sub category of this category id
+     * @return mixed
+     */
     public function select_cat($category)
     {
         $this->db->select('*');
         $this->db->where('parent_id',$category);
         return $this->db->get('category')->result_array();
     }
+
+    /**
+     * insert new user data in user table
+     * @param $data =user_id
+     *               user_name
+     *               user_lastname
+     *               user_email
+     *               user_password
+     *               gender
+     */
     public function insert_user($data)              //insert user data
     {
         $this->db->insert('user', $data);
     }
+
+    /**
+     * new user register with facebook user
+     * @param $data = user_id
+     *                user_name
+     *                user_email
+     *                gender
+     * @param $f_id = fb_token
+     * @return mixed | last inserted user id
+     */
     public function insert_fbuser($data,$f_id)
     {
         $this->db->where('fb_token',$f_id);
         $query=$this->db->get('user')->num_rows();
-
-        if($query == 0) {
-
+        //if new user then insert data and return user_id
+        if($query == 0)
+        {
             $this->db->insert('user', $data);
-          $id=$this->db->insert_id();
+            $id=$this->db->insert_id();
             return $id;
         }
-        else{
+        //if user already iunserted then fetch user  id
+        else
+        {
             $this->db->select('user_id');
             $this->db->where('fb_token',$f_id);
            return $this->db->get('user')->row()->user_id;
         }
     }
+
+    /**
+     * update user data in database
+     * @param $data = user_name
+     *                user_lastname
+     *                user_email
+     *                user_password
+     *                gender
+     * @param $id = user_id
+     */
     public function update_user($data,$id)
     {
         $this->db->where('user_id',$id);
         $this->db->update('user',$data);
     }
+
+    /**
+     * insert user address
+     * @param $data = address_1 manditory filed
+     *                address_2 not complasary
+     *                city
+     *                country
+     *                state
+     *                zipcode
+     * @param $user_id = user_id
+     */
     public function address_user($data,$user_id)     //insert/update user address
     {
-
         $this->db->select('*');
         $this->db->from('user_address');
         $this->db->where('user_id',$user_id);
         $query=$this->db->get();
+        //for updata data
         if($query->num_rows() > 0)
         {
             $this->db->update('user_address',$data);
         }
-        else{
+        //for insert new data
+        else
+        {
             $this->db->insert('user_address',$data);
         }
     }
-    public function user_login()                        //verify and login user
+
+    /**
+     * verify user data when user come fro login
+     * verify using email and password
+     * @return mixed | array
+     */
+    public function user_login()                     //verify and login user
     {
         $email = $this->input->post('user_email');
         $password = $this->input->post('user_password');
-
         $this->db->select('*');
         $this->db->from('user');
         $this->db->where('user_email', $email);
         $this->db->where('user_password', $password);
         $this->db->limit(1);
         $query = $this->db->get();
+        //if data is match
         if ($query->num_rows() == 1)
         {
             $q = $query->result();
             return $q;
-        } else
+        }
+        //else redirect to login page
+        else
         {
             redirect('Userlogin/error');
         }
     }
+
+    /**
+     * find user id which is already login
+     * @param $g_id = google token use for find user_id
+     * @return mixed | number
+     */
     public function google_search_id($g_id)
     {
         $this->db->select('user_id');
@@ -117,7 +198,12 @@ class User extends CI_Model
         $this->db->where('google_token',$g_id);
         return $this->db->get()->row()->user_id;
     }
-    public function user_forget()                       //email verifiacction
+
+    /**
+     * if user forget user password
+     * find password with the help of user email
+     */
+    public function user_forget()                       //email verification
     {
         $email = $this->input->post('user_email');
         $this->db->select('user_id');
@@ -125,7 +211,7 @@ class User extends CI_Model
         $this->db->where('user_email', $email);
         $this->db->limit(1);
         $query = $this->db->get();
-
+        //if email id is match with data
         if ($query->num_rows() == 1)
         {
             $email = $this->input->post('user_email');
@@ -136,34 +222,57 @@ class User extends CI_Model
             $x=$this->db->get()->row()->user_id;
             redirect('Userlogin/sendmail/'.$x);
 
-        } else
+        }//elseredirect to login page
+        else
         {
             redirect('Userlogin/email_error');
         }
     }
+
+    /**
+     * auto creatd new password update in datebase
+     * @param $data = auto created new password
+     * @param $id =  user_id
+     */
     public function newpassword($data,$id)
     {
         $this->db->where('user_id',$id);
         $this->db->update('user',$data);
     }
+
+    /**
+     * fetch user account details with comparing user id
+     * @param $user_id = user_id
+     * @return mixed
+     */
     public function user_account($user_id)              // get user_id
     {
-
         $this->db->select('*');
         $this->db->from('user');
         $this->db->where('user_id',$user_id);
         $query=$this->db->get();
         return $query->result_array();
     }
+
+    /**
+     * update user address
+     * @param $id_user-user id
+     * @return mixed |array
+     */
     public function update_address($id_user)            //update user_address
     {
-
         $this->db->select('*');
         $this->db->from('user_address');
         $this->db->where('user_id',$id_user);
         $query=$this->db->get();
         return $query->result_array();
     }
+
+    /**
+     * password verification
+     * if user want to change password then he/she can change password
+     * match old password and then chaneg new password
+     */
     public function password_verify()                   //update password
     {
         $new_pass['user_password']=$this->input->post('password');
@@ -174,15 +283,24 @@ class User extends CI_Model
         $this->db->where('user_id',$user_id);
         $this->db->where('user_password',$user_password);
         $query=$this->db->get();
+        //if old password match
         if($query->num_rows()>0)
         {
             $this->db->where('user_id',$user_id);
             $this->db->update('user',$new_pass);
         }
-        else{
+        //else dispaly error msg
+        else
+        {
             redirect('Useraccount/pass_error');
         }
     }
+
+    /**
+     * fetch user data
+     * @param $user_ids = user_id
+     * @return mixed|array
+     */
     public function user_data($user_ids)
     {
         $this->db->select('*');
@@ -191,6 +309,10 @@ class User extends CI_Model
         $query=$this->db->get();
         return $query->result_array();
     }
+
+    /**
+     * @param $data =
+     */
     public function send_query($data)
     {
        $this->db->insert('contact_us',$data);
@@ -388,13 +510,14 @@ class User extends CI_Model
         //if order_id is correct show the result
         if ($query->num_rows() == 1)
         {
-            $q = $query->result();
+            $q = 1;
             return $q;
         }
         //else redirect to track order page with appropriate error msg
         else
         {
-            redirect('Useraccount/track_order');
+            $q = 0;
+            return $q;
         }
     }
 
@@ -462,11 +585,17 @@ class User extends CI_Model
             return $this->db->get()->row()->user_id;
         }
     }
+
+    /**
+     * user not register insert new user data in database
+     * else update user data
+     * @param $address_data = user address data
+     * @param $user_id-user_id
+     */
     public function chechkout_user_address($address_data,$user_id)
     {
         $this->db->where('user_id',$user_id);
         $query=$this->db->get('user_address')->num_rows();
-
         //if user not register insert new user data in database
         if($query == 0)
         {
@@ -477,7 +606,46 @@ class User extends CI_Model
             $this->db->where('user_id',$user_id);
             $this->db->update('user_address',$address_data);
         }
+    }
 
+    /**
+     * calculated quantity
+     * @param $p_id = product qunatity
+     * @param $quant = quantity which user purchase
+     * @return mixed
+     */
+    public function check_qty($p_id,$quant)
+    {
+        $this->db->select('quntity');
+        $this->db->from('product');
+        $this->db->where('product_id',$p_id);
+        $total_qty=$this->db->get()->row()->quntity;
+        $reming=$total_qty-$quant;
+        return $reming;
+    }
+
+    /**
+     * insert user data inside table
+     * @param $data = user_name
+     * @param $token = twitter token
+     * @return mixed
+     */
+    public function twitter($data,$token)
+    {
+        $this->db->where('twitter_token',$token);
+        $query = $this->db->get('user')->num_rows();
+        if($query == 0)
+        {
+            $this->db->insert('user',$data);
+            return $this->db->insert_id();
+        }
+        else
+        {
+            $this->db->select('user_id');
+            $this->db->from('user');
+            $this->db->where('twitter_token',$token);
+            return $this->db->get()->row()->user_id;
+        }
     }
 }
 ?>

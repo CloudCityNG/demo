@@ -14,10 +14,13 @@
 	<span style="color: #646464;">Amount Paid :
       	<strong style=" margin-left:50px;font:15px Arial,Helvetica,sans-serif;color:black">$<?php echo $payment_gross ?></strong>
   	</span><br/></div>
+	<span style="color: #646464;">Amount Paid :
+      	<strong style=" margin-left:50px;font:15px Arial,Helvetica,sans-serif;color:black">$<?php echo $mc_shipping ?></strong>
+  	</span><br/></div>
 	<div style="margin-left: 400px">
 	</div>
 	</div>
-<div style="text-align: center">
+	<div style="text-align: center">
 		<table align="center" border="1">
 		<tr>
 		<th>Product Name</th>

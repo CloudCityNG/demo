@@ -14,19 +14,11 @@ class Welcome extends CI_Controller {
 
 		$this->load->library('facebook'); // Automatically picks appId and secret from config
 
-        // OR
-        // You can pass different one like this
-        //$this->load->library('facebook', array(
-        //    'appId' => 'APP_ID',
-        //    'secret' => 'SECRET',
-        //    ));
 
 		$user = $this->facebook->getUser();
         
         if ($user) {
             try {
-
-                //echo "hello";die;
                 $data['user_profile'] = $this->facebook->api('/me?fields=id,name,email');
                 $data['scope'] = array('email');
                 $me = $this->facebook->api('/me');
@@ -70,32 +62,22 @@ class Welcome extends CI_Controller {
             // $data['logout_url'] = $this->facebook->getLogoutUrl();
 
         } else {
-            echo "hello";
             $data['login_url'] = $this->facebook->getLoginUrl(array(
                 'redirect_uri' => site_url('/welcome/login'),
                 'scope' => array("email") // permissions here
-
             ));
-
         }
-//        $this->session->set_userdata('user_session',$fb_id);
-
-
+        //$this->session->set_userdata('user_session',$fb_id);
         $this->load->view('user/headeruser');
         $this->load->view('fblogin',$data);
         $this->load->view('user/footer_user');
-
 	}
-
-    public function logout(){
-
+    public function logout()
+    {
         $this->load->library('facebook');
-
         // Logs off session from website
         $this->facebook->destroySession();
-
         // Make sure you destory website session as well.
-
         redirect('welcome/login');
     }
 

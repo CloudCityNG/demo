@@ -36,6 +36,7 @@
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
     <form action="<?php echo site_url('admin/login/admin_login')?>"method="post" >
+        <center style="color: green"><?php if(isset($newemail)){echo $newemail;}else{echo "";}?> </center>
         <h3 class="form-title">Login to your account</h3>
         <div class="alert alert-error hide">
             <button class="close" data-dismiss="alert"></button>

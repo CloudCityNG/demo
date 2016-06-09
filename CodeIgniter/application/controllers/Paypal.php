@@ -17,7 +17,6 @@ class Paypal extends CI_Controller
 		//putin data variable
 		 $data['data'] = $paypalInfo;
 
-
 		//$data['item_number'] = $paypalInfo['item_number'];
 		 $data['txn_id'] = $paypalInfo["txn_id"];
 		 $data['payment_gross'] = $paypalInfo["payment_gross"];
@@ -27,6 +26,7 @@ class Paypal extends CI_Controller
 		 $user_id = $paypalInfo['custom'];
 		 $total = $paypalInfo['payment_gross'];
 		 $trans_id = $paypalInfo['txn_id'];
+		 $shipping = $paypalInfo['mc_shipping'];
 		 //echo 'i_no' . $item_id = $paypalInfo['item_number'];
 
 		 $user_name = $this->product->find_username($user_id);
@@ -62,8 +62,12 @@ class Paypal extends CI_Controller
 			 'payment_getway_id' => $payment_id,
 			 'transaction_id' => $trans_id,
 			 'grand_total' => $total,
+			 'shipping_charges' => $shipping
 		 );
 		 $this->product->order_data($order_data,$o_id);		//model product
+
+		 //delete data from wishlist
+		 $this->product->delete_wishlist($user_id,$prod_id);
 
 		 $this->session->unset_userdata('order_session');
 		 // $this->session->unset('order_ssession');
@@ -71,7 +75,6 @@ class Paypal extends CI_Controller
 		 $this->load->view('/paypal/success',$data);
 		 $this->load->view('user/footer_user');
 	 }
-
 	//if payment fail redirect to cancel page
 	 function cancel()
 	 {

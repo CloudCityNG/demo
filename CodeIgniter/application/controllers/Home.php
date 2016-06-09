@@ -157,6 +157,31 @@ class Home extends CI_Controller
         $this->load->view('user/footer_user');
     }
 
+    public function qunty_check()
+    {
+        $size=$this->input->post('qty');
+        $id=$this->input->post('p_id');
+
+        $data=$this->User->check_qty($id,$size);
+
+        if($data <= 0)
+        {
+            foreach ($this->cart->contents() as $item)
+            {
+                if($id == $item['id']) {
+
+                    echo $item['qty'];
+                    break;
+                }
+
+            }
+        }
+        else
+        {
+            echo $size;
+        }
+    }
+
     /**
      * update quantity of cart data from front end
      * @return = update quantity in cart product
@@ -165,8 +190,10 @@ class Home extends CI_Controller
     {
         $i = 1;
         //explore cart for updation
+
         foreach ($this->cart->contents() as $item)
         {
+
             $this->cart->update(array('rowid'=>$item['rowid'],'qty'=>$_POST[ 'qty'.$i ])); //update quantity of cart
             $i++;
         }
@@ -356,7 +383,6 @@ class Home extends CI_Controller
             $data['msg']= $emailAddress." added successfully\n";
             $this->load->view('user/footer_user');
         }
-
         $this->load->view('user/headeruser');
         $this->load->view('newsletter',$data);
         $this->load->view('user/footer_user');

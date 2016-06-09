@@ -158,7 +158,8 @@ class Paypal {
       echo "<form method=\"post\" name=\"paypal_form\" ";
       echo "action=\"".$this->paypal_url."\">\n";
 
-      foreach ($this->fields as $name => $value) {
+      foreach ($this->fields as $name => $value)
+      {
          echo "<input type=\"hidden\" name=\"$name\" value=\"$value\"/>\n";
       }
         

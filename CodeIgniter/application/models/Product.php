@@ -43,8 +43,8 @@ class Product extends CI_Model
 	/**
 	 * insert data in order_details table
 	 * @param $data=order_id
-	 * 		product_id
-	 * 		quantity
+	 * 				product_id
+	 * 				quantity
 	 * #controller-products
 	*/
 	public function insert_order_details($data)
@@ -102,6 +102,7 @@ class Product extends CI_Model
 	*/
 	public function check_quantity($x,$quantity)
 	{
+
 		$this->db->select('quntity');
 		$this->db->from('product');
 		$this->db->where('product_id',$x);
@@ -149,8 +150,28 @@ class Product extends CI_Model
 	*/
 	public function update_quantity($qun,$item_id)
 	{
+
 		//update quantity after order done..
 		$this->db->where('product_id',$item_id);
 		$this->db->update('product',$qun);
+
+	}
+
+	/**
+	 * delete itms from wishlist
+	 * @param $user_id-user_id of that user which have this whishlish
+	 * @param $prod_id -product id which percent in wishlsit
+	 */
+	public function delete_wishlist($user_id,$prod_id)
+	{
+		$this->db->where('user_id',$user_id);
+		$this->db->where('product_id',$prod_id);
+		$query=$this->db->get('user_wish_list')->num_rows();
+		if($query > 0)
+		{
+			$this->db->where('user_id',$user_id);
+			$this->db->where('product_id',$prod_id);
+			$this->db->delete('user_wish_list');
+		}
 	}
 }

@@ -103,7 +103,8 @@
                         }?>
                         <img src="<?php echo base_url().'/images/'.$value['banner'];?>" >
                     </div><!--/shipping-->
-
+                    <p>For New User</p>
+                    <marquee>10$ off on each product use Coupon 111</marquee>
                 </div>
             </div>
             <div class="col-sm-9 padding-right">
@@ -135,7 +136,7 @@
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
                                         <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/add_to_wishlist/'.$value['product_id']);}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+<!--                                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>-->
                                     </ul>
                                 </div>
                             </div>

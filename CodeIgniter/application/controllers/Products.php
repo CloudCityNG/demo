@@ -50,29 +50,42 @@ class Products extends CI_Controller
 		if($disc != null) {
 			$discount=$disc;
 		}
-		else{
-
+		else
+		{
 			$discount = 0;
+		}
+		//add shipping changes in for offer
+		foreach ($this->cart->contents() as $items)
+		{
+			$total_grand_amount=$this->cart->format_number($this->cart->total());
+		}
+		if($total_grand_amount >50)
+		{
+			$ship = 50;
+		}
+		else{
+			$ship = 0;
 		}
 		//set cart for send data to paypal
 		foreach ($carted as $val) {
 			$this->paypal->add_field('item_number_' . $i, $i);
 			$this->paypal->add_field('item_name_' . $i, $val['name']);
-			$this->paypal->add_field('amount_' . $i, ($val['price']-$discount));
+			$this->paypal->add_field('amount_' . $i, ($val['price']));
 			$this->paypal->add_field('quantity_' . $i, $val['qty']);
+			$this->paypal->add_field('shipping_' . $i, $ship);
+			$this->paypal->add_field('discount_amount_' . $i, $discount);
 			$i++;
 		}
+		// $this->paypal->add_field('shipping_' . $i, $ship);
 		$this->paypal->add_field('custom', $user_id);
 		$this->paypal->add_field('business', $paypalID);
 		$this->paypal->add_field('notify_url', base_url() . $notifyURL);
 		$this->paypal->add_field('cancel_return', base_url() . $cancelURL);
 		$this->paypal->add_field('return',$returnURL);
-
 		$this->paypal->submit_paypal_post();
-
 	}
 
-	/*
+	/**
 	 * user data validation
 	 * insert new user data
 	 * validation of items avalible in stock or not
@@ -119,7 +132,7 @@ class Products extends CI_Controller
 		}
 		else
 		{
-			//if cutomer pay payment using paypal
+			//if customer pay payment using paypal
 			if ($this->input->post('payment_type') == 'paypal') {
 				//insert user data
 				$data = array(
@@ -128,16 +141,18 @@ class Products extends CI_Controller
 					'user_email' => $this->input->post('user_email'),
 					'user_password' => $this->input->post('user_password')
 				);
+				//unique mail
+				$user_email = $this->input->post('user_email');
+				//find user id
+				$user_id = $this->User->checkout_user($data, $user_email);
 				//insert user address
 				$address_data = array(
 					'address_1' => $this->input->post('address_1'),
 					'address_2' => $this->input->post('address_2'),
 					'zipcode' => $this->input->post('zipcode'),
+					'user_id' => $user_id
 				);
-				//unique mail
-				$user_email = $this->input->post('user_email');
-				//find user id
-				$user_id = $this->User->checkout_user($data, $address_data, $user_email);
+				$this->User->chechkout_user_address($address_data,$user_id);
 				//$user_id = $this->session->userdata('user_session');
 				$i = 1;
 				$quantity = "";
@@ -150,6 +165,17 @@ class Products extends CI_Controller
 					$total = $this->cart->format_number($items['subtotal']);
 					$i++;
 				endforeach;
+
+				foreach ($this->cart->contents() as $items)
+				{
+					$total_amount=$this->cart->format_number($this->cart->total());
+				}
+				//if selected than redirect to error page
+				if($total_amount <= 0 )
+				{
+					redirect('products/checkout_error/'.$user_id);
+				}
+
 
 				//@empty variables x,name
 				$x = "";
@@ -176,6 +202,7 @@ class Products extends CI_Controller
 						{
 							//redirect to checkout page with error msg
 							$user_data['userdata'] = $this->User->chekout_data($user_id);
+							$user_data['address']=$this->User->checkout_address($id);
 							$user_data['quntity'] = 'Out Of Stock';
 							$this->load->view('user/headeruser');
 							$this->load->view('user/checkout', $user_data);
@@ -196,11 +223,12 @@ class Products extends CI_Controller
 							if ($c_id == null)
 							{
 								//redirect to checkout page with error msg
-								$user_data['userdata'] = $this->User->chekout_data($user_id);
+								//$user_data['userdata'] = $this->User->chekout_data($user_id);
+								//$user_data['address']=$this->User->checkout_address($id);
 								$user_data['invalid'] = 'Invalid Coupon';
-								$this->load->view('user/headeruser');
-								$this->load->view('user/checkout', $user_data);
-								$this->load->view('user/footer_user');
+								//$this->load->view('user/headeruser');
+								//$this->load->view('user/checkout', $user_data);
+								//$this->load->view('user/footer_user');
 							}
 							else
 							{
@@ -233,11 +261,12 @@ class Products extends CI_Controller
 				if ($coup_used_id == 0) {
 
 					//redirect to checkout page with error msg
-					$user_data['userdata'] = $this->User->chekout_data($user_id);
+					//$user_data['userdata'] = $this->User->chekout_data($user_id);
+					//$user_data['address']=$this->User->checkout_address($id);
 					$user_data['msg'] = 'Coupon Already Used';
-					$this->load->view('user/headeruser');
-					$this->load->view('user/checkout', $user_data);
-					$this->load->view('user/footer_user');
+					//$this->load->view('user/headeruser');
+					//$this->load->view('user/checkout', $user_data);
+					//$this->load->view('user/footer_user');
 				}
 				else
 				{
@@ -300,14 +329,14 @@ class Products extends CI_Controller
 
 		<table style="margin-left: 50px;width:600px; background-color: skyblue;">
 		<tr>
-			<td style="display:inline;width: 250px;height: 150px; text-align: center"><b><h4>THANK YOU FOR YOUR ORDER
+			<td style="width: 250px;height: 150px; text-align: center"><b><h4>THANK YOU FOR YOUR ORDER
 				FROM MY SHOPPING CAR</h4></b>
 				Once your package ships we will send
 				an email with a link to track your order.
 				Your order summary is below. Thank
 				you again for your business.
 			</td>
-			<td  style="margin-left: 10px; display: inline;width: 50px">
+			<td  style="margin-left: 10px;width: 50px">
 				<h6 style=" font-weight: normal; margin-top: -40px">
 					<b>Call Us:
 						<a style="color: blue">+91 - 22 -40500699</a>
@@ -322,8 +351,10 @@ class Products extends CI_Controller
 			</td>
 			</tr>
 			</table>
+
 		<div style="text-align: center"><h3>Your Order</h3></div><br>
-		<div style="text-align: center">Place on Date</div><br>
+		<div style="text-align: center">Place on Date '.date("Y-m-d").'</div><br>
+		<div style="margin-left: 50px"> Order ID :'.$order_id.'</div><br>
 		<div>
 			<table border="1" style="margin-left: 50px;;width:600px;">
 				<tr style="text-align: center;  width: 50px;height: 50px">
@@ -382,8 +413,23 @@ class Products extends CI_Controller
 					}
 
 					//redirect to paypal method buy..
-					$this->buy($val, $name, $user_id);
+
 				}//end else if valid coupon is used
+
+				if(empty($user_data)) {
+					$this->buy($val, $name, $user_id);
+				}
+				//else show error
+				else
+				{
+					$user_data['userdata'] = $this->User->chekout_data($user_id);
+					$user_data['address']=$this->User->checkout_address($user_id);
+					$this->load->view('user/headeruser');
+					$this->load->view('user/checkout', $user_data);
+					$this->load->view('user/footer_user');
+					$this->load->view('user/footer_user');
+				}//end else of error present
+
 			}//end if payment type is paypal
 
 			//if payment type is cash on delivery
@@ -421,6 +467,18 @@ class Products extends CI_Controller
 					 $total = $this->cart->format_number($items['subtotal']);
 					$i++;
 				endforeach;
+
+				//check products are selected in cart or not
+				foreach ($this->cart->contents() as $items)
+				{
+					$total_amount=$this->cart->format_number($this->cart->total());
+				}
+				//if selected than redirect to error page
+				if($total_amount <= 0 )
+				{
+					redirect('products/checkout_error/'.$user_id);
+				}
+
 				$x = "";
 				//fetch id of cart items
 				foreach ($this->cart->contents() as $items):
@@ -439,27 +497,24 @@ class Products extends CI_Controller
 
 				$i="";
 				//validation of
-				foreach ($y as $val)
-					if(!empty($val))
-					{
-						$total_quan = $this->product->check_quantity($val, $quantity);
+//				foreach ($y as $val)
+//					if(!empty($val))
+//					{
+//						$total_quan = $this->product->check_quantity($val, $quantity);
 
 						//check product avaliable in stock or not
-						if ($total_quan <= 0)
-						{
-							echo "error";
-							$user_data['userdata'] = $this->User->chekout_data($user_id);
-							$user_data['quntity'] = 'Out Of Stock';
-							$this->load->view('user/headeruser');
-							$this->load->view('user/checkout', $user_data);
-							$this->load->view('user/footer_user');
-							break;
-						}
+						//						if ($total_quan <= 0)
+						//						{
+						//	$user_data['userdata'] = $this->User->chekout_data($user_id);
+						//							$user_data['quntity'] = 'Out Of Stock';
+						//						}
 						//update quantity after order submit
-						$product_update = array(
-							'quntity' => $total_quan
-						);
-						$this->product->update_quantity($product_update, $val);
+
+						//						$product_update = array(
+						//							'quntity' => $total_quan
+						//						);
+						// update below
+							//$this->product->update_quantity($product_update, $val);
 
 						//user use coupon code
 						$off = $this->input->post('code');
@@ -473,12 +528,7 @@ class Products extends CI_Controller
 							//if enter invalid coupon code
 							if ($c_id == null)
 							{
-								////redirect to previous page with apporiate error msg
-								$user_data['userdata'] = $this->User->chekout_data($user_id);
 								$user_data['invalid'] = 'Invalid Coupon';
-								$this->load->view('user/headeruser');
-								$this->load->view('user/checkout', $user_data);
-								$this->load->view('user/footer_user');
 
 							} else
 							{
@@ -502,18 +552,13 @@ class Products extends CI_Controller
 							'user_id' => $user_id,
 							'coupons_id' => $c_id
 						);
-					}//end if user_id loop is end
+//					}//end if user_id loop is end
 				$coup_used_id = $this->couponmgmt->uses($c_id, $user_id, $coupon_data);
 
 				//check coupon already used used or not
-				if ($coup_used_id <= 0)
+				if ($coup_used_id == 0)
 				{
-					//redirect to previous page with apporiate error msg
-					$user_data['userdata'] = $this->User->chekout_data($user_id);
 					$user_data['msg'] = 'Coupon Already Used';
-					$this->load->view('user/headeruser');
-					$this->load->view('user/checkout', $user_data);
-					$this->load->view('user/footer_user');
 				}
 				else
 				{
@@ -575,14 +620,14 @@ class Products extends CI_Controller
 
 		<table style="margin-left: 50px;width:600px; background-color: skyblue;">
 		<tr>
-			<td style="display:inline;width: 250px;height: 150px; text-align: center"><b><h4>THANK YOU FOR YOUR ORDER
+			<td style="width: 250px;height: 150px; text-align: center"><b><h4>THANK YOU FOR YOUR ORDER
 				FROM MY SHOPPING CAR</h4></b>
 				Once your package ships we will send
 				an email with a link to track your order.
 				Your order summary is below. Thank
 				you again for your business.
 			</td>
-			<td  style="margin-left: 10px; display: inline;width: 50px">
+			<td  style="margin-left: 10px; width: 50px">
 				<h6 style=" font-weight: normal; margin-top: -40px">
 					<b>Call Us:
 						<a style="color: blue">+91 - 22 -40500699</a>
@@ -598,7 +643,8 @@ class Products extends CI_Controller
 			</tr>
 			</table>
 		<div style="text-align: center"><h3>Your Order</h3></div><br>
-		<div style="text-align: center">Place on Date</div><br>
+		<div style="text-align: center">Place on Date '.date("Y-m-d").'</div><br>
+		<div style="margin-left: 50px"> Order ID :'.$order_id.'</div><br>
 		<div>
 			<table border="1" style="margin-left: 50px;;width:600px;">
 				<tr style="text-align: center;  width: 50px;height: 50px">
@@ -654,13 +700,60 @@ class Products extends CI_Controller
 					{
 						show_error($this->email->print_debugger());
 					}
-
 				}//end else if coupon is valid or not used coupon
 			}//end else if payment using cash on delivery
 		}//end else if customer data is valid
 		//redirect to success page
+
+		//if no any error occure go to sccusse page
+		if(empty($user_data))
+		{
+			//delete data from wishlist
+			foreach ($this->cart->contents() as $items)
+			{
+				$product_id = $items['id'];
+				$this->product->delete_wishlist($user_id,$product_id);
+			}//end foreach
+			//update quantity in database
+			foreach ($this->cart->contents() as $items)
+			{
+				$item_ids = $items['id'];
+				$del_qunty = $items['qty'];
+				//reammaing quantity after user purchse product
+				$total_quan = $this->product->check_quantity($item_ids, $del_qunty);
+				$product_update = array(
+					'quntity' => $total_quan
+				);
+				//update that in database
+				$this->product->update_quantity($product_update, $item_ids);
+			}
+			$this->load->view('user/headeruser');
+			$this->load->view('paypal/cash_success');
+			$this->load->view('user/footer_user');
+		}
+		//else show error
+		else
+		{
+			$user_data['userdata'] = $this->User->chekout_data($user_id);
+			$user_data['address']=$this->User->checkout_address($user_id);
+			$this->load->view('user/headeruser');
+			$this->load->view('user/checkout', $user_data);
+			$this->load->view('user/footer_user');
+			$this->load->view('user/footer_user');
+		}//end else of error present
+	}//end function
+
+
+	public function checkout_error()
+	{
+		$user_id=$this->uri->segment(3);
+		$user_data['amount_total'] = 'Plseae Select Items';
+		//	$user_id=$this->session->userdata('user_session');
+		$user_data['userdata'] = $this->User->chekout_data($user_id);
+		$user_data['address']=$this->User->checkout_address($user_id);
 		$this->load->view('user/headeruser');
-		$this->load->view('paypal/cash_success');
+		$this->load->view('user/checkout', $user_data);
+		$this->load->view('user/footer_user');
 		$this->load->view('user/footer_user');
 	}
-}
+}//end class

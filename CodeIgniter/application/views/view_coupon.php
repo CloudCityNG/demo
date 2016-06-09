@@ -40,42 +40,52 @@
                     <span class="selected"></span>
                 </a>
             </li>
+            <!--      List of Admin      -->
             <li >
                 <a href="<?php echo site_url('admin/adminuser/')?>">
-                    Coupon Managment</a>
+                    Admin Management</a>
             </li>
-
+            <!--      List of Product      -->
             <li >
                 <a href="<?php echo site_url('admin/product/')?>">
-                    Product Managment</a>
+                    Product Management</a>
             </li>
-
-
+            <!--      List of Banner      -->
             <li >
                 <a href="<?php echo site_url('admin/banner')?>">
-                    Banner Managment</a>
+                    Banner Management</a>
             </li>
-
+            <!--      List of Category      -->
             <li >
                 <a href="<?php echo site_url('admin/category')?>">
                     Category Management</a>
             </li>
+            <!--      List of Users      -->
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
                     User List</a>
             </li>
-            <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
-            </li>
+            <!--      List of Orders      -->
             <li >
                 <a href="<?php echo site_url('admin/orders')?>">
                     Orders</a>
             </li>
+            <!--      List of Coupons      -->
+            <li >
+                <a href="<?php echo site_url('admin/coupon')?>">
+                    Coupon Management</a>
+            </li>
+            <!--      List of Complints      -->
+            <li >
+                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                    Complints Book</a>
+            </li>
+            <!--      CMS Details      -->
             <li >
                 <a href="<?php echo site_url('admin/cms')?>">
                     CMS</a>
             </li>
+            <!--      Admin setting      -->
             <li >
                 <a href="<?php echo site_url('admin/dashboard/setting')?>">
                     Setting</a>
@@ -199,9 +209,9 @@
                             <thead>
                             <tr>
                                 <th>Code ID</th>
-                                <th>User Id<a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_name&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_name&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Code <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_lastname&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Discount <a href='<?php if(empty($sort)){echo site_url('admin/adminuser?sortby=admin_lastname&sortorder='.$sortorder);}else{echo site_url('admin/adminuser/search_admin?sortby=admin_lastname&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>User Id</th>
+                                <th>Code </th>
+                                <th>Discount</th>
                             </tr>
                             </thead>
                             <?php

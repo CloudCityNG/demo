@@ -10,7 +10,9 @@ class Google extends CI_Controller
         $this->load->model('User');
     }
 
-
+    /**
+     * login using google
+     */
     public function google_login()
     {
         $authUrl="";
@@ -68,7 +70,11 @@ class Google extends CI_Controller
         }
 
 
-
+        /*
+         * if userdata set
+         * get infromtion of loged user
+         * else redirect to goole_auth page
+         */
         if(isset($userData))
         {
             $page_data['user_name']=$userData->given_name;
@@ -78,11 +84,13 @@ class Google extends CI_Controller
 
             $this->db->where('google_token',$userData->id);
             $query=$this->db->get('user')->num_rows();
+            //if data user is already login get user id from databse
             if(!empty($query))
             {
                $g_id= $this->User->google_id($userData->id);
                 redirect('Userlogin/ids/'.$g_id);
             }
+            //else insert user as a new user
             else
             {
                 $this->db->insert('user',$page_data);
@@ -97,6 +105,10 @@ class Google extends CI_Controller
                 $this->load->view('google_authentication', $data);
             }
     }
+
+    /**
+     * destroy user session
+     */
     public function destroy()
     {
         $this->session->sess_destroy();

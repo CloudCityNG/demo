@@ -15,7 +15,16 @@ class Coupon extends CI_Controller
         $this->load->library('upload');
         $this->load->helper(array('form', 'url'));
     }
-    public function index()                                    //banner table
+
+    /**
+     * display all register user list to admin
+     * apply pagination on table data
+     * apply both side sorting on columns
+     * @data = coupon code
+     *         coupon id
+     *         percent off
+     */
+    public function index()                                    //coupon table
     {
         if($this->session->userdata('session')) {
 
@@ -23,7 +32,7 @@ class Coupon extends CI_Controller
             $x=$this->session->userdata('id');
             $perpage=$this->Admin_Insert->fetch_perpage($x);
             $config = array();
-            $config["base_url"] = base_url()."admin/banner/index";
+            $config["base_url"] = base_url()."admin/coupon/index";
             $total_row = $this->couponmgmt->record_count_coupon();
             $config["total_rows"] = $total_row;
             $config["per_page"] = $perpage;
@@ -43,10 +52,11 @@ class Coupon extends CI_Controller
                 $page = 1;
             }
             $data['coupon'] = $this->couponmgmt->fetch_coupon_data($config["per_page"], $page);
-            $str_links = $this->pagination->create_links();
-            $data["links"] = explode('&nbsp;',$str_links );
 
-            $sortorder = 'DESC';
+            $str_links = $this->pagination->create_links();
+            $data["links"] = explode('&nbsp;',$str_links );         //generate links for pagination
+
+            $sortorder = 'DESC';                                    //sorting apply all columns
             if($this->input->get('sortorder') == 'DESC')
                 $sortorder = 'ASC';
 
@@ -55,26 +65,43 @@ class Coupon extends CI_Controller
             $this->load->view('footer');
             $this->load->view('coupon_mgmt', $data);
         }
-        else{
+        else
+        {
             redirect('admin/login');
         }
     }
-    public function delete_coupon()                                   //delete img
+
+    /**
+     * delete coupon from database
+     * basis on respective coupon id
+     */
+    public function delete_coupon()                                   //delete coupon
     {
         $this->couponmgmt->img_delete();
         redirect('admin/coupon');
     }
+
+    /**
+     * go to add new coupon page
+     */
     public function add_coupon()
     {
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('add_coupon');
     }
+
+    /**
+     * add new coupon with discount in databse
+     * validation of form is required
+     * generate randum coupon code
+     * insert new data in databse
+     */
     public function add()
     {
-
         $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
         $this->form_validation->set_rules('percent_off', 'Discount', 'required');
+        //if error occur in valdiation
         if ($this->form_validation->run() == FALSE){
 
             $this->load->view('header');
@@ -83,15 +110,16 @@ class Coupon extends CI_Controller
         }
         else
         {
+            //generate new coupon code
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             $charactersLength = strlen($characters);
             $randomString = '';
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 5; $i++)
+            {
                 $randomString .= $characters[rand(1, $charactersLength - 1)];
             }
             $admin_id=$this->session->userdata('id');
             $data= array(
-
                 'code' => $randomString,
                 'percent_off' => $this->input->post('percent_off'),
                 'created_by' => $admin_id
@@ -100,6 +128,10 @@ class Coupon extends CI_Controller
             redirect('admin/coupon');
         }
     }
+
+    /**
+     * view used coupon details to admin
+     */
     public function view_coupons()
     {
         $data['coupon']=$this->couponmgmt->show_coupon();
@@ -107,23 +139,54 @@ class Coupon extends CI_Controller
         $this->load->view('footer');
         $this->load->view('view_coupon',$data);
     }
+
+    /**
+     * search coupon data in table
+     * using keyword come from front end
+     * search in all columns
+     */
+    public function search_coupon()
+    {
+        $coupon_ser=$this->input->post('search');
+        $coupon_serach=trim($coupon_ser);
+        $data['coupon']=$this->couponmgmt->coupon_search($coupon_serach);
+        $sortorder = 'DESC';
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+
+        $data['sort']="sort";
+        $data["sortorder"] = $sortorder;
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );
+        $this->load->view('header');
+        $this->load->view('footer');
+        $this->load->view('coupon_mgmt',$data);
+    }
+
+    /**
+     * call from checkout.php from front end
+     * call in ajax function
+     * @return discount of respected coupon code
+    */
     public function discount()
     {
+        //code enter at front end
         $off=$this->input->post('code');
+        //fetch discount from database
         $disc=$this->couponmgmt->discount_off($off);
-        if($disc != null) {
+        //if discount is not null give discount
+        if($disc != null)
+        {
             $x = "";
             foreach ($this->cart->contents() as $items):
-
             endforeach;
             $x = $this->cart->format_number($this->cart->total());
-
-            echo $z = $x - $disc;
+            echo $z = $x - $disc;           //discount
         }
-        else{
-
-            echo $x = $this->cart->format_number($this->cart->total());
-
+        //else set previous total
+        else
+        {
+            echo $x = $this->cart->format_number($this->cart->total());//prev total
         }
     }
 

@@ -16,9 +16,18 @@ class Dashboard extends CI_Controller
         //$this->load->helper('form');
         //$this->load->library('session');
     }
+
+    /**
+     * admin dashboard
+     * display admin,product,compliant,banner counts,
+     * with all management tables
+     */
     public function index()
     {
-        if ($this->session->userdata('session')) {
+        //check session is set or not
+        //if session is set
+        if ($this->session->userdata('session'))
+        {
             $this->load->view('footer');
             $this->load->view('header');
             $count['admin_count'] = $this->Admin_Insert->record_count();
@@ -26,10 +35,17 @@ class Dashboard extends CI_Controller
             $count['compliant_count'] = $this->Admin_Insert->compliant_count();
             $count['banner_count'] = $this->Bannermgmt->record_count_banner();
             $this->load->view('dashboard', $count);
-        } else {
+        }
+        //else session not set
+        else
+        {
             redirect('admin/login');
         }
     }
+
+    /**
+     * redirect to dashboard page
+     */
     public function back_dashbord()                         //back link
     {
         if($this->session->userdata('session')){
@@ -39,7 +55,11 @@ class Dashboard extends CI_Controller
         }
     }
 
-
+    /**
+     * admin setting
+     * admin set perpage of list of table from admin side
+     * each admin can set differnt perpage
+     */
     public function setting()                                       //setting
     {
 
@@ -51,10 +71,16 @@ class Dashboard extends CI_Controller
         $this->load->view('footer');
         $this->load->view('setting',$session_data,$email);
     }
+
+    /**
+     * change perpage of admin panels table
+     * insert perpage data of suer in setting table with admin id
+     */
     public function perpage_change()
     {
-         $ses_id=$this->session->userdata('id');
+        $ses_id=$this->session->userdata('id');
         $page = $this->input->post('page');
+
         if($page == 'admin') {
             $data = array(
                 'conf_key' => $this->input->post('admin_id'),
@@ -77,6 +103,10 @@ class Dashboard extends CI_Controller
         $this->load->view('footer');
         $this->load->view('setting',$msg);
     }
+
+    /**
+     * change admin email id from admin setting
+     */
     public function change_email()
     {
         $id=$this->session->userdata('id');
@@ -85,8 +115,12 @@ class Dashboard extends CI_Controller
             'admin_email'=>$this->input->post('admin_email')
         );
         $this->Admin_Insert->upadate_email($data,$id);
-
     }
+
+    /**
+     * go to the admin replay page
+     * wih user query
+     */
     public function reply()                                          //view all query
     {
         if($this->session->userdata('session')) {
@@ -99,6 +133,10 @@ class Dashboard extends CI_Controller
             redirect('admin/login');
         }
     }
+
+    /**
+     * admin can see user query here and give replay to user
+     */
     public function replay_user()                                   //query details
     {
         if($this->session->userdata('session')) {
@@ -113,17 +151,18 @@ class Dashboard extends CI_Controller
         }
     }
 
+    /**
+     * admin replay send to respective user
+     */
     public function admin_replay()                                    //replay query
     {
-        $replay=$this->input->post('replay');
-        $email=$this->input->post('email');
-        $username=$this->input->post('username');
-        $msg=$this->input->post('message');
-        $contact=$this->input->post('contact');
+        $replay=$this->input->post('replay');       //admin replay
+        $email=$this->input->post('email');         //user email
+        $username=$this->input->post('username');   //user name
+        $msg=$this->input->post('message');         //user query
+        $contact=$this->input->post('contact');     //contact discription
         $this->Admin_Insert->replay_admin();
-
-
-
+        //send email to user
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'mail.wwindia.com',
@@ -135,6 +174,14 @@ class Dashboard extends CI_Controller
             'charset' => 'utf-8',
             'wordwrap' => TRUE
         );
+
+        $msgdata = array(
+            'username' => $username,
+            'email' => $email,
+            'contact' => $contact,
+            'replay' => $replay
+        );
+        /*
         $message = '
 
 
@@ -178,31 +225,42 @@ class Dashboard extends CI_Controller
 	</head>
 	</html>
         ';
-
+*/
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
         $this->email->from('sumit.desai@wwindia.com'); // change it to yours
         $this->email->to('sumit.desai@wwindia.com');// change it to yours
         $this->email->subject($msg);
-        $this->email->message($message);
-        if ($this->email->send()) {
-
-
-        } else {
+        $body = $this->load->view('email/admin_replay',$msgdata,TRUE);
+        $this->email->message($body);
+        if ($this->email->send())
+        {}
+        else
+        {
             show_error($this->email->print_debugger());
         }
         $con=$this->input->post('con_id');
-        $this->Admin_Insert->delete_signle($con);
+        //  $this->Admin_Insert->delete_signle($con);
         redirect('admin/dashboard/reply');
     }
+
+    /**
+     * on logout click
+     * unset admin session
+     * redirect to admin login
+     */
     public function logout()                                            //logout
     {
-       $this->session->unset_userdata();
-
-            $this->session->sess_destroy();
-
+            $this->session->unset_userdata();
+            //   $this->session->sess_destroy();
             redirect('admin/login');
     }
+
+    /**
+     * search user query from query list
+     * keywods comes from front end
+     * search realted data about that keyword in all column
+     */
     public function search_query()
     {
         $ser=$this->input->post('search');
