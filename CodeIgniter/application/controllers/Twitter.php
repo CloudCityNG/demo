@@ -108,9 +108,11 @@ class Twitter extends CI_Controller
 				//	var_dump($user_info);
 				$token = $user_info->id_str;
 				//	echo $token = $user_info->email_id;
+				$tregi = 'twit';
 				$data =array(
 					'user_name' => $user_info->name,
-					'twitter_token' => $user_info->id_str
+					'twitter_token' => $user_info->id_str,
+					'registration_method' => $tregi
 				);
 				$tw_id=$this->User->twitter($data,$token);
 				//	echo $tw_id;

@@ -48,8 +48,8 @@
             </li>
 
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <li >
                 <a href="<?php echo site_url('admin/userlist')?>">
@@ -61,7 +61,7 @@
 
             </li>
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 

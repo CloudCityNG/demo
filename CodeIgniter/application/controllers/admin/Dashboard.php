@@ -21,6 +21,9 @@ class Dashboard extends CI_Controller
      * admin dashboard
      * display admin,product,compliant,banner counts,
      * with all management tables
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()
     {
@@ -45,6 +48,9 @@ class Dashboard extends CI_Controller
 
     /**
      * redirect to dashboard page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function back_dashbord()                         //back link
     {
@@ -59,11 +65,15 @@ class Dashboard extends CI_Controller
      * admin setting
      * admin set perpage of list of table from admin side
      * each admin can set differnt perpage
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
+   /*
     public function setting()                                       //setting
     {
-
         $session_data=$this->session->userdata('session');
+
         $email=$this->Admin_Insert->session_email();
         $this->session->set_userdata('email',$email);
         $this->session->userdata('email');
@@ -75,8 +85,11 @@ class Dashboard extends CI_Controller
     /**
      * change perpage of admin panels table
      * insert perpage data of suer in setting table with admin id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function perpage_change()
+   /* public function perpage_change()
     {
         $ses_id=$this->session->userdata('id');
         $page = $this->input->post('page');
@@ -106,22 +119,28 @@ class Dashboard extends CI_Controller
 
     /**
      * change admin email id from admin setting
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function change_email()
+    /*public function change_email()
     {
-        $id=$this->session->userdata('id');
+        //  $id=$this->session->userdata('id');
         $data=array(
-            'admin_id'=>$this->input->post('admin_id'),
-            'admin_email'=>$this->input->post('admin_email')
+            'setting_email'=>$this->input->post('admin_email')
         );
-        $this->Admin_Insert->upadate_email($data,$id);
+        //  $this->Admin_Insert->upadate_email($data,$id);
+        $this->Admin_Insert->set_mail($data);
     }
-
+    */
     /**
      * go to the admin replay page
-     * wih user query
+     * with user query
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function reply()                                          //view all query
+    /*public function reply()                                          //view all query
     {
         if($this->session->userdata('session')) {
             $data['query']=$this->Admin_Insert->user_query();
@@ -132,12 +151,15 @@ class Dashboard extends CI_Controller
         {
             redirect('admin/login');
         }
-    }
+    }*/
 
     /**
      * admin can see user query here and give replay to user
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function replay_user()                                   //query details
+    /*public function replay_user()                                   //query details
     {
         if($this->session->userdata('session')) {
             $user_id = $this->input->get('contact_id', TRUE);
@@ -149,21 +171,24 @@ class Dashboard extends CI_Controller
         else{
             redirect('admin/login');
         }
-    }
+    }*/
 
     /**
      * admin replay send to respective user
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function admin_replay()                                    //replay query
+  /*  public function admin_replay()                                    //replay query
     {
         $replay=$this->input->post('replay');       //admin replay
         $email=$this->input->post('email');         //user email
         $username=$this->input->post('username');   //user name
         $msg=$this->input->post('message');         //user query
         $contact=$this->input->post('contact');     //contact discription
-        $this->Admin_Insert->replay_admin();
+        $this->Admin_Insert->replay_admin();*/
         //send email to user
-        $config = Array(
+       /* $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'mail.wwindia.com',
             'smtp_port' => 25,
@@ -173,14 +198,14 @@ class Dashboard extends CI_Controller
             //'charset' => 'iso-8859-1',
             'charset' => 'utf-8',
             'wordwrap' => TRUE
-        );
+        );*/
 
-        $msgdata = array(
+        /*$msgdata = array(
             'username' => $username,
             'email' => $email,
             'contact' => $contact,
             'replay' => $replay
-        );
+        );*/
         /*
         $message = '
 
@@ -226,9 +251,10 @@ class Dashboard extends CI_Controller
 	</html>
         ';
 */
-        $this->email->initialize($config);
+        /*$email=$this->Admin_Insert->fetch_email();
+        $this->email->initialize($this->config->item('email'));
         $this->email->set_newline("\r\n");
-        $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+        $this->email->from($email); // change it to yours
         $this->email->to('sumit.desai@wwindia.com');// change it to yours
         $this->email->subject($msg);
         $body = $this->load->view('email/admin_replay',$msgdata,TRUE);
@@ -242,12 +268,15 @@ class Dashboard extends CI_Controller
         $con=$this->input->post('con_id');
         //  $this->Admin_Insert->delete_signle($con);
         redirect('admin/dashboard/reply');
-    }
+    }*/
 
     /**
      * on logout click
      * unset admin session
      * redirect to admin login
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function logout()                                            //logout
     {
@@ -260,8 +289,11 @@ class Dashboard extends CI_Controller
      * search user query from query list
      * keywods comes from front end
      * search realted data about that keyword in all column
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
-    public function search_query()
+    /*public function search_query()
     {
         $ser=$this->input->post('search');
         $search=trim($ser);
@@ -270,5 +302,5 @@ class Dashboard extends CI_Controller
         $this->load->view('footer');
         $this->load->view('user_query',$data);
 
-    }
+    }*/
 }

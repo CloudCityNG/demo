@@ -22,6 +22,9 @@ class Category extends CI_Controller
      * $category = category_name
      *             category_id
      *             category_parent_is
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                 //view category list
     {
@@ -79,6 +82,9 @@ class Category extends CI_Controller
      *             parent_id
      * $category_ser = search is a keywords enter from front end
      * $category_search = trim search data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_category()                                   //search category data
     {
@@ -103,6 +109,9 @@ class Category extends CI_Controller
     /**
      * go to add category page
      * $category = all category list
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add_category()
     {
@@ -129,6 +138,9 @@ class Category extends CI_Controller
      * $data = category_name new category_name
      *         parent id if category is sub category of any categpry then apply parent_id of that category
      *         created_by = admin_id who create new category
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function insert_category()
     {
@@ -175,6 +187,9 @@ class Category extends CI_Controller
      * go to the edit category data page
      * $category = category_name
      *             parent category
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_category()
     {
@@ -205,6 +220,9 @@ class Category extends CI_Controller
      * $data = category_name new category_name
      *         parent id if category is sub category of any categpry then apply parent_id of that category
      *         created_by = admin_id who create new category
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function update_category()
     {

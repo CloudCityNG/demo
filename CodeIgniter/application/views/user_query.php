@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -64,8 +65,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -74,7 +75,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -185,7 +186,7 @@
 <!--                                </a>-->
 <!--                            </div>-->
                             <div class="btn-group pull-right">
-                                <form style="height: 30px; " action="<?php echo site_url('admin/dashboard/search_query')?>" method="post">
+                                <form style="height: 30px; " action="<?php echo site_url('admin/reply/search_query')?>" method="post">
                                     <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
                                     <input type="submit" class="btn" name="searchs">Search
                                     </input>
@@ -196,10 +197,11 @@
                             <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Subject</th>
-                                    <th>View/Replay</th>
+<!--                                    <th>Product Name  <a href='--><?php //if(empty($sort)){echo site_url('admin/product/?sortby=name&sortorder='.$sortorder);}else{echo site_url('admin/product/search_product?sortby=name&sortorder='.$sortorder);}?><!--' class='sort_icon'>  <img src="--><?php //echo base_url('/images/arrows.png')?><!--"> </a></th>-->
+                                    <th>Name <a href="<?php if(empty($sort)){echo site_url('admin/reply/?sortby=user_name&sortorder='.$sortorder);}else{echo site_url('admin/reply/search_query/?sortby=user_name&sortorder='.$sortorder);}?>" class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                    <th>Email<a href="<?php if(empty($sort)){echo site_url('admin/reply/?sortby=user_email&sortorder='.$sortorder);}else{echo site_url('admin/reply/search_query/?sortby=user_email&sortorder='.$sortorder);}?>" class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                    <th>Subject<a href="<?php if(empty($sort)){echo site_url('admin/reply/?sortby=message&sortorder='.$sortorder);}else{echo site_url('admin/reply/search_query/?sortby=message&sortorder='.$sortorder);}?>" class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                    <th>View/Reply</th>
 <!--                                    <th>Delete</th>-->
                                 </tr>
                                 </thead>
@@ -217,8 +219,7 @@
                                             <td><?php echo $value['user_name'];?></td>
                                             <td><?php echo $value['user_email'];?></td>
                                             <td><?php echo $value['message'];?></td>
-                                            <td><a href="<?php echo site_url('admin/dashboard/replay_user?contact_id='.$value['contact_id']);?>">View/Replay </a></td>
-<!--                                            <td><a href="--><?php //echo site_url('admin/dashboard/delete_user?admin_id='.$value['admin_id']);?><!--">Delete</a></td>-->
+                                            <td><a href="<?php echo site_url('admin/reply/replay_user/'.$value['contact_id']);?>">View/Reply </a></td>
                                         </tr>
                                     <?php } } ?>
                             </table>
@@ -226,12 +227,14 @@
                         </div>
                     </div>
                     <div class="pagination_listing">
-<!--                        --><?php
-//                        foreach($links as $li)
-//                        {
-//                            echo "<li>" . $li . "</li>";
-//                        }
-//                        ?>
+                        <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
+                            <?php
+                            foreach($links as $li)
+                            {
+                                echo " <li>". $li . "</li>";
+                            }
+                            ?>
+                        </ul>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>

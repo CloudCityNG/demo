@@ -17,6 +17,9 @@ class Login extends CI_Controller
 
     /**
      * adminuser login page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                          //login page
     {
@@ -25,6 +28,9 @@ class Login extends CI_Controller
 
     /**
      * validation on admin form
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function insert()                                               //admin registration
     {
@@ -45,6 +51,7 @@ class Login extends CI_Controller
         //otherwise insert admin data in table
         else
         {
+            echo $tus = $this->input->post('status');
             $data= array(
                 'admin_name' => $this->input->post('admin_name'),
                 'admin_lastname' => $this->input->post('admin_lastname'),
@@ -62,6 +69,9 @@ class Login extends CI_Controller
      * validation apply on form
      * display admin list
      * apply pagination on display admin list
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function add()                                      //add new admin
     {
@@ -125,6 +135,9 @@ class Login extends CI_Controller
 
     /**
      * go to forget password page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function forget()                                           //forget password
     {
@@ -133,6 +146,9 @@ class Login extends CI_Controller
 
     /**
      * go to add admin page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function add_admin()                                        //new admin add
     {
@@ -143,6 +159,9 @@ class Login extends CI_Controller
 
     /**
      * go to the admin_registration page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function registration()                                     //registraion page view
     {
@@ -153,6 +172,9 @@ class Login extends CI_Controller
      * admin login
      * verify user name and password
      * and send him to respective pages
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function admin_login()                                      //admin login
     {
@@ -177,6 +199,9 @@ class Login extends CI_Controller
     /**
      * verify email id
      * for forget password
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function verify_email()                                         //email validation
     {
@@ -186,6 +211,9 @@ class Login extends CI_Controller
 
     /**
      * if login is unsccuessfull then show this msg
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function error()                                          //invalid login data
     {
@@ -196,6 +224,9 @@ class Login extends CI_Controller
 
     /**
      * if email is not valid
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function email_error()                                    //invalid email
     {
@@ -241,7 +272,12 @@ class Login extends CI_Controller
         }
     }
     */
-    //login done successfully redirect to dashboard page
+    /**
+     * login done successfully redirect to dashboard page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
+     */
     public function admin_dashboard()                                   //admin_dashboard
     {
         //session is activated

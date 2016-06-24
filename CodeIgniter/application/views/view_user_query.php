@@ -65,8 +65,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -75,7 +75,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -158,7 +158,7 @@
                             <i class="icon-angle-right"></i>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('admin/dashboard/reply')?>">Back</a>
+                            <a href="<?php echo base_url('admin/reply')?>">Back</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li><a href="#">Setting Page</a></li>
@@ -173,7 +173,7 @@
             foreach($view as $value)
                     $value=(array)$value;}else {echo "";}
             ?>
-            <form name="form" onsubmit="return query_valid()" action="<?php echo base_url('admin/dashboard/admin_replay')?>" method="post">
+            <form name="form" onsubmit="return query_valid()" action="<?php echo base_url('admin/reply/admin_replay')?>" method="post">
                 <input type="hidden" name="con_id" value="<?php echo $value['contact_id']?>">
                 <div class="row-fluid">
                     <div class="span12"><div style="text-align: center"><lable> <h1>User Query Details<h1></lable></div>
@@ -198,7 +198,7 @@
             </form>
 
 
-                        <a href="<?php echo base_url('admin/dashboard/reply')?>" class="btn">Back</a>
+                        <a href="<?php echo base_url('admin/reply')?>" class="btn">Back</a>
                     </div>
                 </div>
 

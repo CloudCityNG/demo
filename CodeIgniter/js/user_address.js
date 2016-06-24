@@ -1,6 +1,6 @@
 function user_address_valid()
 {
-    alert('s');
+    alert('asd');
     var add1 = document.forms["form"]["address_1"].value;
     //var add2 = document.forms["form"]["address_2"].value;
     var city = document.forms["form"]["city"].value;
@@ -12,7 +12,7 @@ function user_address_valid()
     if((add1 == null || add1 == "" ||city == null || city == "" || state == null || state == "" ||
         con == null || con == "" ||zip == null || zip == "" || (str < 6 || str > 8)))
     {
-        alert('sd');
+
         document.getElementById('add1').innerHTML="";
         document.getElementById('city').innerHTML="";
         document.getElementById('state').innerHTML="";

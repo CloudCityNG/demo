@@ -77,8 +77,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -87,7 +87,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -196,23 +196,18 @@
                         <!--                            <div class="clearfix">-->
 
                         <div class="btn-group pull-right">
-                            <form style="height: 30px; " action="<?php echo site_url('admin/coupon/search_admin')?>" method="post">
-                                <input style="width:150px" type="text" class="span6 m-wrap" name="search"/>
-                                <input type="submit" class="btn" name="searchs">Search
-                                </input>
-                            </form>
 
                         </div>
                         <!--                            </div>-->
                         <center><?php echo "<h3 style='color: green'>".$this->session->flashdata('msg');"<h3>"?></center>
                         <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                             <thead>
-                            <tr>
-                                <th>Code ID</th>
-                                <th>User Id</th>
-                                <th>Code </th>
-                                <th>Discount</th>
-                            </tr>
+                                <tr>
+                                    <th> Code ID <a href='<?php if(empty($sort)){echo site_url('admin/coupon/view_coupons?sortby=coupon_id&sortorder='.$sortorder);}else{echo site_url('admin/coupon/view_coupons/search_admin?sortby=coupon_id&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                    <th>User Id <a href='<?php if(empty($sort)){echo site_url('admin/coupon/view_coupons?sortby=user_id&sortorder='.$sortorder);}else{echo site_url('admin/coupon/view_coupons/search_admin?sortby=user_id&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                    <th>Code <a href='<?php if(empty($sort)){echo site_url('admin/coupon/view_coupons?sortby=code&sortorder='.$sortorder);}else{echo site_url('admin/coupon/view_coupons/search_admin?sortby=code&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a></th>
+                                    <th>Discount  <a href='<?php if(empty($sort)){echo site_url('admin/coupon/view_coupons?sortby=percent_off&sortorder='.$sortorder);}else{echo site_url('admin/coupon/view_coupons/search_admin?sortby=percent_off&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a></th></th>
+                                 </tr>
                             </thead>
                             <?php
                             if(empty($coupon)){
@@ -232,14 +227,15 @@
                         </table>
                     </div>
                 </div>
-                <div class="pagination_listing">
-                    <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-<!--                        --><?php
-//                        foreach($links as $li)
-//                        {
-//                            echo "<li style=''>" . $li . "</li>";
-//                        }
-//                        ?>
+                <div class=" pagination ">
+                    <ul id="pagination-demo" class="pagination_lg">
+                        <?php
+                        foreach($links as $li)
+                        {
+                            echo "<li style=''>" . $li . "</li>";
+                        }
+                        ?>
+                    </ul>
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
             </div>

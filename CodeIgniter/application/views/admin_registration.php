@@ -1,4 +1,26 @@
 <!DOCTYPE html>
+<script>
+    function email()
+    {
+        var code=document.getElementById('mail').value;
+        $.ajax({ url: '<?php echo site_url('admin/adminuser/check_email/');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output) {
+                if(output > 0 ) {
+                    document.getElementById('mail').value="";
+                    document.getElementById('email').innerHTML="E-mail Already Exists";
+
+                    return false;
+                }
+                else {
+                    document.getElementById('email').innerHTML="";
+                    return true;
+                }
+            }
+        });
+    }
+</script>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
@@ -110,18 +132,18 @@
             <div class="controls">
                 <div class="input-icon left">
                     <i class="icon-envelope"></i>
-                    <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
+                    <input id="mail" onchange="return email()" class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
                 </div>
-                <div id="email" style="display:inline;color: red">
+                <div id="email" style="display:inline;color: red"><div id="remail">
                     <?php echo form_error('admin_email'); ?>
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                    <lable>Active<input type="radio"  name="status" value="1"/></lable>
-                    <lable>Inctive<input type="radio"  name="status" value="0"/></lable>
-                <div  style="display:inline;color: red">
+                    <lable>Active<input type="radio"  name="status" value="M"/></lable>
+                    <lable>Inctive<input type="radio"  name="status" value="F"/></lable>
+                <br><div id="gender" style="display:inline;color: red">
                     <?php echo form_error('status'); ?>
                 </div>
             </div>
@@ -129,7 +151,7 @@
         <div class="control-group">
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    <input type="checkbox" name="tnc" id="cnt"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
                 </label>
                 <div id="tnc" style="display:inline;color: red">
                     <?php echo form_error('tnc'); ?>

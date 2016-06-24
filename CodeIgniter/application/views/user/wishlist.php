@@ -69,7 +69,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
+                        <a href="<?php echo base_url('')?>"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
@@ -100,10 +100,14 @@
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="<?php echo site_url('home/checkout/')?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="<?php echo site_url('home/user_cart');?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('checkout/');}else{echo site_url('checkout/checkout_new_user');}?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <?php $i[]=""; foreach ($this->cart->contents() as $item) {$i[]=$item['qty'];}$cart_item= array_sum($i);?>
+                            <li><a href="<?php echo site_url('cart');?>"><i class="fa fa-shopping-cart"></i>Cart(<?php echo $cart_item;?>)</a></li>
                             <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
-                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <?php }else{?><li><a href=""><i class="fa fa-user"></i> <?php echo $this->session->userdata('user_name')?></a>
+                                <ul role="" class="sub-menu" style="background-color: white">
+                                    <li><a href="<?php echo site_url('home/logout')?>" style="color: black">Logout</a></li>
+                                </ul></li>
                             <?php }?>
                         </ul>
                     </div>
@@ -126,7 +130,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('home')?>" class="active">Home</a></li>
+                            <li><a href="<?php echo base_url('')?>" class="active">Home</a></li>
                            <!-- <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
@@ -186,7 +190,7 @@
 
                 <td><?php echo $value['price'];?></td>
                 <td><a onclick="return delete_con()" href="<?php echo site_url('Userwishlist/delete_from_wishlist/'.$value['wishlist_id'])?>">Delete</a></td>
-                <td><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id'])?>">Add</a></td>
+                <td> <?php if($value['quntity'] < 10){echo "Out of Stock";}else{?><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id'])?>">Add</a> <?php }?></td>
             </tr>
         <?php } } ?>
 </table>

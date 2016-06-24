@@ -16,12 +16,14 @@ class Userwishlist extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->helper('form');
     }
-    /*
+    /**
      * display user wishlist
      * $ses_id = user_id
      * $data = array of product details image,name,price
      * #model = user
-     * return = @data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function wishlist()                                //user wishlist
     {
@@ -30,13 +32,16 @@ class Userwishlist extends CI_Controller
         $this->load->view('user/wishlist',$data);
     }
 
-    /*
+    /**
      * add product to wishlist from front end
      * @ses_id = loged user user_id
      * @prduct_id = selected product_id
      * @data =  user_id,product_id
      * return = add @data in database
      * #model = user
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add_to_wishlist()                         //add to wishlist
     {
@@ -50,14 +55,18 @@ class Userwishlist extends CI_Controller
         );
         //insert data in database
         $this->User->add_wishlist($data);
+        $this->session->set_flashdata('msg2','Product Add In Wishlist');
         redirect('home');
     }
 
-    /*
+    /**
      * delete particular product from database
      * @wish_id = wishlist select product_id
      * #model = user
      * return delete single product from database
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_from_wishlist()                    //delete data from wishlist
     {

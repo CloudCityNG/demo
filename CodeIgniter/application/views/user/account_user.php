@@ -5,6 +5,27 @@ if(isset($user_data)){
 {
     $value =(array)$value;}}else{echo "";}
 ?>
+<script>
+    function email()
+    {
+        var code=document.getElementById('mail').value;
+        $.ajax({ url: '<?php echo site_url('useraccount/verify_email/');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output) {
+                if(output == '0' ) {
+                    document.getElementById('mail').value="";
+                    document.getElementById('remail').innerHTML="E-mail Already Exists";
+                    return false;
+                }
+                else {
+                    document.getElementById('remail').innerHTML="";
+                    return true;
+                }
+            }
+        });
+    }
+</script>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -62,7 +83,7 @@ if(isset($user_data)){
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
+                        <a href="<?php echo base_url()?>"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
@@ -93,10 +114,13 @@ if(isset($user_data)){
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="<?php echo site_url('home/checkout/')?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="<?php echo site_url('home/user_cart');?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
-                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('checkout/');}else{echo site_url('checkout/checkout_new_user');}?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <?php $i[]=""; foreach ($this->cart->contents() as $item) {$i[]=$item['qty'];}$cart_item= array_sum($i);?>
+                            <li><a href="<?php echo site_url('cart');?>"><i class="fa fa-shopping-cart"></i>Cart(<?php echo $cart_item;?>)</a></li>                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <?php }else{?><li><a href=""><i class="fa fa-user"></i> <?php echo $this->session->userdata('user_name')?></a>
+                                <ul role="" class="sub-menu" style="background-color: white">
+                                    <li><a href="<?php echo site_url('home/logout')?>" style="color: black">Logout</a></li>
+                                </ul></li>
                             <?php }?>
                         </ul>
                     </div>
@@ -118,7 +142,7 @@ if(isset($user_data)){
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('home')?>" class="active">Home</a></li>
+                            <li><a href="<?php echo base_url()?>" class="active">Home</a></li>
                             <li ><a href="<?php echo site_url('Useraccount/address_update/')?>">Address Book</a>
                                 <!--<ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
@@ -128,14 +152,15 @@ if(isset($user_data)){
                                     <li><a href="login.html">Login</a></li>
                                 </ul>-->
                             </li>
-                            <li><a href="<?php echo site_url('Useraccount/password_change/')?>">Chnage Password<i></i></a>
+                            <li><a href="<?php echo site_url('Useraccount/password_change/')?>">Change Password<i></i></a>
                                 <!--<ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
                                 </ul>-->
                             </li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/track_order/');}else{echo site_url('Userlogin/login');}?>">Track Order</a></li>
-                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/contact/');}else{echo site_url('Userlogin/login');}?>"> Contact</a></li>                        </ul>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/contact/');}else{echo site_url('Userlogin/login');}?>"> Contact</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/allorders/');}else{echo site_url('Userlogin/login');}?>"> My Orders</a></li>
                         </ul>
                     </div>
                 </div>
@@ -175,25 +200,25 @@ if(isset($user_data)){
                             <?php echo form_error('user_lastname'); ?>
                         </div><br>
                         <label>Email Address</label>
-                        <input type="email" placeholder="Email Address" name="user_email"value="<?php if(isset($user_data)){echo $value['user_email'];}else{echo set_value('user_email');};?>"/>
-                        <div id="email"  style="display:inline; color: red" >
+                        <input onchange="return email()" id="mail" type="email" placeholder="Email Address" name="user_email"value="<?php if(isset($user_data)){echo $value['user_email'];}else{echo set_value('user_email');};?>"/>
+                            <div id="remail"  style="display:inline; color: red" ></div><div id="email"  style="display:inline; color: red" >
                             <?php echo form_error('user_email'); ?>
                         </div><br>
-                        <label>Password</label>
-                        <input readonly type="password" placeholder="Password" name="user_password"value="<?php if(isset($user_data)){ echo $value['user_password'];}else{echo set_value('user_email');};?>"/>
-                        <div id="pass" style="display:inline; color: red" >
-                            <?php echo form_error('user_password'); ?>
-                        </div><br>
+<!--                        <label>Password</label>-->
+<!--                        <input readonly type="password" placeholder="Password" name="user_password"value="--><?php //if(isset($user_data)){ echo $value['user_password'];}else{echo set_value('user_email');};?><!--"/>-->
+<!--                        <div id="pass" style="display:inline; color: red" >-->
+<!--                            --><?php //echo form_error('user_password'); ?>
+<!--                        </div><br>-->
                         <label>
-                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="<?php if(isset($user_data)){ echo $value['user_status'];}else{echo set_value('user_status');}?>">
+                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="M" <?php if(isset($user_data)){echo($value['user_status'] == 'M')?'checked':'';}else{ echo 'checked' ;}?>>
                             Male
                         </label>
                         <label>
-                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="<?php if(isset($user_data)){ echo $value['user_status'];}else{echo set_value('user_status');}?>">
-                            Female
+                            <input type="radio" name="user_status"style="display: inline;width: 20px;height: 10px" value="F" <?php if(isset($user_data)){echo ($value['user_status'] == 'F')?'checked':'';}?>>
+                                   Female
                         </label>
                         <div></div>
-                        <div style="display:inline; color: red" >
+                        <div id="gender" style="display:inline; color: red" >
                             <?php echo form_error('user_status'); ?>
                         </div><br>
 

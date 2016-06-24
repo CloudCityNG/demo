@@ -29,8 +29,8 @@
 <div class="navbar-inner"  style="margin-left: 0px>
         <div class="container-fluid">
 <!-- BEGIN LOGO -->
-<a class="brand" href="index.html">
-    <img src="<?php echo base_url('assets/img/logo.png')?>" alt="logo" />
+<a class="brand" href="<?php echo base_url('admin/dashboard')?>">
+    <img src=" <?php echo base_url('assets/img/logo.png')?>" alt="logo" />
 </a>
 <!-- END LOGO -->
 <!-- BEGIN RESPONSIVE MENU TOGGLER -->

@@ -67,8 +67,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -77,7 +77,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -183,11 +183,8 @@
                         <!--                                <a href="--><?php //echo base_url('javascript:;')?><!--" class="remove"></a>-->
                         <!--                            </div>-->
                     </div>
-
                 </div>
-
-
-
+                <!-- Add new Category With Partent Category List-->
                 <form action="<?php echo site_url('admin/category/insert_category')?>" method="post">
 
                     <div class="control-group">
@@ -195,14 +192,12 @@
                         <div class="controls">
                             <select name="category" class="category" id='category'>
                                 <option value="not" selected >Not Select</option>
+                                <!--   Display Current Category List-->
                                 <?php
                                 foreach($category as $value)
-                                {
-                                    ?>
+                                {?>
                                     <option  value="<?php echo $value['category_name']?>"><?php echo $value['category_name']?></option>
-
                                 <?php }?>
-
                             </select>
                             <br>
                         </div>
@@ -223,8 +218,6 @@
 
             </input>
         </form>
-
-
     </div>
 </div>
 <!-- END PAGE CONTENT -->

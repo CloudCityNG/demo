@@ -81,6 +81,11 @@ class Banner extends CI_Controller
         }
     }
 */
+    /**
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
+     */
     public function done()                                         // practice img
     {
         $data['image']=$this->Admin_Insert->show_image();
@@ -113,11 +118,13 @@ class Banner extends CI_Controller
 
 
 
-    /*
+    /**
      * pagination for banner page
      * apply sorting both side
      * $banner = banner_image
-     *
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                    //banner table
     {
@@ -159,14 +166,17 @@ class Banner extends CI_Controller
             $this->load->view('footer');
             $this->load->view('banner_control', $data);
         }
-        else{
+        else
+        {
             redirect('admin/login');
         }
     }
 
     /**
      * change banner image
-     *
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_banner()                                        //edit banner-imiage
     {
@@ -184,17 +194,25 @@ class Banner extends CI_Controller
      * $x = file name
      * $id = admin_id
      * $path = image path
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function updated_banner()                                   //update banner_image
     {
+        $file = $_FILES["banner_name"]["name"];
+        $array = explode('.', $file);
+        $fileName=$array[0];
+        $fileExt=$array[1];
+        $newfile=$fileName."_".time().".".$fileExt;
 
-        $x=$_FILES['banner']['name'];
+        $x=$newfile;
         $id=$this->session->userdata('id');
-        $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['banner']['name'];
+        $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$newfile;
         //check image is uplaoded or not
         if(!empty($x)){
             if(move_uploaded_file($_FILES['banner']['tmp_name'], $path )) {
-            $uploed = $_FILES['banner']['name'];
+            $uploed = $newfile;
             $img = array(
                 'banner' => $uploed,
                 'modify_by' => $id,
@@ -218,6 +236,9 @@ class Banner extends CI_Controller
     /**
      * delete image from banner
      * select id using url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_banner()                                   //delete img
     {
@@ -229,6 +250,9 @@ class Banner extends CI_Controller
      * search banner image from database
      * based on image name,banner_id
      * apply both side sorting fro searching relevant data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_banner()                                  //serach img
     {
@@ -250,6 +274,9 @@ class Banner extends CI_Controller
      * view signle banner deatails
      * $image=banner_image
      *        image_name
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function view_banner_details()                              //view img
     {
@@ -275,21 +302,29 @@ class Banner extends CI_Controller
      * $x = image name
      * $id=user_id
      * $path = image path
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add()
     {
+        $file = $_FILES["banner_name"]["name"];
+        $array = explode('.', $file);
+        $fileName=$array[0];
+        $fileExt=$array[1];
+        $newfile=$fileName."_".time().".".$fileExt;
         //filename
-        $x=$_FILES['banner']['name'];
+        $x=$newfile;
         //admin_id
         $id=$this->session->userdata('id');
         //image path
-        $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$_FILES['banner']['name'];
+        $path =$_SERVER['DOCUMENT_ROOT'].'/CodeIgniter/images/'.$newfile;
         //check image selected or not
         if(!empty($x))
         {
             if (move_uploaded_file($_FILES['banner']['tmp_name'], $path))
             {
-                $upload = $_FILES['banner']['name'];
+                $upload =$newfile;
                 $img = array(
                     'banner' => $upload,
                     'created_by' => $id

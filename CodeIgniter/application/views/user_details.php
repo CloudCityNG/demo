@@ -64,8 +64,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -74,7 +74,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 

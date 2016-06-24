@@ -8,6 +8,7 @@ class Welcome extends CI_Controller {
         // To use site_url and redirect on this controller.
         $this->load->helper('url');
         $this->load->model('User');
+        $this->load->model('Admin_Insert');
 	}
 
 	public function login(){
@@ -35,42 +36,61 @@ class Welcome extends CI_Controller {
             } catch (FacebookApiException $e) {
                 $user = null;
             }
-        }else {
-
+        }
+        else
+        {
             $this->facebook->destroySession();
         }
-
-        if ($user) {
-
+        if ($user)
+        {
             $data['logout_url'] = site_url('welcome/logout'); // Logs off application
             $data['user_profile'] = $this->facebook->api('/me?fields=id,name,email');
             $data['scope'] = array('email');
             $me = $this->facebook->api('/me?fields=id,name,email');
             $f_id=$me['id'];
+            $regi_method='fb';
             $fb_data=array(
                 //'scope' => array('email'),
                 'user_name' => $me['name'],
                 'fb_token' => $me['id'],
                 'user_email' => $me['email'],
+                'registration_method' => $regi_method
             );
 
-            $fb_id=$this->User->insert_fbuser($fb_data,$f_id);
-            redirect('Userlogin/ids/'.$fb_id);
+            $data['fb_data']=$me['name'];
+            $data['fb_data']=$me['id'];
+            $data['fb_data']=$me['email'];
+            $data['method']='fb';
+
+
 
             // OR
             // Logs off FB!
             // $data['logout_url'] = $this->facebook->getLogoutUrl();
+            $this->db->where('fb_token',$f_id);
+            $query=$this->db->get('user')->num_rows();
 
-        } else {
+            if(!empty($query))
+            {
+                  $fb_id=$this->User->insert_fbuser($fb_data,$f_id);
+                  redirect('Userlogin/ids/'.$fb_id);
+            }
+            else
+            {
+                $this->load->view('user/registration_form', $data);
+                $this->load->view('user/footer_user');
+            }
+        }
+        else
+        {
             $data['login_url'] = $this->facebook->getLoginUrl(array(
                 'redirect_uri' => site_url('/welcome/login'),
                 'scope' => array("email") // permissions here
             ));
+            $this->load->view('user/headeruser');
+            $this->load->view('fblogin',$data);
+            $this->load->view('user/footer_user');
         }
-        //$this->session->set_userdata('user_session',$fb_id);
-        $this->load->view('user/headeruser');
-        $this->load->view('fblogin',$data);
-        $this->load->view('user/footer_user');
 	}
     public function logout()
     {

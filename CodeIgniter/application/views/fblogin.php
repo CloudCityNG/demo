@@ -11,9 +11,6 @@
             <?php if (@$user_profile):  // call var_dump($user_profile) to view all data ?>
 
 
-
-
-
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <img class="img-thumbnail" data-src="holder.js/140x140" alt="140x140" src="https://graph.facebook.com/<?=$user_profile['id']?>/picture?type=large" style="width: 140px; height: 140px;">

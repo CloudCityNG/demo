@@ -10,6 +10,29 @@ else
     $value="";
 }?>
 
+<script>
+    function email()
+    {
+        var code=document.getElementById('mail').value;
+        $.ajax({ url: '<?php echo site_url('admin/adminuser/verify_email/');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output) {
+                if(output == '0' ) {
+                    document.getElementById('mail').value="";
+                    document.getElementById('remail').innerHTML="E-mail Already Exists";
+                    return false;
+                }
+                else {
+                    document.getElementById('remail').innerHTML="";
+                    return true;
+
+                }
+            }
+        });
+    }
+</script>
+
 <script src="<?php echo base_url('js/up_admin_valid.js');?>"></script>
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
@@ -76,8 +99,8 @@ else
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -86,7 +109,7 @@ else
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -213,9 +236,6 @@ else
                                     <?php echo form_error('admin_name'); ?>
                                 </div>
                             </div>
-
-
-
                         <div class="control-group">
                             <label style="display: inline">Lastname</label>
 
@@ -229,9 +249,9 @@ else
                             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                             <label style="display: inline">Email</label>
 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="span6 m-wrap" style="display: inline ;width: 250px" type="text" placeholder="Email" name="admin_email" value="<?php if(isset($edit_userdata)){echo $value['admin_email'];}else echo set_value('admin_email');?>"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="mail" onchange="return email()" class="span6 m-wrap" style="display: inline ;width: 250px" type="text" placeholder="Email" name="admin_email" value="<?php if(isset($edit_userdata)){echo $value['admin_email'];}else echo set_value('admin_email');?>"/>
                                 </div>
-                                <div id="email" style="display:inline;color: red">
+                                <div id="email" style="display:inline;color: red"><div id="remail"></div>
                                     <?php echo form_error('admin_email'); ?>
                                 </div>
 

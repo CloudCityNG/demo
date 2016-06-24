@@ -74,8 +74,8 @@ else{
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -84,7 +84,7 @@ else{
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -196,13 +196,15 @@ else{
                 </div>
 
 
+                <div class="portlet-body form">
 
                 <center>  <form name="form" onsubmit="return cms_valid()"  action="<?php echo site_url('admin/cms/update/')?>" method="post" enctype="multipart/form-data">
 
 <!--                    <input type="hidden" value="--><?php //if(isset($cms)){echo $value['cms_id'];}else{echo $c_id;}?><!--" name="id">-->
 
+                        <input class="span6 m-wrap"  style="margin-left: 120px ;display: inline;width:250px;"type="hidden" placeholder="Title" name="id" value="<?php if(isset($cms)){echo $value['cms_id'];}else{echo set_value('title');}?>"/>
 
-                    <div class="control-group ">
+                        <div class="control-group ">
 
                         &nbsp;
                            <img src="<?php if(isset($cms)) {echo base_url().'/images/'.$value['banner_name'];}else{echo "";}?>"style="width: 200px;height: 200px" >
@@ -225,7 +227,7 @@ else{
                     </div>
                     <div  class="control-group">
                         <label style="display: inline" >Meta-Description</label>
-                        <textarea class="span6 m-wrap" style="margin-left: 50px ;display: inline;width:250px;" type="password" id="register_password" placeholder="Meta-description"  name="meta_description"><?php if(isset($cms)){echo $value['meta_description'];}else echo set_value('meta_description')?></textarea>
+                        <textarea  class=" ckeditor span6 m-wrap" style="margin-left: 50px ;display: inline;width:250px;" type="password" id="register_password" placeholder="Meta-description"  name="meta_description"><?php if(isset($cms)){echo $value['meta_description'];}else echo set_value('meta_description')?></textarea>
                     </div>
                     <div id="meta_desc" style="display:inline;color: red ">
                         <?php echo form_error('meta_desc'); ?>
@@ -239,10 +241,7 @@ else{
                     <div id="meta_key" style="display:inline;color: red">
                         <?php echo form_error('meta_key'); ?>
                     </div>
-
-
             </div>
-
           <center>  <a  style="margin-left: 50px" href="<?php echo site_url('admin/cms')?>" type="button" class="btn">
                 Back
             </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -255,7 +254,7 @@ else{
 
         </form></center>
 
-
+</div>
     </div>
 </div>
 <!-- END PAGE CONTENT -->
@@ -276,13 +275,14 @@ else{
 			</span>
     </div>
 </div>
-
+<script type="text/javascript" src="<?php echo base_url('assets/plugins/ckeditor/ckeditor.js')?>"></script>
 <script>
     jQuery(document).ready(function() {
         App.init();
         TableEditable.init();
     });
 </script>
+
 </body>
 <!-- END BODY -->
 </html>

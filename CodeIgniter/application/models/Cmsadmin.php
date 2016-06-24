@@ -5,6 +5,9 @@ class Cmsadmin extends CI_Model
     /**
      * count total numbers of row in cms table
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function cms_record_count()
     {
@@ -17,6 +20,9 @@ class Cmsadmin extends CI_Model
      * @param $limit pagination limit of perpage
      * @param $page selected page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetchcms_data($limit, $page)           //pagignation cms
     {
@@ -45,6 +51,9 @@ class Cmsadmin extends CI_Model
      * @param $data = cms_image
      *                 title,metadescription
      *                 keywords,content
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function insert_csm($data)
     {
@@ -55,6 +64,9 @@ class Cmsadmin extends CI_Model
      * go to the cms edit page
      * @param $cms_id-cms data id
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function cms_edit($cms_id)
     {
@@ -68,6 +80,9 @@ class Cmsadmin extends CI_Model
      * @param $data = cms_image
      *                 title,metadescription
      *                 keywords,content
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function update_csm($id,$data)
     {
@@ -78,6 +93,9 @@ class Cmsadmin extends CI_Model
     /**
      * delete data from table
      * @param $id - selected cms_id fro deletion
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function cms_delete($id)
     {
@@ -88,6 +106,9 @@ class Cmsadmin extends CI_Model
     /**
      * set cms data at home page
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function home_cms()
     {
@@ -98,6 +119,9 @@ class Cmsadmin extends CI_Model
      * search related data of enter keyword from front end
      * @param $cms_search - enter keyword from front end
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function cms_search($cms_search)
     {

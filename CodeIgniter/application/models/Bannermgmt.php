@@ -6,6 +6,9 @@ class Bannermgmt extends CI_Model
     /**
      * count total numbers of row in banner table
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function record_count_banner()                      //count images
     {
@@ -18,6 +21,9 @@ class Bannermgmt extends CI_Model
      * @param $limit pagination limit og perpage
      * @param $page selected page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch_banner_data($limit, $page)           //pagignation images
     {
@@ -44,6 +50,9 @@ class Bannermgmt extends CI_Model
     /**
      * fetch data of selected image whitch select for updatetion
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function img_edit()                          //edit img
     {
@@ -58,6 +67,9 @@ class Bannermgmt extends CI_Model
     /**
      * update new image in databse
      * @param $data = banner_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function image_update($data)                  //update img
     {
@@ -70,6 +82,9 @@ class Bannermgmt extends CI_Model
      * delete image from database
      * selected image id get from front end
      * by get method
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function img_delete()                         //delete img
     {
@@ -82,6 +97,9 @@ class Bannermgmt extends CI_Model
      * search related data from table
      * @param $image_search = keyword comes from front end
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function search_image($image_search)
     {
@@ -99,6 +117,9 @@ class Bannermgmt extends CI_Model
     /**
      * show image details to admin
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function img_detalis()                      //img details
     {
@@ -113,6 +134,9 @@ class Bannermgmt extends CI_Model
      * insert new banner data in table
      * @param $data=banner_images
      *              banner_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function update_banner($data)                //insert new banner
     {
@@ -123,6 +147,9 @@ class Bannermgmt extends CI_Model
      * fetch banners for display on home page
      * not a slider banner
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function home_banner()                       //change home banner
     {
@@ -131,6 +158,9 @@ class Bannermgmt extends CI_Model
 
     /**
      * show signle banner which id is 5
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function single_banner()
     {

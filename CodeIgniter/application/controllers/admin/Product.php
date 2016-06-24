@@ -21,6 +21,9 @@ class Product extends CI_Controller
      * @data = product_id
      *         product_name
      *         product_status
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public  function index()
     {
@@ -71,6 +74,9 @@ class Product extends CI_Controller
     /**
      * go to add product page
      * display all categorys are avaliable
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add_product()                                   //new product
     {
@@ -89,6 +95,9 @@ class Product extends CI_Controller
     /**
      * insert new product in database
      * server side validation apply on add new product from
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function insert_product()                    //insert_product
     {
@@ -186,6 +195,9 @@ class Product extends CI_Controller
      * delete product from product table
      * on the basis of product id
      * comes from url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_product()                      //delete product
     {
@@ -199,6 +211,9 @@ class Product extends CI_Controller
      * @data = product_id
      *         product_name
      *         title,metadata,keywords,description,etc
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_product()                        //edit_product
     {
@@ -211,6 +226,9 @@ class Product extends CI_Controller
     /**
      * validation for update product form
      * insert images in image table product data in product table
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function product_update()                        //update product
     {
@@ -298,6 +316,9 @@ class Product extends CI_Controller
      * search product from table
      * search keywords comes from front end
      * match with all columns
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_product()                        //serach product
     {
@@ -324,6 +345,9 @@ class Product extends CI_Controller
     /**
      * view product details to admin
      * select product on the basis of product_id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function view_product_details()                  //product_details
     {

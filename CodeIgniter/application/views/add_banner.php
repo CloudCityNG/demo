@@ -67,8 +67,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -77,7 +77,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -188,29 +188,19 @@
                 </div>
 
 
-
+<!--                    Add new Banner Form-->
                 <form name="form" onsubmit="return admin_valid()"  action="<?php echo site_url('admin/banner/add')?>" method="post" enctype="multipart/form-data">
-
-
 <!--                    <img src="--><?php //echo base_url().'/images/'.$item['banner_name']?><!--"><BR><BR>-->
                     <input type="file" class="default" name="banner" size="20"/>
-
                     <?php if(!empty($msg)){echo "<p style='color: red'>".$msg."<p>";}else{ echo "";}?>
-
             </div>
             <a  href="<?php echo site_url('admin/banner')?>" type="button" class="btn">
                 Back
             </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="submit" id="register-submit-btn" class="btn green" value="Submit">
-
             </input>
-
         </div>
-
-
         </form>
-
-
     </div>
 </div>
 <!-- END PAGE CONTENT -->

@@ -1,4 +1,6 @@
 var Charts = function () {
+   //console.log(arrayOfPHPData);
+
 
     return {
         //main function to initiate the module
@@ -131,6 +133,9 @@ var Charts = function () {
                     [29, 90 + randValue()],
                     [30, 95 + randValue()]
                 ];
+                //console.log(amount);
+                //var item=arrayOfPHPData;
+
                 var visitors = [
                     [1, randValue() - 5],
                     [2, randValue() - 5],
@@ -163,13 +168,13 @@ var Charts = function () {
                     [29, 27 + randValue()],
                     [30, 31 + randValue()]
                 ];
-
-                var plot = $.plot($("#chart_2"), [{
-                            data: pageviews,
-                            label: "Unique Visits"
+                //var plot = $("#chart_1").plot(data, amount).data("plot");
+                var plot = $.plot($("#chart_1"), [{
+                            data: amount,
+                            label: "Total Sales"
                         }, {
-                            data: visitors,
-                            label: "Page Views"
+                            data: order,
+                            label: "Total Orders"
                         }
                     ], {
                         series: {
@@ -199,8 +204,9 @@ var Charts = function () {
                         },
                         colors: ["#d12610", "#37b7f3", "#52e136"],
                         xaxis: {
-                            ticks: 11,
-                            tickDecimals: 0
+                            ticks: [[1,'January'],[2,'February'],[3,'March'],[4,'April'],[5,'May'],[6,'June'],[7,'Jully'],[8,'August'],[9,'September'],[10,'October'],[11,'November'],[12,'December']],
+                            tickDecimals: 0,
+
                         },
                         yaxis: {
                             ticks: 11,
@@ -225,7 +231,7 @@ var Charts = function () {
                 }
 
                 var previousPoint = null;
-                $("#chart_2").bind("plothover", function (event, pos, item) {
+                $("#chart_1").bind("plothover", function (event, pos, item) {
                     $("#x").text(pos.x.toFixed(2));
                     $("#y").text(pos.y.toFixed(2));
 
@@ -236,8 +242,20 @@ var Charts = function () {
                             $("#tooltip").remove();
                             var x = item.datapoint[0].toFixed(2),
                                 y = item.datapoint[1].toFixed(2);
-
-                            showTooltip(item.pageX, item.pageY, item.series.label + " of " + x + " = " + y);
+                            console.log(x);
+                            if(x == 5.00)
+                            {
+                                x='May';
+                            }
+                            if(x == 6.00)
+                            {
+                                x='June';
+                            }
+                            if(x == 7.00)
+                            {
+                                x='Jully';
+                            }
+                            showTooltip(item.pageX, item.pageY, item.series.label + " in " + x + " = " + y);
                         }
                     } else {
                         $("#tooltip").remove();

@@ -1,5 +1,26 @@
 <!DOCTYPE html>
+<script>
+    function email()
+    {
+        var code=document.getElementById('mail').value;
+        $.ajax({ url: '<?php echo site_url('admin/adminuser/check_email/');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output) {
+                if(output > 0 ) {
+                    document.getElementById('mail').value="";
+                    document.getElementById('email').innerHTML="E-mail Already Exists";
 
+                    return false;
+                }
+                else {
+                    document.getElementById('email').innerHTML="";
+                    return true;
+                }
+            }
+        });
+    }
+</script>
 <script src="<?php echo base_url('js/admin_validation.js');?>"></script>
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
@@ -66,8 +87,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -76,7 +97,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -187,7 +208,7 @@
                 </div>
 
 
-
+                <!--  Add new adminuser from  -->
                 <form name="form" onsubmit="return admin_valid()"  action="<?php if(isset($add)){echo site_url('admin/adminuser/add');}else{echo site_url('admin/adminuser/add');}?>" method="post">
 
                     <div class="control-group">
@@ -198,7 +219,7 @@
                         <?php echo form_error('admin_name'); ?>
                     </div>
 
-
+            <!--  Admin Lastname-->
             <div class="control-group">
                 <label style="display: inline">Lastname</label>
                 <input class="span6 m-wrap" style="display: inline;width:250px;" type="text" placeholder="Lastname" name="admin_lastname" value="<?php echo set_value('admin_lastname')?>"/>
@@ -206,6 +227,7 @@
             <div id="last" style="display:inline; color: red" >
                 <?php echo form_error('admin_lastname'); ?>
             </div>
+                    <!-- Admin Password-->
             <div  class="control-group">
                 <label style="display: inline" >Password</label>
                 <input class="span6 m-wrap" style="display: inline;width:250px;" type="password" id="register_password" placeholder="Password"  name="admin_password" value="<?php echo set_value('admin_password')?>"/>
@@ -213,7 +235,7 @@
             <div id="pass" style="display:inline;color: red ">
                 <?php echo form_error('admin_password'); ?>
             </div>
-
+                    <!-- Admin Confirm Password-->
             <div class="control-group">
                 <label style="display: inline" >Confirm</label>
                 &nbsp;
@@ -222,14 +244,13 @@
             <div id="com" style="display:inline;color: red">
                 <?php echo form_error('admin_compass'); ?>
             </div>
-
+                    <!--            Admin Email-->
             <div class="control-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label style="display: inline">Email</label>
-
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="span6 m-wrap" style="display: inline;width:250px;" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input onchange=" return email()" id="mail" class="span6 m-wrap" style="display: inline;width:250px;" type="text" placeholder="Email" name="admin_email" value="<?php echo set_value('admin_email')?>"/>
             </div>
-            <div id="email" style="display:inline;color: red">
+            <div id="email" style="display:inline;color: red"><div id="remail"></div>
                 <?php echo form_error('admin_email'); ?>
             </div>
 

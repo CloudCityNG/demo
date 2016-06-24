@@ -6,6 +6,9 @@ class Couponmgmt extends CI_Model
     /**
      * count total numbers of row in coupons table
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function record_count_coupon()                               //count coupons
     {
@@ -18,6 +21,9 @@ class Couponmgmt extends CI_Model
      * @param $limit pagination limit of perpage
      * @param $page selected page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch_coupon_data($limit, $page)                    //pagination on coupons
     {
@@ -43,6 +49,9 @@ class Couponmgmt extends CI_Model
     /**
      * delete data from table
      * selected coupons_id for deletion
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function delete_coupon()                                     //delete coupons
     {
@@ -55,6 +64,9 @@ class Couponmgmt extends CI_Model
      * insert cms data in database
      * @param $data = code
      *                 percent off,coupon_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function insert($data)                                       //insert coupons
     {
@@ -65,6 +77,9 @@ class Couponmgmt extends CI_Model
      * give discount on coupon code
      * @param $off(string) selected coupon
      * @return null|double
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function discount_off($off)                                  //calculate discount
     {
@@ -87,6 +102,9 @@ class Couponmgmt extends CI_Model
      * select coupon id onthe basis of coupon code
      * @param $off(string)- code eter from front end
      * @return null|coupon_id(int)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function code_id($off)                                       //find code id
     {
@@ -109,6 +127,9 @@ class Couponmgmt extends CI_Model
      * @param $user_id(int) which user used that coupon
      * @param $coupon_data(string) code
      * @return int
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function uses($c_id,$user_id,$coupon_data)                   //find used coupons
     {
@@ -133,8 +154,11 @@ class Couponmgmt extends CI_Model
 
     /**
      * udpaet table of used of coupons
-     * @param $order_id - order id  in whictch coupon code is used
-     * @param $c_id- which coupon code is used
+     * @param $order_id(int) - order id  in whictch coupon code is used
+     * @param $c_id(int)- which coupon code is used
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function update_used_coupon($order_id,$c_id)                 //update used coupon data
     {
@@ -145,6 +169,9 @@ class Couponmgmt extends CI_Model
      * search related data of enter keyword from front end
      * @param $search(string) - enter keyword from front end
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function coupon_search($search)                              //search coupons from table
     {
@@ -154,17 +181,47 @@ class Couponmgmt extends CI_Model
         $this->db->or_like('percent_off',$search);
         return $this->db->get()->result_array();
     }
-
-    /**
-     * show all coupons to admin
-     * @return mixed
-     */
-    public function show_coupon()                                       //display coupons
+    public function record_count_coupon_used()
     {
         $this->db->select('*');
         $this->db->from('coupons_used');
         $this->db->join('coupon','coupon.coupon_id=coupons_used.coupons_id');
-        return $this->db->get()->result_array();
-        var_dump($query);
+        return $this->db->get()->num_rows();
+
+    }
+
+    /**
+     * show all coupons to admin
+     * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
+     */
+    public function show_coupon($limit,$page)                                       //display coupons
+    {
+        //sorting column if selected column den sort by that or default column code
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'coupon_id';
+        //sorting default order is desc
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+        $offset = ($page - 1) * $limit;
+        $this->db->limit($limit, $offset);
+        $this->db->select('*');
+        $this->db->from('coupons_used');
+        $this->db->join('coupon','coupon.coupon_id=coupons_used.coupons_id');
+        $this->db->order_by($var,$order);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+
+
+
     }
 }

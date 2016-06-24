@@ -14,10 +14,14 @@ class Userlogin extends CI_Controller
         $this->load->library('cart');
         $this->load->helper(array('form', 'url'));
         $this->load->helper('form');
+        $this->load->model('Admin_Insert');
     }
 
     /**
      * go to user login
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function login()                 // login and registration
     {
@@ -31,6 +35,9 @@ class Userlogin extends CI_Controller
      * insert new user data in table
      * send mail to admin about new user regester
      * send new mail to user after registration with email and password
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function registration()                 //user registration
     {
@@ -51,12 +58,14 @@ class Userlogin extends CI_Controller
         //validation successfull
         else
         {
+            $regi = 'form';
             $data = array(
                 'user_name' => $this->input->post('user_name'),
                 'user_lastname' => $this->input->post('user_lastname'),
                 'user_password' => $this->input->post('user_password'),
                 'user_email' => $this->input->post('user_email'),
-                'user_status' => $this->input->post('user_status')
+                'user_status' => $this->input->post('user_status'),
+                'registration_method' => $regi
             );
             $this->User->insert_user($data);
             $email=$this->input->post('user_email');
@@ -64,7 +73,7 @@ class Userlogin extends CI_Controller
 
             //send mail to user about welcome to shopping card
             //with email and password
-            $config = Array(
+            /*$config = Array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'mail.wwindia.com',
                 'smtp_port' => 25,
@@ -74,12 +83,12 @@ class Userlogin extends CI_Controller
                 //'charset' => 'iso-8859-1',
                 'charset' => 'utf-8',
                 'wordwrap' => TRUE
-            );
+            );*/
             $ep=array(
                 'email' => $email,
                 'pass' => $pass,
             );
-            $this->load->library('email', $config);
+            $this->load->library('email', $this->config->item('email'));
 /*
             $message = '
 
@@ -137,7 +146,7 @@ class Userlogin extends CI_Controller
 </head>
 </html>';
 */
-            $this->email->initialize($config);
+            $this->email->initialize($this->config->item('email'));
             $this->email->set_newline("\r\n");
             $this->email->from('sumit.desai@wwindia.com'); // change it to yours
             $this->email->to('sumit.desai@wwindia.com');// change it to yours
@@ -205,10 +214,10 @@ class Userlogin extends CI_Controller
 </head>
 </html>
             ';*/
-
-            $this->email->initialize($config);
+            $email=$this->Admin_Insert->fetch_email();
+            $this->email->initialize($this->config->item('email'));
             $this->email->set_newline("\r\n");
-            $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+            $this->email->from($email); // change it to yours
             $this->email->to('sumit.desai@wwindia.com');// change it to yours
             $this->email->subject('New User Add');
             //call template from email template
@@ -225,26 +234,48 @@ class Userlogin extends CI_Controller
 
     /**
      * fetch user id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function login_user()               // get id
     {
-        $user_data['id'] = $this->User->user_login();
-        $this->load->view('user/empty', $user_data);
+        $this->form_validation->set_error_delimiters('<div style="display: inline" class="error">', '</div>');
+        $this->form_validation->set_rules('login_email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('login_password', 'Password', 'required|regex_match[/^[0-9A-Za-z]{6}$/]');
+        if ($this->form_validation->run() == FALSE)
+        {
+            //$this->load->view('user/headeruser');
+            $this->load->view('user/login_user');
+            $this->load->view('user/footer_user');
+        }else {
+            $user_data['id'] = $this->User->user_login();
+            $this->load->view('user/empty', $user_data);
+        }
     }
 
     /**
      * set id in session
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function ids()                      // set sesssion
     {
         $user_data = $this->uri->segment(3);
-        echo $user_data;
-        $this->session->set_userdata('user_session', $user_data);
-        redirect('home');
+        // echo $user_data;
+        $user_name=$this->User->fetch_name($user_data);
+        echo $this->session->set_userdata('user_session', $user_data);
+        echo $this->session->set_userdata('user_name', $user_name);
+
+        redirect(base_url());
     }
 
     /**
      * show errro if email and password not match in database
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function error()                    // login error
     {
@@ -256,6 +287,9 @@ class Userlogin extends CI_Controller
 
     /**
      * go to forget password page
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function forget()                     //forgot e-mail
     {
@@ -266,6 +300,9 @@ class Userlogin extends CI_Controller
 
     /**
      * match data with database
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function forget_user()                 // e-mail validation
     {
@@ -274,6 +311,9 @@ class Userlogin extends CI_Controller
 
     /**
      * if foeget password email not match
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function email_error()                  //e-mail error
     {
@@ -285,6 +325,9 @@ class Userlogin extends CI_Controller
     /**
      * send email to user with new password
      * @param $id = user_id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function sendmail($id)                  //send mail to user e-mail id
     {
@@ -301,7 +344,7 @@ class Userlogin extends CI_Controller
         );
         $this->User->newpassword($data,$id);
 
-        $config = Array(
+        /*$config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'mail.wwindia.com',
             'smtp_port' => 25,
@@ -311,11 +354,12 @@ class Userlogin extends CI_Controller
             //'charset' => 'iso-8859-1',
             'charset' => 'utf-8',
             'wordwrap' => TRUE
-        );
+        );*/
         $message = $randomString;
-        $this->email->initialize($config);
+        $email=$this->Admin_Insert->fetch_email();
+        $this->email->initialize($this->config->item('email'));
         $this->email->set_newline("\r\n");
-        $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+        $this->email->from($email); // change it to yours
         $this->email->to('sumitdesai80@gmail.com');// change it to yours
         $this->email->subject('Resume from JobsBuddy for your Job posting');
         $this->email->message($message);
@@ -333,4 +377,18 @@ class Userlogin extends CI_Controller
             show_error($this->email->print_debugger());
         }//end else
     }//end sendmail function
+    public function check_email()
+    {
+        $email=$this->input->post('code');
+        $verify=$this->User->email_check($email);
+        if($verify == '0')
+        {
+            echo $verify;
+            return true;
+        }
+        else{
+           // echo "E-mail already Exists";
+            echo $verify;
+        }
+    }
 }//end controller

@@ -8,6 +8,7 @@ class Orders extends CI_Controller
     {
         parent:: __construct();
         $this->load->model('Admin_Insert');
+        $this->load->model('User');
         $this->load->model('orderadmin');
         $this->load->library('form_validation');
         $this->load->library('email');
@@ -23,6 +24,9 @@ class Orders extends CI_Controller
      *                user_name - who purches respective product
      *                status - product current status
      *                grand_total - total price with/without discount of order
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                 //view user data
     {
@@ -81,6 +85,9 @@ class Orders extends CI_Controller
      * search on the bases of all columns
      * sorting also apply on search data
      * @param search - keyword enter at front end
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      *
      */
     public function search_order()                          //search admin_user data
@@ -106,6 +113,9 @@ class Orders extends CI_Controller
      * view details of particular orders
      * @param o_id - order_id
      * @param data - status of particular product
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function view_order()                            //view details of particular orders
     {
@@ -128,6 +138,9 @@ class Orders extends CI_Controller
      *                comment(string)- msg fro customer
      *                order_id(int)- order_id
      *                modify_date(date)-current date
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function update_order()
     {
@@ -151,7 +164,7 @@ class Orders extends CI_Controller
         //chanegs updated in order_status table
         $this->orderadmin->order_update($o_id,$data);
         //send mail to cutomer of its order status
-        $config = Array(
+        /*$config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'mail.wwindia.com',
             'smtp_port' => 25,
@@ -160,11 +173,12 @@ class Orders extends CI_Controller
             'mailtype' => 'html', //'charset' => 'iso-8859-1',
             'charset' => 'utf-8',
             'wordwrap' => TRUE
-        );
+        );*/
         $message = $comment;
-        $this->email->initialize($config);
+        $email=$this->Admin_Insert->fetch_email();
+        $this->email->initialize($this->config->item('email'));
         $this->email->set_newline("\r\n");
-        $this->email->from('sumit.desai@wwindia.com'); // change it to yours
+        $this->email->from($email); // change it to yours
         $this->email->to('sumit.desai@wwindia.com');// change it to yours
         $this->email->subject('About Product Status');
         $this->email->message($message);
@@ -204,6 +218,9 @@ class Orders extends CI_Controller
      *             transaction id
      *             payment date
      *             grand_total
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_order()
     {
@@ -218,12 +235,73 @@ class Orders extends CI_Controller
         //fetch order details
         $data['order']=$this->orderadmin->order_data($o_id);
         //fetch shipping details address,etc;
-        $data['shipping']=$this->orderadmin->shipping_data($u_id);
+        $data['shipping']=$this->orderadmin->shipping_data($o_id);
         //fetch payment type and details
         $data['payment']=$this->orderadmin->payment($o_id);
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('view_orderdetails', $data);
+    }
+    public function order_chart()
+    {
+        $total_mc = "";
+        $total_jc = "";
+//       $data_ap = $this->orderadmin->fetch_date_ap();
+        $data_may_paypal = $this->orderadmin->fetch_date_may();
+        $data_may_cod = $this->orderadmin->fetch_date_may_cod();
+        $data_jun_paypal = $this->orderadmin->fetch_date_jun();
+        $data_jun_cod = $this->orderadmin->fetch_date_jun_cod();
+
+        foreach ($data_may_paypal as $value) {
+            $value = (array)$value;
+            $date_mp[] = $value['grand_total'];
+            $total_mp = array_sum($date_mp);
+        }
+        foreach ($data_may_cod as $value) {
+            $value = (array)$value;
+            $date_mc[] = $value['grand_total'];
+            $total_mc = array_sum($date_mc);
+        }
+        foreach ($data_jun_paypal as $value) {
+            $value = (array)$value;
+            $date_junep[] = $value['grand_total'];
+            $total_jp = array_sum($date_junep);
+        }
+        foreach ($data_jun_cod as $value) {
+            $value = (array)$value;
+            $date_junec[] = $value['grand_total'];
+            $total_jc = array_sum($date_junec);
+        }
+
+
+        $data_may_order = $this->orderadmin->fetch_date_may_order();
+
+       foreach($data_may_order as $value)
+       {
+           $value=(array)$value;
+           $may_order=$value['order_id'];
+       }
+        $data_jun_order = $this->orderadmin->fetch_date_jun_order();
+        foreach($data_jun_order as $value)
+        {
+            $value=(array)$value;
+            $june_order=$value['order_id'];
+        }
+
+        $order_data['total_m'] = $total_mc + $total_mp;
+        $order_data['order_m'] = $may_order;
+        $order_data['total_j'] = $total_jp + $total_jc;
+        $order_data['order_j'] = $june_order;
+        $this->load->view('header');
+        $this->load->view('Sales_reports', $order_data);
+    }
+
+
+
+    public function pract_chart()
+    {
+        $data['year_graph'] = $this->User->get_data();
+        $this->load->view('script_chart',$data);
     }
 
 }

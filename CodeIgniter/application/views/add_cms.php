@@ -67,8 +67,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -77,7 +77,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -186,8 +186,6 @@
 
                 </div>
 
-
-
                 <form name="form" onsubmit="return cms_valid()"  action="<?php echo site_url('admin/cms/add')?>" method="post" enctype="multipart/form-data">
 
                     <div class="control-group">
@@ -208,7 +206,7 @@
                     </div>
                     <div  class="control-group">
                         <label style="display: inline" >Meta-Description</label>
-                        <textarea class="span6 m-wrap" style="margin-left: 50px ;display: inline;width:250px;" type="text" id="register_password" placeholder="Meta-description"  name="meta_description"><?php echo set_value('meta_description')?></textarea>
+                        <textarea class=" ckeditor span6 m-wrap" style="margin-left: 50px ;display: inline;width:250px;" type="text" id="register_password" placeholder="Meta-description"  name="meta_description"><?php echo set_value('meta_description')?></textarea>
                     </div>
                     <div id="meta_desc" style="display:inline;color: red ">
                         <?php echo form_error('meta_description'); ?>
@@ -258,6 +256,8 @@
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
+<script type="text/javascript" src="<?php echo base_url('assets/plugins/ckeditor/ckeditor.js')?>"></script>
+
 <div class="footer">
     <div class="footer-inner">
         2013 &copy; Metronic by keenthemes.

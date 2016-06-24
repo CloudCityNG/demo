@@ -24,7 +24,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/CodeIgniter';
-
+$config['email'] = Array(
+    'protocol' => 'smtp',
+    'smtp_host' => 'mail.wwindia.com',
+    'smtp_port' => 25,
+    'smtp_user' => 'sumit.desai@wwindia.com', // change it to yours
+    'smtp_pass' => 'nb=np2^89mKn', // change it to yours
+    'mailtype' => 'html',
+    //'charset' => 'iso-8859-1',
+    'charset' => 'utf-8',
+    'wordwrap' => TRUE
+);
 /*
 |--------------------------------------------------------------------------
 | Index File

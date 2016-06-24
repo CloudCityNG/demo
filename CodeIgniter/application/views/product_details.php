@@ -64,8 +64,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -74,7 +74,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -174,33 +174,21 @@
                 foreach($details as $value)
                 {
                     $value=(array)$value;
-//                    ?><!--<h1> --><?php //echo $value['name']?><!--</h1>-->
-<!--                    <div style="display: inline;width: 200px;height: 300px">-->
-<!--                        <img src="--><?php //echo base_url().'/images/'.$value['image_name'];?><!--" style="width: 200px;height: 300px;display: inline">-->
-                    </div>
+                ?></div>
 
-
-
-
-                    <div style="display: inline;width: 200px; height: 300px">
-                        <b><h3 style="display: inline">Product Name:</h3></b>
-                        <h4 style="display: inline"><?php echo $value['name']?></h4><br>
-                        <b><h3 style="display: inline">Brand:</h3></b>
-                        <h4 style="display: inline"><?php echo $value['short_description']?></h4> <br>
-                        <b><h3 style="display: inline">Description:</h3></b>
-                        <h4 style="display: inline"><?php echo $value['long_description']?></h4> <br>
-                        <b><h3 style="display: inline">Price:</h3></b>
-                        <h4 style="display: inline"><?php echo $value['price']?></h4> <br>
-                        <b><h3 style="display: inline">Discount Price:</h3></b>
-                        <h4 style="display: inline"><?php echo $value['special_price']?></h4> <br>
-
-                    </div>
-<!--                    <h1> --><?php //echo $value['name']?><!--</h1>-->
-<!--                    <div style="display: inline;width: 200px;height: 300px">-->
-                        <img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 200px;height: 300px;display: inline;margin-left: 300px;margin-top: -222px">
-<!--                    </div>-->
-
-
+        <center><img src="<?php echo base_url().'/images/'.$value['image_name'];?>" style="width: 200px;height: 200px"></center><br>
+        <center><table class="table" style="display: inline;width: 600px; height: 300px">
+            <tr><td style="display: inline">Product Name:</td>
+            <td style="display: inline"><?php echo $value['name']?></td></tr>
+            <tr><td style="display: inline">Brand:</td>
+            <td style="display: inline"><?php echo $value['short_description']?></td></tr>
+            <tr><td style="display: inline">Description:</td>
+            <td style="display: inline"><?php echo $value['long_description']?></td></tr>
+            <tr><td style="display: inline">Price:</td>
+            <td style="display: inline"><?php echo $value['price']?></td></tr>
+            <tr><td style="display: inline">Discount Price:</td>
+            <td style="display: inline"><?php echo $value['special_price']?></td></tr>
+        </table></center>
 
                <?php
                 }

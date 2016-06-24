@@ -23,6 +23,9 @@ class Coupon extends CI_Controller
      * @data = coupon code
      *         coupon id
      *         percent off
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                    //coupon table
     {
@@ -74,6 +77,9 @@ class Coupon extends CI_Controller
     /**
      * delete coupon from database
      * basis on respective coupon id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_coupon()                                   //delete coupon
     {
@@ -95,7 +101,10 @@ class Coupon extends CI_Controller
      * add new coupon with discount in databse
      * validation of form is required
      * generate randum coupon code
-     * insert new data in databse
+     * insert new data in database
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add()
     {
@@ -131,10 +140,44 @@ class Coupon extends CI_Controller
 
     /**
      * view used coupon details to admin
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function view_coupons()
     {
-        $data['coupon']=$this->couponmgmt->show_coupon();
+        $x=$this->session->userdata('id');
+        $perpage=$this->Admin_Insert->fetch_perpage($x);
+        $config = array();
+        $config["base_url"] = base_url()."admin/coupon/view_coupons/";
+        $total_row = $this->couponmgmt->record_count_coupon_used();
+        $config["total_rows"] = $total_row;
+        $config["per_page"] = $perpage;
+        $config['use_page_numbers'] = TRUE;
+        $config['num_links'] = $total_row;
+        $config['cur_tag_open'] = '&nbsp;<a class="current">';
+        $config['cur_tag_close'] = '</a>';
+        $config['next_link'] = 'Next';
+        $config['prev_link'] = 'Previous';
+        $this->pagination->initialize($config);
+        if($this->uri->segment(4))
+        {
+            $page = ($this->uri->segment(4));
+        }
+        else
+        {
+            $page = 1;
+        }
+        $data['coupon'] = $this->couponmgmt->show_coupon($config["per_page"], $page);
+
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );         //generate links for pagination
+
+        $sortorder = 'DESC';                                    //sorting apply all columns
+        if($this->input->get('sortorder') == 'DESC')
+            $sortorder = 'ASC';
+
+        $data["sortorder"] = $sortorder;
         $this->load->view('header');
         $this->load->view('footer');
         $this->load->view('view_coupon',$data);
@@ -144,6 +187,9 @@ class Coupon extends CI_Controller
      * search coupon data in table
      * using keyword come from front end
      * search in all columns
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_coupon()
     {
@@ -167,6 +213,9 @@ class Coupon extends CI_Controller
      * call from checkout.php from front end
      * call in ajax function
      * @return discount of respected coupon code
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
     */
     public function discount()
     {
@@ -181,7 +230,8 @@ class Coupon extends CI_Controller
             foreach ($this->cart->contents() as $items):
             endforeach;
             $x = $this->cart->format_number($this->cart->total());
-            echo $z = $x - $disc;           //discount
+            $x_total=str_replace(',', '', $x);
+            echo $z = $x_total - $disc;           //discount
         }
         //else set previous total
         else

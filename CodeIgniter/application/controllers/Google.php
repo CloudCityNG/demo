@@ -47,15 +47,11 @@ class Google extends CI_Controller
             $client->authenticate($_GET['code']);
             $_SESSION['access_token'] = $client->getAccessToken();
             header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
-
-
         }
 
         // Set Access Token to make Request
         if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
             $client->setAccessToken($_SESSION['access_token']);
-
-
         }
 
         // Get User Data from Google and store them in $data
@@ -69,49 +65,64 @@ class Google extends CI_Controller
             redirect($authUrl);
         }
 
-
-        /*
+        /**
          * if userdata set
          * get infromtion of loged user
          * else redirect to goole_auth page
+         * @package CodeIgniter
+         * @subpackage Controller
+         * @author Sumit Desai
+         *
          */
         if(isset($userData))
         {
+            $gregi='google';
             $page_data['user_name']=$userData->given_name;
             $page_data['user_lastname']= $userData->family_name;
             $page_data['user_email']=$userData->email;
             $page_data['google_token']=$userData->id;
+            $page_data['registration_method']=$gregi;
 
             $this->db->where('google_token',$userData->id);
             $query=$this->db->get('user')->num_rows();
             //if data user is already login get user id from databse
+
+            $data['name']=$userData->givenName;
+            $data['last']= $userData->family_name;
+            $data['email']=$userData->email;
+            $data['token']=$userData->id;
+            $data['method']='google';
+
             if(!empty($query))
             {
                $g_id= $this->User->google_id($userData->id);
                 redirect('Userlogin/ids/'.$g_id);
             }
-            //else insert user as a new user
             else
             {
-                $this->db->insert('user',$page_data);
-                $g_id= $this->User->google_id($userData->id);
-                redirect('Userlogin/ids/'.$g_id);
+                $this->load->view('user/registration_form',$data);
+                $this->load->view('user/footer_user');
             }
         }
         else
+        {
             if(isset($authUrl))
             {
                 $this->session->sess_destroy();
                 $this->load->view('google_authentication', $data);
             }
+        }
     }
 
     /**
      * destroy user session
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function destroy()
     {
         $this->session->sess_destroy();
-       redirect('home');
+         redirect('home');
     }
 }

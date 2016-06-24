@@ -7,25 +7,38 @@ function registration()
     var pass = document.forms["form"]["admin_password"].value;
     var str=pass.length;
     var com = document.forms["form"]["admin_compass"].value;
+    var radio = document.forms["form"]["status"].value;
+    var namef=/[^a-zA-Z\-\/]/;
+    var check1= document.getElementById("cnt").checked;
 
-    if((first == null || first == "")|| (last == null || last == "")||email==""||
+    if((first == null || first == "")||(namef.test(first))||(namef.test(last))|| (last == null || last == "")||email==""||
         (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email))||pass == null ||
         pass == "" ||(str < 6 || str > 8)||((/[^a-zA-Z0-9\-\/]/.test(pass)))||(com == "")||
-        (com != pass))
+        (com != pass)||(radio == false)||(check1 == false))
     {
         document.getElementById('first').innerHTML="";
         document.getElementById('last').innerHTML="";
         document.getElementById('pass').innerHTML="";
         document.getElementById('email').innerHTML="";
         document.getElementById('com').innerHTML="";
+        document.getElementById('gender').innerHTML="";
+        document.getElementById('tnc').innerHTML="";
 
-        if(first == null || first == "")            //firstname
+        if(first.trim() == null || first.trim() == "")            //firstname
         {
             document.getElementById('first').innerHTML="First Name Required";
         }
-        if(last == null || last == "")              //lastname
+        if(namef.test(first))
+        {
+            document.getElementById("first").innerHTML="Use Only Letters";
+        }
+        if(last.trim() == null || last.trim() == "")              //lastname
         {
             document.getElementById('last').innerHTML="Last Name Required";
+        }
+        if(namef.test(last))
+        {
+            document.getElementById("last").innerHTML="Use Only Letters";
         }
         if(email == null || email == "")            //email
         {
@@ -55,10 +68,18 @@ function registration()
         {
             document.getElementById('com').innerHTML="Confirm Password Not match";
         }
+        if(radio == false)
+        {
+            document.getElementById("gender").innerHTML="Select Status ";
+        }
+        if(check1 == false)
+        {
+            document.getElementById("tnc").innerHTML="Select Terms and Condition ";
+        }
         return false;
     }
     else{
-        alert('hello');
+
         return true;
     }
 

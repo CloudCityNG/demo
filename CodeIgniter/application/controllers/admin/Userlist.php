@@ -23,6 +23,9 @@ class Userlist extends CI_Controller
      * @data = user_name
      *         user_email
      *         user_id
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()
     {
@@ -66,7 +69,10 @@ class Userlist extends CI_Controller
     }
 
     /**
-     * delete suspicious user from admin panale
+     * delete suspicious user from admin panal
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_userlist_data()                                   //delete img
     {
@@ -78,6 +84,9 @@ class Userlist extends CI_Controller
      * display user data to admin..
      * display user personal data
      * display user address data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function view_user_data()
     {
@@ -93,6 +102,9 @@ class Userlist extends CI_Controller
      * using search keyword witch come from front end
      * match keyword with all columns
      * apply sorting ojn all columns
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_user()
     {

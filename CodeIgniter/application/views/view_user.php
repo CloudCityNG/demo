@@ -11,7 +11,12 @@
         }
     }
 </script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css">
+<script src="<?php echo base_url('js/jquery.com/jquery-1.12.1.min.js')?>"></script>
+<script src="<?php echo base_url('js/bootstrap.min.js')?>"></script>
+<script src="<?php echo base_url('js/jquery.twbsPagination.js')?>"></script>
+
+<!--<link rel="stylesheet" type="text/css" href="--><?php //echo base_url('css/pagination.css');?><!--"-->
+<!--<link rel="stylesheet" type="text/css" href="--><?php //echo base_url('css/paginationmulti.css');?><!--"-->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
@@ -77,8 +82,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -87,7 +92,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -242,14 +247,24 @@
 
                         </div>
                     </div>
-                    <div class="pagination_listing">
-                        <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">
-                        <?php
-                        foreach($links as $li)
-                        {
-                            echo "<li style=''>" . $li . "</li>";
-                        }
-                        ?>
+<!--                    <div class="pagination_listing">-->
+<!--                        <ul class="tsc_pagination tsc_paginationA tsc_paginationA01">-->
+<!--                        --><?php
+//                        foreach($links as $li)
+//                        {
+//                            echo "<li style=''>" . $li . "</li>";
+//                        }
+//                        ?>
+<!--                    </div>-->
+                    <div class=" pagination ">
+                        <ul id="pagination-demo" class="pagination_lg">
+                            <?php
+                            foreach($links as $li)
+                            {
+                                echo "<li style=''>" . $li . "</li>";
+                            }
+                            ?>
+                        </ul>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
@@ -273,12 +288,20 @@
     </div>
 </div>
 
+
 <script>
     jQuery(document).ready(function() {
         App.init();
         TableEditable.init();
     });
 </script>
+<!--<script>-->
+<!--    $('#pagination-demo').twbsPagination({-->
+<!--        totalPages: 25,-->
+<!--    visiblePages: 5-->
+<!--    });-->
+<!---->
+<!--</script>-->
 </body>
 <!-- END BODY -->
 </html>

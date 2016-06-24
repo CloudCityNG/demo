@@ -2,28 +2,39 @@
 <?php //echo form_open('path/to/controller/update/function'); ?>
 <?php $i = 1; ?>
 <html lang="en">
-
+<script>
+    function delete_con()
+    {
+        {
+            var x = confirm("Are you sure you want to delete?");
+            if (x)
+                return true;
+            else
+                return false;
+        }
+    }
+</script>
 <script>
     function check_qunty(qty,p_id,i)
     {
-//        alert('hello');
+        // alert('hello');
         var id='qty' + i;
 
-        //var code=document.getElementsByName('qty').value;
-//        alert(qty);
+        // var code=document.getElementsByName('qty').value;
+        // alert(qty);
         $.ajax({ url: '<?php echo site_url('home/qunty_check');?>',
             data: {qty: qty,p_id:p_id},
             type: 'post',
             success: function(output) {
-//                 alert(output);
+
                 if(output != qty)
                 {
                     alert('Out of Stock');
-//                    document.getElementById('quanti').innerHTML = output;
+
                     document.getElementById(id).value = output;
                 }
                 else{
-//                    alert('in stock');
+
                     document.getElementById(id).value = output;
                 }
             }
@@ -41,7 +52,7 @@
             </ol>
         </div>
 
-        <form action="<?php echo site_url('home/update_cart')?>" method="post">
+        <form action="<?php echo site_url('cart/update_cart')?>" method="post">
         <div class="table-responsive cart_info">
             <table class="table table-condensed">
                 <thead>
@@ -78,7 +89,7 @@
                         <p class="cart_total_price"><?php echo $this->cart->format_number($items['subtotal']); ?></p>
                     </td>
                     <td class="cart_delete">
-                        <a class="cart_quantity_delete" href="<?php echo base_url('home/delete_cart/'.$items['rowid'])?>"><i class="fa fa-times"></i></a>
+                        <a onclick="return delete_con()" class="cart_quantity_delete" href="<?php echo base_url('cart/delete_cart/'.$items['rowid'])?>"><i class="fa fa-times"></i></a>
                     </td>
                 </tr>
                 <?php $i++; ?>
@@ -188,8 +199,10 @@
 
                         <li>Total <span ><?php echo $total_with_charge=$total+$shipping_charge;?></span></li>
                     </ul>
-<!--                    <a class="btn btn-default update" href="">Update</a>-->
-                    <a class="btn btn-default check_out" href="<?php echo site_url('home/checkout')?>">Check Out</a>
+
+                    <?php  $data=$this->session->userdata('user_session');?>
+                    <!--                    <a class="btn btn-default update" href="">Update</a>-->
+                    <a class="btn btn-default check_out" href="<?php if(!empty($data)){echo site_url('checkout/');}else{echo site_url('checkout/checkout_new_user');}?>">Check Out</a>
                 </div>
             </div>
         </div>

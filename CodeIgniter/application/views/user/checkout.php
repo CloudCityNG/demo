@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <?php $i = 1; ?>
 <?php
-if(!empty($userdata)){
-    foreach($userdata as $item)
-    $item=(array)$item;}
-else{
-    echo "";
-}
+    if(!empty($userdata))
+    {
+        foreach($userdata as $item)
+            $item=(array)$item;
+    }
+    else
+    {
+        echo "";
+    }
 ?>
 <?php
-if(!empty($address)){
-    foreach($address as $value)
-        $value=(array)$value;}
-else{
-    echo "";
-}
+    if(!empty($address))
+    {
+        foreach($address as $value)
+            $value=(array)$value;
+    }
+    else
+    {
+        echo "";
+    }
 ?>
 
-<script>
-    function get_discount()
-    {
-        alert('hello');
-        var code=document.getElementById('discount').value;
-        alert(code);
-        $.ajax({ url: '<?php echo site_url('admin/coupon/discount');?>',
-            data: {code: code},
-            type: 'post',
-            success: function(output) {
-               // alert(output);
-                   document.getElementById('total').value = output;
-               }
-        });
-    }
-</script>
+
+<!--<script>-->
+<!--    function get_discount()-->
+<!--    {-->
+<!--        alert('hello');-->
+<!--        var code=document.getElementById('discount').value;-->
+<!--        alert(code);-->
+<!--        $.ajax({ url: '--><?php //echo site_url('admin/coupon/discount');?><!--',-->
+<!--            data: {code: code},-->
+<!--            type: 'post',-->
+<!--            success: function(output) {-->
+<!--               // alert(output);-->
+<!--                   document.getElementById('total').value = output;-->
+<!--               }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 
 <script>
     function get_discount()
@@ -52,46 +59,57 @@ else{
     }
 </script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#hide").click(function(){
+            $("#ship").hide();
+        });
+        $("#show").click(function(){
+            $("#ship").show();
+        });
+    });
+</script>
 
 
 
-
-
+<link rel="stylesheet" href="<?php echo base_url('css/input.css')?>">
 <script src="<?php echo base_url('js/checkout_validation.js')?>"></script>
 <section id="cart_items" xmlns="http://www.w3.org/1999/html">
     <div class="container">
         <div class="breadcrumbs">
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
+                <li><a href="<?php echo base_url()?>">Home</a></li>
                 <li class="active">Check out</li>
             </ol>
         </div><!--/breadcrums-->
-
+        <form action="<?php echo base_url('checkout/checkouts')?>" method="post">
 <!--        <div class="step-one">-->
 <!--            <h2 class="heading">Step1</h2>-->
 <!--        </div>-->
-<!--        <div class="checkout-options">-->
-<!--            <h3>New User</h3>-->
-<!--            <p>Checkout options</p>-->
-<!--            <ul class="nav">-->
-<!--                <li>-->
-<!---->
-<!---->
-<!--                    <label><input onclick="return register()" type="radio" name="checkout"> Register Account</label>-->
-<!--                </li>-->
-<!--                <li>-->
-<!---->
-<!--                    <label><input type="radio" name="checkout"> Guest Checkout</label>-->
-<!--                </li>-->
-<!--                <li>-->
+        <div class="checkout-options">
+            <h3>New User</h3>
+            <p>Checkout options</p>
+            <ul class="nav">
+                <li>
+
+                    <label><input onclick="return register()" type="radio" value="register" name="checkout"> Register Account</label>
+                </li>
+                <li>
+
+                    <label><input  type="radio" value="guest" name="checkout"> Guest Checkout</label>
+                </li>
+                <li>
+                    <input type="submit" >
 <!--                    <a href="--><?php //echo site_url('home')?><!--"><i class="fa fa-times"></i>Cancel</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div><!--/checkout-options-->
-<!---->
-<!--        <div class="register-req">-->
-<!--            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>-->
-<!--        </div><!--/register-req-->
+                </li>
+            </ul>
+        </div>
+        </form>
+        <div class="register-req">
+            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+        </div>
+
 
         <div class="shopper-informations">
 
@@ -140,7 +158,18 @@ else{
                                 <input name="zipcode" value="<?php if(!empty($address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>" type="text" placeholder="Zip / Postal Code *">
                                 <div id="zipcode" style="display:inline; color: red" >
                                     <?php echo form_error('zipcode'); ?>
-                                </div><br>
+                                </div>
+                                <ul class="nav">
+                                    <li>
+                                        <label> Same Shipping Address &nbsp;&nbsp;<input  id="hide" type="radio" value="register" name="ship_address"> </label>
+                                    </li>
+                                    <li>
+                                        <label>With Differnt Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="show" type="radio" value="guests" name="ship_address"> </label>
+                                    </li>
+                                    <div id="addressship" style="display:inline; color: red" >
+                                        <?php echo form_error('select_address'); ?>
+                                    </div>
+                                </ul><br>
                         </div>
 
 <!--                        <div class="form-two">-->
@@ -183,9 +212,69 @@ else{
 <!--                        <label><input type="checkbox"> Shipping to bill address</label>-->
 <!--                    </div>-->
 <!--                </div>-->
-            </div>
-            </div>
 
+<div id="ship">
+<div class="col-sm-6">
+<!--    <div id="shipadd">-->
+        <?php
+        if(!empty($address_all))
+        {
+            $i=1;
+            foreach($address_all as $value) {
+                $value = (array)$value;
+                ?>
+                <div class="col-sm-6">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo ">
+                                <center>Address</center>
+                                <table class="table table-bordered">
+                                    <tr><td style="width: 250px">City-</td><td style="width: 200px"><?php echo $value['city']?></td></tr>
+                                    <tr><td>State</td><td><?php echo $value['state']?></td></tr>
+                                    <tr><td>Country</td><td><?php echo $value['country']?></td></tr>
+                                    <tr><td>Address</td><td><?php echo $value['address_1']?></td></tr>
+                                    <tr><td>Address</td><td><?php echo $value['address_2']?></td></tr>
+                                    <tr><td>Zipcode</td><td><?php echo $value['zipcode']?></td></tr>
+                                </table>
+                               <input id="<?php echo $i ?>" value="<?php echo $value['address_id']?>" name="select_address" style="width: 190px;margin-top: -5px;margin-bottom: 10px" type="radio">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php  $i++; }?>
+        <div id="diff_address" style="display:inline; color: red" >
+                    <?php echo form_error('select_address'); ?>
+        </div><?php }else {
+            echo "Not Address Updated.. Add New Addr" ?>
+<!--        <div id="ship">-->
+        <div class="col-sm-12 clearfix">
+            <div class="bill-to">
+                <p>Shipping Address</p>
+                <div class="form-one">
+<!--                                  <form name="form" onsubmit="return submit_form()" action="--><?php //echo site_url('products/product_data')?><!--" method="post"><!--                            <form action="--><?php ////base_url('products/product_data')?><!--<!--" method="post">-->
+                    <input class="check_guest"  name="address_3" value="<?php if(!empty($address)){echo $value['address_1'];}else{echo set_value('address_1');}?>" type="text" placeholder="Address 1 *">
+                    <div id="add3" style="display:inline; color: red" >
+                        <?php echo form_error('address_3'); ?>
+                    </div><br><br>
+                    <input class="check_guest"  name="address_4" value="<?php if(!empty($address)){echo $value['address_2'];}else{echo set_value('address_2');}?>"type="text" placeholder="Address 2">
+                    <div id="add4" style="display:inline; color: red" >
+                        <?php echo form_error('address_4'); ?>
+                    </div><br><br>
+                    <input class="check_guest"  name="zipcode1" value="<?php if(!empty($address)){echo $value['zipcode'];}else{echo set_value('zipcode');}?>" type="text" placeholder="Zip / Postal Code *">
+                    <div id="zipcode1" style="display:inline; color: red" >
+                        <?php echo form_error('zipcode1'); ?>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+            <?php  }  ?>
+
+
+                </div>
+    </div>
+            </div>
+        </div>
         <div class="review-payment">
             <h2>Review & Payment</h2>
         </div>
@@ -247,6 +336,7 @@ else{
                         <tr>
                             <td colspan="3"> </td>
                             <td class="right"><strong>Total</strong></td>
+
                             <td class="right">$<input id="total" name="total" style="border: 0px" readonly value="<?php echo $this->cart->format_number($this->cart->total());?>"><?php if(isset($amount_total)){echo "<p style='color: red'>".$amount_total."</p>";}else{echo "";}?></td>
                         </tr>
                     </table>
@@ -263,7 +353,6 @@ else{
 					<span style="margin-left: 525px">
 						<input type="submit" value="submit">
 					</span>
-
                 </form>
     </div>
 </section> <!--/#cart_items-->

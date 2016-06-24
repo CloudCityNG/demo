@@ -17,6 +17,7 @@ class Home extends CI_Controller
         $this->load->library('cart');
         $this->load->helper(array('form', 'url'));
         $this->load->helper('form');
+
     }
 
     /**
@@ -29,6 +30,9 @@ class Home extends CI_Controller
      * @recommend = recently add product
      * #model = user,bannermgmt,category,cmsadmin,
      * @return @data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                       //home page
     {
@@ -78,11 +82,14 @@ class Home extends CI_Controller
      * @recommend = recently add product
      * #model = user,bannermgmt,category,cmsadmin,
      * @return @data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function category()
     {
         $category=$this->uri->segment(3);
-        /*
+
         $config = array();
         $config["base_url"] = base_url()."/home/index";
         $total_row = $this->User->record_cat_count($category);
@@ -103,13 +110,12 @@ class Home extends CI_Controller
         {
             $page = 1;
         }
-*/
-        $data['product'] = $this->User->data($category);
+        $data['product'] = $this->User->data($config["per_page"], $page,$category);
         $data['categorys']=$this->User->home_category();              //fetch images and content of cms
         $data['cms']=$this->cmsadmin->home_cms();                     //fetch list of category
         $data['banner']=$this->Bannermgmt->home_banner();             //fetch images of banner
         $data['category']=$this->User->select_cat($category);         //sub category block for show sub-category
-
+        $data['slider']="";
         $str_links = $this->pagination->create_links();               //generate link for pagination
         $data["links"] = explode('&nbsp;',$str_links );
         $this->load->view('user/headeruser');
@@ -123,11 +129,15 @@ class Home extends CI_Controller
      * @product= image_name,name,price
      * #model =  user
      * @return = add data into codeigniter card
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add_to_cart()                             //add data into cart function
     {
+        $i="";
         $prod_id = $this->uri->segment(3);                    //fetch product_id
-        $product = $this->User->fetch_data($prod_id);         //fetch all details of particular product_id
+        $product = $this->User->fetch_data($prod_id);        //fetch all details of particular product_id
         //explore product array
         foreach($product as $value)
         {
@@ -144,11 +154,17 @@ class Home extends CI_Controller
             );
             $this->cart->insert($data);
         }
-        redirect('home');
+
+        $this->session->set_flashdata('msg','Product Add In Cart');
+//        $this->load->view('user/headeruser',$data);
+        redirect(base_url());
     }
 
-    /*
+    /**
      * call user cart
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function user_cart()
     {
@@ -168,12 +184,11 @@ class Home extends CI_Controller
         {
             foreach ($this->cart->contents() as $item)
             {
-                if($id == $item['id']) {
-
-                    echo $item['qty'];
+                if($id == $item['id'])
+                {
+                      echo $item['qty'];
                     break;
                 }
-
             }
         }
         else
@@ -185,6 +200,9 @@ class Home extends CI_Controller
     /**
      * update quantity of cart data from front end
      * @return = update quantity in cart product
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function update_cart()
     {
@@ -205,6 +223,9 @@ class Home extends CI_Controller
     /**
      * delete product from cart
      * fetch product_id using url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_cart()
     {
@@ -224,6 +245,9 @@ class Home extends CI_Controller
      * @recommend = recently add product
      * #model = user,bannermgmt,category,cmsadmin,
      * @return @data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function product_view()                  //product details
     {
@@ -247,6 +271,9 @@ class Home extends CI_Controller
      * @address = address_1,address_2,zipcode
      * #model = user
      * @return fill form or empty form
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function checkout()                                      //checkout with cart data
     {
@@ -257,6 +284,7 @@ class Home extends CI_Controller
         //if user is not register
         if(empty($id))
         {
+
             $this->load->view('user/headeruser');
             $this->load->view('user/checkout',$data);
             $this->load->view('user/footer_user');
@@ -264,6 +292,7 @@ class Home extends CI_Controller
         //else user already register with our website
         else
         {
+            $data['address_all']=$this->User->fetch_address($id);
             $data['userdata']=$this->User->chekout_data($id);           //user personal data
             $data['address']=$this->User->checkout_address($id);        //user address data
             $this->load->view('user/headeruser');
@@ -283,6 +312,9 @@ class Home extends CI_Controller
      * @recommend = recently add product
      * #model = user,bannermgmt,category,cmsadmin,
      * @return @data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_all()
     {
@@ -305,6 +337,9 @@ class Home extends CI_Controller
      * destroy try to facebook session
      * destroy cart with destroying user session
      * @return clear cart and destory session
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function logout()                                        //destroy user session
     {
@@ -316,6 +351,7 @@ class Home extends CI_Controller
         $this->load->library('facebook');
         // Logs off session from website
         $this->facebook->destroySession();
+        $this->session->sess_destroy();
         redirect('Userlogin/login');
     }
 
@@ -327,6 +363,9 @@ class Home extends CI_Controller
      * @list = list_name,memeber_count,unsubscribe_count,cleaned_count
      * check user already subscribe or not
      * @return = subscribe user to newsletter
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function newsletter()
     {

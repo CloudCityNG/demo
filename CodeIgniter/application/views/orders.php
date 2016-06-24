@@ -77,8 +77,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -87,7 +87,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -195,9 +195,9 @@
                     <div class="portlet-body">
                         <!--                            <div class="clearfix">-->
                         <div class="btn-group">
-<!--                            <a href="--><?php //echo base_url('admin/adminuser/add_admin');?><!--" id="sample_editable_1_new" class="btn green">-->
-<!--                                Add New <i class="icon-plus"></i>-->
-<!--                            </a>-->
+                            <a href="<?php echo base_url('admin/orders/order_chart');?>" id="sample_editable_1_new" class="btn green">
+                                Sales Report</i>
+                            </a>
                         </div>
                         <div class="btn-group pull-right">
                             <form style="height: 30px; " action="<?php echo site_url('admin/orders/search_order')?>" method="post">
@@ -214,8 +214,8 @@
                             <thead>
                             <tr>
                                 <th>Order ID   <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=order_id&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=order_id&sortorder='.$sortorder);}?>' class='sort_icon'>   <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Customer  <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=user_name&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=user_name&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
-                                <th>Status        <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=status&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=status&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Billing Address  <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=address_1&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=address_1&sortorder='.$sortorder);}?>' class='sort_icon'> <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
+                                <th>Status          <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=status&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=status&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                 <th>Grand Total     <a href='<?php if(empty($sort)){echo site_url('admin/orders?sortby=grand_total&sortorder='.$sortorder);}else{echo site_url('admin/orders/search_order?sortby=grand_total&sortorder='.$sortorder);}?>' class='sort_icon'>  <img src="<?php echo base_url('/images/arrows.png')?>"></a> </th>
                                 <th>View</th>
                                 <th>Edit</th>
@@ -234,7 +234,7 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $value['order_id'];?></td>
-                                        <td><?php echo $value['user_name'];?></td>
+                                        <td><?php echo $value['address_1'].",".$value['address_2'].",".$value['zipcode'];?></td>
                                         <td><?php echo $value['status'];?></td>
                                         <td><?php echo $value['grand_total'];?></td>
                                         <td><a  href="<?php echo site_url('admin/orders/view_order/'.$value['order_id']);?>">View </a></td>

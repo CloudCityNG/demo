@@ -24,6 +24,9 @@ class Cms extends CI_Controller
      *         description
      *         title
      *         banner_image
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                 //view user data
     {
@@ -78,6 +81,9 @@ class Cms extends CI_Controller
     }
     /**
      * go to add cms page for new addition
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add_cms()
     {
@@ -90,6 +96,9 @@ class Cms extends CI_Controller
      * add new cms data in table
      * server side validation is perfome on form
      * insert image add respective table
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function add()
     {
@@ -107,14 +116,21 @@ class Cms extends CI_Controller
         }
         else
         {
+            $file = $_FILES["banner_name"]["name"];
+            $array = explode('.', $file);
+            $fileName=$array[0];
+            $fileExt=$array[1];
+            $newfile=$fileName."_".time().".".$fileExt;
+
             //fetch session id
             $id = $this->session->userdata('id');
             //set image path
-            $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $_FILES['banner_name']['name'];
+            $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $newfile;
             //if image is persent insert in table
             if (move_uploaded_file($_FILES['banner_name']['tmp_name'], $path))
             {
-                $upload = $_FILES['banner_name']['name'];
+
+                $upload = $newfile;
                 $data = array(
                     'title' => $this->input->post('title'),
                     'content' => $this->input->post('content'),
@@ -133,6 +149,9 @@ class Cms extends CI_Controller
     /**
      * go to edit cms page
      * with respective id comes form url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_cms()
     {
@@ -146,6 +165,9 @@ class Cms extends CI_Controller
     /**
      * update cms data in databse
      * server side validation in perform here
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function update()
     {
@@ -167,14 +189,21 @@ class Cms extends CI_Controller
         }
         else
         {
-            $x=$_FILES['banner_name']['name'];
+            $xi= $_FILES["banner_name"]["name"];
+            $file= $_FILES["banner_name"]["name"];
+            $array = explode('.', $file);
+            $fileName=$array[0];
+            $fileExt=$array[1];
+            $newfile=$fileName."_".time().".".$fileExt;
+
+            $x=$newfile;
             $id = $this->session->userdata('id');
-            $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $_FILES['banner_name']['name'];
-            if(!empty($x))
+            $path = $_SERVER['DOCUMENT_ROOT'] . '/CodeIgniter/images/' . $newfile;
+            if(!empty($xi))
             {
                 if (move_uploaded_file($_FILES['banner_name']['tmp_name'], $path))
                 {
-                    $upload = $_FILES['banner_name']['name'];
+                   $upload = $newfile;
                     $data = array(
                         'title' => $this->input->post('title'),
                         'content' => $this->input->post('content'),
@@ -184,8 +213,9 @@ class Cms extends CI_Controller
                         'modify_by' => $id,
                         'modify_date' => date('Y/M/D')
                     );
-                    $id = $this->input->post('id');
-                    $this->cmsadmin->update_csm($id, $data);
+                    $ids = $this->input->post('id');
+                   // echo $ids;
+                    $this->cmsadmin->update_csm($ids, $data);
                     $this->session->set_flashdata('msg', 'Chages Successfull Done');
                     redirect('admin/cms');
                 }
@@ -211,6 +241,9 @@ class Cms extends CI_Controller
     /**
      * delete cms data
      * with respective id comes form url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_cms()
     {
@@ -224,6 +257,9 @@ class Cms extends CI_Controller
      * using search keyword witch come from front end
      * match keyword with all columns
      * apply sorting ojn all columns
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_cms()
     {

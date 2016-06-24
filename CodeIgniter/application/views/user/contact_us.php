@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
+                        <a href="<?php echo base_url('')?>"><img src="<?php echo base_url('images/home/logo.png')?>" alt="" /></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
@@ -87,10 +87,13 @@
                         <ul class="nav navbar-nav"><?php $data=$this->session->userdata('user_session')?>
                             <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/account_user/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="<?php if(!empty($data)){echo site_url('Userwishlist/wishlist/');}else{echo site_url('Userlogin/login');}?>"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="<?php echo site_url('home/checkout/')?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="<?php echo site_url('home/user_cart');?>"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
-                            <?php }else{?><li><a href="<?php echo site_url('home/logout')?>"><i class="fa fa-lock"></i> Logout</a></li>
+                            <li><a href="<?php if(!empty($data)){echo site_url('checkout/');}else{echo site_url('checkout/checkout_new_user');}?>"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <?php $i[]=""; foreach ($this->cart->contents() as $item) {$i[]=$item['qty'];}$cart_item= array_sum($i);?>
+                            <li><a href="<?php echo site_url('cart');?>"><i class="fa fa-shopping-cart"></i>Cart(<?php echo $cart_item;?>)</a></li>                            <?php if(empty($data)) { ?><li><a href="<?php echo site_url('Userlogin/login')?>"><i class="fa fa-lock"></i> Login</a></li>
+                            <?php }else{?><li><a href=""><i class="fa fa-user"></i> <?php echo $this->session->userdata('user_name')?></a>
+                                <ul role="" class="sub-menu" style="background-color: white">
+                                    <li><a href="<?php echo site_url('home/logout')?>" style="color: black">Logout</a></li>
+                                </ul></li>
                             <?php }?>
                         </ul>
                     </div>
@@ -112,7 +115,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="<?php echo base_url('home')?>" >Home</a></li>
+                            <li><a href="<?php echo base_url('')?>" >Home</a></li>
                             <li ><a href="<?php echo site_url('useraccount/address_update/')?>">Address Book</a>
                                 <!--<ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
@@ -122,7 +125,7 @@
                                     <li><a href="login.html">Login</a></li>
                                 </ul>-->
                             </li>
-                            <li><a href="<?php echo site_url('useraccount/password_change/')?>">Chnage Password<i></i></a>
+                            <li><a href="<?php echo site_url('useraccount/password_change/')?>">Change Password<i></i></a>
                                 <!--<ul role="menu" class="sub-menu">
                                     <li><a href="blog.html">Blog List</a></li>
                                     <li><a href="blog-single.html">Blog Single</a></li>
@@ -130,6 +133,8 @@
                             </li>
                             <li><a href="<?php echo site_url('useraccount/admin_replay/')?>">Admin Replay</a></li>
 <!--                            <li><a href="--><?php //echo site_url('useraccount/contact')?><!--" class="active">Contact</a></li>-->
+                            <li><a href="<?php if(!empty($data)){echo site_url('Useraccount/allorders/');}else{echo site_url('Userlogin/login');}?>"> My Orders</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -166,19 +171,17 @@ $value=(array)$value?>
                         <input readonly type="email" placeholder="E-mail" name="user_email" value="<?php echo $value['user_email']?>">
 
                         <label>Contact No</label>
-                        <input type="number" placeholder="Contact_NO" name="contact_no">
+                        <input type="number" placeholder="Contact_NO" name="contact_no" value="<?php echo set_value('contact_no')?>">
                         <div style="display:inline; color: red" >
                             <?php echo form_error('contact_no'); ?>
                         </div>
                         <label>Subject</label>
-                        <textarea rows="2" placeholder="Subject" name="message" type="text">
-                        </textarea>
+                        <textarea rows="2" placeholder="Subject" name="message" type="text" value=""><?php echo set_value('message')?></textarea>
                             <div style="display:inline; color: red">
                             <?php echo form_error('message'); ?>
                         </div><br><br>
                         <label>Note</label>
-                        <textarea rows="3" type="text" placeholder="Message" name="note_admin">
-                        </textarea>
+                        <textarea rows="3" type="text" placeholder="Message" name="note_admin" value=""><?php echo set_value('note_admin')?></textarea>
                             <div style="display:inline; color: red" >
                             <?php echo form_error('note_admin'); ?>
                         </div><br><br>

@@ -99,8 +99,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -109,7 +109,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
         </ul>
@@ -322,21 +322,14 @@
                                             <tbody>
                                             <?php foreach($shipping as $ship)
                                                 $ship=(array)$ship;?>
-                                            <tr>
-                                                <td>First Name:</td>
-                                                <td><?php echo $ship['user_name']?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Last Name:</td>
-                                                <td><?php echo $ship['user_lastname']?></td>
-                                            </tr>
+
                                             <tr>
                                                 <td>Address 1:</td>
                                                 <td><?php echo $ship['address_1']?></td>
                                             </tr>
                                             <tr>
-                                                <td>City:</td>
-                                                <td><?php echo $ship['city']?></td>
+                                                <td>Address :</td>
+                                                <td><?php echo $ship['address_2']?></td>
                                             </tr>
                                             <tr>
                                                 <td>Postcode:</td>

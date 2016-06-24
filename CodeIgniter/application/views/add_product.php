@@ -327,8 +327,8 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
-                    Complints Book</a>
+                <a href="<?php echo site_url('admin/reply')?>">
+                    Complaint Book</a>
             </li>
             <!--      CMS Details      -->
             <li >
@@ -337,7 +337,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -546,11 +546,11 @@
                         <label class="control-label">Status</label>
                         <div class="controls">
                             <label class="radio">
-                                <input type="radio" name="status" value="1" />
+                                <input type="radio" name="status" value="1" checked/>
                                 Avalible
                             </label>
                             <label class="radio">
-                                <input type="radio" name="status" value="0" checked />
+                                <input type="radio" name="status" value="0"  />
                                 Unavalible
                             </label>
                         </div>
@@ -584,7 +584,7 @@
                     <div class="control-group">
                         <label class="control-label">Meta-Description</label>
                         <div class="controls">
-                            <textarea class="span6 m-wrap" rows="3"style="width:905px"name="meta_description"value="<?php echo set_value('meta_description')?>"/><?php echo set_value('meta_description')?></textarea>
+                            <textarea class=" ckeditor span6 m-wrap" rows="3"style="width:905px"name="meta_description"value="<?php echo set_value('meta_description')?>"/><?php echo set_value('meta_description')?></textarea>
                         </div>
                         <div id="meta_desc" style="display:inline; color: red" >
                             <?php echo form_error('meta_description'); ?>
@@ -605,11 +605,11 @@
                         <label class="control-label">Status</label>
                         <div class="controls">
                             <label class="radio">
-                                <input type="radio" name="product_status" value="1" />
+                                <input type="radio" name="product_status" value="1" checked/>
                                 Option 1
                             </label>
                             <label class="radio">
-                                <input type="radio" name="product_status" value="0" checked />
+                                <input type="radio" name="product_status" value="0"  />
                                 Option 2
                             </label>
                         </div>
@@ -668,6 +668,7 @@
 			</span>
     </div>
 </div>
+<script type="text/javascript" src="<?php echo base_url('assets/plugins/ckeditor/ckeditor.js')?>"></script>
 
 
 <script type="text/javascript">

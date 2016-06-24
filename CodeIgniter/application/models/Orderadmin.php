@@ -6,12 +6,15 @@ class Orderadmin extends CI_Model
     /**
      * count total numbers of rows in user_order table
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function order_record_count()                      //count admin
     {
         $this->db->select('*');
         $this->db->from('user_order');
-        $this->db->join('user','user.user_id=user_order.user_id');
+        $this->db->join('user_address','user_address.address_id=user_order.billing_address_id');
         return $this->db->get()->num_rows();
 
     }
@@ -19,11 +22,14 @@ class Orderadmin extends CI_Model
     /**
      * fetch all data about user order
      * data sort with both side sorting
-     * @param $limit = limit of pagination
-     * @param $page = selected page number
+     * @param $limit(int) = limit of pagination
+     * @param $page (int)= selected page number
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
-    public function fetch_order_data($limit, $page)           //pagination admin
+    /*public function fetch_order_data($limit, $page)           //pagination admin
     {
         $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'order_id';    // sorting using data
         $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';// sorting type
@@ -43,11 +49,36 @@ class Orderadmin extends CI_Model
         }
         return false;
     }
+    */
+
+    public function fetch_order_data($limit, $page)           //pagination admin
+    {
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'order_id';    // sorting using data
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';// sorting type
+        //pagination
+        $offset = ($page - 1) * $limit;
+        $this->db->select('*');
+        $this->db->from('user_order');
+        $this->db->join('user_address','user_address.address_id=user_order.billing_address_id');
+        $this->db->limit($limit, $offset);
+        $this->db->order_by($var, $order);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
 
     /**
      * search product on the basis of order_id,user_naem,status,grand_total
-     * @param $order_search = keyword enter from front end
+     * @param $order_search(string) = keyword enter from front end
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function order_search($order_search)
     {
@@ -56,9 +87,9 @@ class Orderadmin extends CI_Model
 
         $this->db->select('*');
         $this->db->from('user_order');
-        $this->db->join('user','user.user_id=user_order.user_id');
+        $this->db->join('user_address','user_address.address_id=user_order.billing_address_id');
         $this->db->like('order_id',$order_search);
-        $this->db->or_like('user_name',$order_search);
+        $this->db->or_like('address_1',$order_search);
         $this->db->or_like('status',$order_search);
         $this->db->or_like('grand_total',$order_search);
         $this->db->order_by($var, $order);
@@ -71,10 +102,13 @@ class Orderadmin extends CI_Model
      * order status change by admin form admin panale
      * if order status changed 1st time data inserted
      * else data update into table
-     * @param $o_id = order id used for finding status
-     * @param $data = $status- order current status
-     *                $comment- admin note on customer status
-     *                $modify_date- current date
+     * @param $o_id(int) = order id used for finding status
+     * @param $data = $status(ENUM)- order current status
+     *                $comment(string)- admin note on customer status
+     *                $modify_date(date)- current date
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function order_update($o_id,$data)                   //update order status in order_status table
     {
@@ -95,8 +129,11 @@ class Orderadmin extends CI_Model
 
     /**
      * if admin update status that status update in user_order table
-     * @param $o_id = order_id- specific order_id
-     * @param $status = order status- admin change order status
+     * @param $o_id(int) = order_id- specific order_id
+     * @param $status(ENUM) = order status- admin change order status
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function order_status($o_id,$status)                 //update status in order_table
     {
@@ -107,8 +144,11 @@ class Orderadmin extends CI_Model
     /**
      * retrive information about order status
      * matching order id
-     * @param $o_id = order_id
-     * @return mixed
+     * @param $o_id(int) = order_id
+     * @return mixed(array)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function status($o_id)                               //retrview order_status
     {
@@ -118,8 +158,11 @@ class Orderadmin extends CI_Model
 
     /**
      * fetch user id on the bases of order_id
-     * @param $o_id-order_id
-     * @return user_id
+     * @param $o_id (int)-order_id fro find user id
+     * @return user_id(int)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function u_id($o_id)                                 //fetch user id
     {
@@ -131,8 +174,11 @@ class Orderadmin extends CI_Model
 
     /**
      * fetch user whole data personal as well as user address
-     * @param $u_id-user_id
+     * @param $u_id (int)-user_id serach fro user data
      * @return array - array of user personal details and user address
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function user_data($u_id)                            //fetch user personal data
     {
@@ -144,8 +190,11 @@ class Orderadmin extends CI_Model
 
     /**
      * fetch order data on the bases of order id
-     * @param $o_id - order_id
+     * @param $o_id(int) - order_id search  particular order data
      * @return array order_details
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function order_data($o_id)                           //fetch order data
     {
@@ -155,24 +204,29 @@ class Orderadmin extends CI_Model
 
     /**
      * fetch user whole data personal as well as user address and user order
-     * @param $u_id-user_id
+     * @param $u_id(int)-user_id search user data
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
-    public function shipping_data($u_id)                        //fetch user data adn approriate order data
+    public function shipping_data($o_id)                        //fetch user data adn approriate order data
     {
         $this->db->select('*');
-        $this->db->from('user');
-        $this->db->join('user_address','user_address.user_id=user.user_id');
-        $this->db->join('user_order','user_order.user_id=user.user_id');
-        $this->db->where('user.user_id',$u_id);
-        $query=$this->db->get()->result_array();
-        return $query;
+        $this->db->from('user_order');
+        $this->db->join('user_address','user_address.address_id=user_order.shopping_address_id');
+        //$this->db->join('user_order','user_order.user_id=user.user_id');
+        $this->db->where('user_order.order_id',$o_id);
+        return $this->db->get()->result_array();
     }
 
     /**
      * get order details for completeing other payment details
-     * @param $o_id=order_id
+     * @param $o_id (int)=order_id search order data
      * @return array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function payment($o_id)                              //fetch order details
     {
@@ -182,14 +236,86 @@ class Orderadmin extends CI_Model
         return $this->db->get()->result_array();
     }
 
+
     /**
      * fetch of user address from user address table
-     * @param $u_id-user_id for matching user_address
+     * @param $u_id(int) -user_id for matching user_address
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function user_address($u_id)
     {
         $this->db->where('user_id',$u_id);
         return $this->db->get('user_address')->result_array();
     }
+    public function fetch_date_may()
+    {
+        $first_date='2016-05-01 00:00:00';
+        $second_date='2016-05-31 00:00:00';
+        $this->db->select('grand_total');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        $this->db->where('shopping_method','PAYPAL');
+        return $this->db->get()->result_array();
+    }
+    public function fetch_date_may_cod()
+    {
+        $first_date='2016-05-01 00:00:00';
+        $second_date='2016-05-31 00:00:00';
+        $this->db->select('grand_total');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        $this->db->where('shopping_method','COD');
+        $this->db->where('status','Complete');
+        return $this->db->get()->result_array();
+    }
+
+    public function fetch_date_jun()
+    {
+        $first_date='2016-06-01 00:00:00';
+        $second_date='2016-06-31 00:00:00';
+        $this->db->select('grand_total');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        $this->db->where('shopping_method','PAYPAL');
+        return $this->db->get()->result_array();
+    }
+    public function fetch_date_jun_cod()
+    {
+        $first_date='2016-06-01 00:00:00';
+        $second_date='2016-06-31 00:00:00';
+        $this->db->select('grand_total');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        $this->db->where('shopping_method','COD');
+        $this->db->where('status','Complete');
+        return $this->db->get()->result_array();
+    }
+    public function fetch_date_may_order()
+    {
+        $first_date='2016-05-01 00:00:00';
+        $second_date='2016-05-31 00:00:00';
+        $this->db->select('count(*) as order_id');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        return $this->db->get()->result();
+    }
+    public function fetch_date_jun_order()
+    {
+        $first_date='2016-06-01 00:00:00';
+        $second_date='2016-06-31 00:00:00';
+        $this->db->select('count(*) as order_id');
+        $this->db->from('user_order');
+        $this->db->where('created_date >=', $first_date);
+        $this->db->where('created_date <=', $second_date);
+        return $this->db->get()->result();
+    }
+
 }

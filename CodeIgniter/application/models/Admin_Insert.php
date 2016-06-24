@@ -8,6 +8,9 @@ class Admin_insert extends CI_Model
      * insert new admin_data in database
      * @param $data = admin_name,admin_lastname,admin_id
      *                admin_email,admin_password
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function insert_admin($data)                    //insert admin
     {
@@ -19,6 +22,9 @@ class Admin_insert extends CI_Model
      * @param $id = admin_id use for match data
      * @param $data = admin_name,admin_lastname,admin_id
      *                admin_email,admin_password
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function update_admin($id,$data)
     {
@@ -30,6 +36,9 @@ class Admin_insert extends CI_Model
      * verify admin admin name adn respective password
      * for login admin
      * @return mixed | admin_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function login()                                //admin login
     {
@@ -55,6 +64,9 @@ class Admin_insert extends CI_Model
 
     /**
      * verify data for login and get respective action on that
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function verify()                               //verify e-mail
     {
@@ -129,6 +141,9 @@ class Admin_insert extends CI_Model
     /**
      * display list of user admin
      * @return mixed |array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function list_user()                         //admin_list
     {
@@ -140,6 +155,9 @@ class Admin_insert extends CI_Model
     /**
      * display list of total product with product images
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function list_product()                      //prduct list
     {
@@ -154,6 +172,9 @@ class Admin_insert extends CI_Model
     /**
      * delete adminuser from database
      * get admin_id by url
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function user_delete()                       //delete admin
     {
@@ -165,6 +186,9 @@ class Admin_insert extends CI_Model
     /**
      * go to the edit page with perticular user information
      * @return mixed | array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function user_edit()                         //edit admin
     {
@@ -180,6 +204,9 @@ class Admin_insert extends CI_Model
      * sort user list
      * @param $var = order by recommented column
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function sort_data($var)                            //sort admin
     {
@@ -193,6 +220,9 @@ class Admin_insert extends CI_Model
     /**
      * fetch data of user fro validation
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch()
     {
@@ -207,6 +237,9 @@ class Admin_insert extends CI_Model
     /**
      * fetch data of user fro validation
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function add_fetch()
     {
@@ -221,6 +254,9 @@ class Admin_insert extends CI_Model
     /**
      * count total admin user in table
      * @return mixed|numbers of row
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function record_count()                      //count admin
     {
@@ -231,6 +267,9 @@ class Admin_insert extends CI_Model
      * @param $limit = limit of pagination
      * @param $page = selecterd page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch_data($limit, $page)           //pagination admin
     {
@@ -254,6 +293,9 @@ class Admin_insert extends CI_Model
     /**
      * count total product in database
      * @return mixed|numbers of tatol product
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_count()                            //count product
     {
@@ -263,6 +305,9 @@ class Admin_insert extends CI_Model
     /**
      * count total product in database from both tables image and products
      * @return mixed|numbers of tatol product
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function record_count_product()                     //product_count
     {
@@ -277,6 +322,9 @@ class Admin_insert extends CI_Model
      * @param $limit = limit of data perpage
      * @param $page = selected page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch_product_data($limit, $page)           //pagignation product
     {
@@ -306,6 +354,9 @@ class Admin_insert extends CI_Model
      * insert product data in database
      * @param $data = name,meta_description,keywords,title,images,ect;
      * @return mixed|product_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_insert($data)                    //insert product
     {
@@ -317,6 +368,9 @@ class Admin_insert extends CI_Model
     /**
      * insert img in database
      * @param $uploed=image_name
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function upload_img($uploed)                      //insert img
     {
@@ -337,6 +391,9 @@ class Admin_insert extends CI_Model
 
     /**
      * @param $pro_cat =category id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_category($pro_cat)              //insert category
     {
@@ -347,6 +404,9 @@ class Admin_insert extends CI_Model
      * update product_id in database
      * @param $prod_id = product_id
      * @param $data =  name,meta_description,keywords,title,images,ect;
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function update_product_category($prod_id,$data)
     {
@@ -357,6 +417,9 @@ class Admin_insert extends CI_Model
     /**
      * count numbers of category in database
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function category_list()
     {
@@ -367,6 +430,9 @@ class Admin_insert extends CI_Model
      * @param $limit = limit of perpage data
      * @param $page = selected paeg
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function fetch_data_from_category($limit,$page)
     {
@@ -394,6 +460,9 @@ class Admin_insert extends CI_Model
      * search category id
      * @param $category_name search id using category name
      * @return mixed|category_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function cat($category_name)
     {
@@ -407,6 +476,9 @@ class Admin_insert extends CI_Model
      * select category related data matching category id
      * @param $id=category_id
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function category_edit($id)
     {
@@ -419,6 +491,9 @@ class Admin_insert extends CI_Model
     /**
      * get catagory table details
      * @return mixed|array
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function categoryall()
     {
@@ -429,6 +504,9 @@ class Admin_insert extends CI_Model
     /**
      * @param $category_search(string) search keywaord
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function category_search($category_search)
     {
@@ -446,6 +524,9 @@ class Admin_insert extends CI_Model
      * insert data in category table
      * @param $data = category_id(int)
      *                parent_id(int),category_name(string)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function category_insert($data)
     {
@@ -457,6 +538,9 @@ class Admin_insert extends CI_Model
      * @param $data = category_id(int)
      *                parent_id(int),category_name(string)
      * @param $cate_id(int) category id for match id in database
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function category_update($data,$cate_id)
     {
@@ -467,6 +551,9 @@ class Admin_insert extends CI_Model
     /**
      * delete product from product table
      * base on selected product_id
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_delete()                         //delete product
     {
@@ -478,6 +565,9 @@ class Admin_insert extends CI_Model
     /**
      * go to product edit page
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_edit()                          //edit product
     {
@@ -497,6 +587,9 @@ class Admin_insert extends CI_Model
      * @param $data = product_id(int),product_name(string)
      *                title(string),metadata(string),keywords(string)
      *                quantity(int),price(float)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     function update($id,$data)                             //update product
     {
@@ -508,6 +601,9 @@ class Admin_insert extends CI_Model
      * search data in table
      * @param $admin_serach(string) = searach admin in admin list using relative data in all columns
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function search($admin_serach)                 //serach admin
     {
@@ -526,6 +622,9 @@ class Admin_insert extends CI_Model
      * search data in table
      * @param $admin_serach(string) = searach admin in product list using relative data in all columns
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_search($product_serach)        //search product
     {
@@ -547,6 +646,9 @@ class Admin_insert extends CI_Model
     /**
      * select images from product iamge table
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function select_img()                         //search img
     {
@@ -558,6 +660,9 @@ class Admin_insert extends CI_Model
     /**
      * count all product precent in database
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function record_home_count()
     {
@@ -573,6 +678,9 @@ class Admin_insert extends CI_Model
      * @param $limit limit of data precent in perpage
      * @param $page selected page
      * @return array|bool
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function home($limit,$page)
     {
@@ -599,6 +707,9 @@ class Admin_insert extends CI_Model
     /**
      * show recommened items on recommred section on home page
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function recommend()
     {
@@ -615,6 +726,9 @@ class Admin_insert extends CI_Model
      * display product details
      * @param $id - product_id
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_details($id)                //product_detalis
     {
@@ -632,6 +746,9 @@ class Admin_insert extends CI_Model
      * fetch product category data
      * @param $id(int) product category id
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function product_details_cat($id)            //product category
     {
@@ -645,6 +762,9 @@ class Admin_insert extends CI_Model
     /**
      * show banner details to user
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function view_banner()                       //banner
     {
@@ -656,6 +776,9 @@ class Admin_insert extends CI_Model
      * update product image
      * @param $prod_id - product_id
      * @param $data image(img)
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function from_image_update($prod_id,$data)                  //uppdate img
     {
@@ -666,6 +789,9 @@ class Admin_insert extends CI_Model
     /**
      * show product image to admin
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function show_image()                         //show img
     {
@@ -676,13 +802,31 @@ class Admin_insert extends CI_Model
     /**
      * show all user query to admin on admin panel
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
-    public function user_query()                        //user query
+    public function user_query($limit,$page)                        //user query
     {
-        $this->db->select('*');
-        $this->db->from('contact_us');
-        $prob=$this->db->get();
-        return $prob->result_array();
+
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
+
+        $offset = ($page - 1) * $limit;
+        $this->db->limit($limit, $offset);
+        $this->db->order_by($var, $order);
+        $query = $this->db->get("contact_us");
+        //if data is avalaibale
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        else return false;
+
     }
 
 
@@ -747,11 +891,24 @@ class Admin_insert extends CI_Model
 //        return $query_result;
 //    }
 
-
+    /**
+     * count numbers of query from send by user in database
+     * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
+     */
+    public function record_count_reply()
+    {
+        return $this->db->count_all('contact_us');
+    }
     /**
      * fetch query of user data to display on admin panel
      * @param $user_id(int) admin-id
      * @return mixed
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function view_query($user_id)                //view query
     {
@@ -766,6 +923,9 @@ class Admin_insert extends CI_Model
      * give repaly to user query
      * all data save in database
      * and show on user accounts
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function replay_admin()                      //replay on query
     {
@@ -777,7 +937,10 @@ class Admin_insert extends CI_Model
 
     /**
      * delete replay data from databse
-     * @param $con delete replay data from databse
+     * @param $con delete replay data from database
+     * @package CodeIgniter
+     * @subpackage Model
+     * @author Sumit Desai
      */
     public function delete_signle($con)
     {
@@ -887,12 +1050,25 @@ class Admin_insert extends CI_Model
         $se=$search->row()->admin_email;
             return $se;
     }
-    public function upadate_email($data,$id)
+
+   /* public function upadate_email($data,$id)
     {
 
         $this->db->where('admin_name',$id);
         $this->db->update('e-commers',$data);
+    }*/
+    public function set_mail($data)
+    {
+        $this->db->where('e_id','1');
+        $this->db->update('admin_email',$data);
     }
+    public function fetch_email()
+    {
+        $this->db->select('setting_email');
+        $this->db->where('e_id','1');
+        return $this->db->get('admin_email')->row()->setting_email;
+    }
+
     public function record_count_user()                      //count images
     {
         return $this->db->count_all("user");
@@ -986,11 +1162,50 @@ class Admin_insert extends CI_Model
      */
     public function query_search($search)
     {
+        $var = $this->input->get('sortby') ? $this->input->get('sortby') : 'user_name';
+        $order = $this->input->get('sortorder') ? $this->input->get('sortorder') : 'DESC';
         $this->db->like('user_name',$search);
         $this->db->or_like('user_email',$search);
         $this->db->or_like('message',$search);
+        $this->db->order_by($var,$order);
         $query = $this->db->get('contact_us');
         $x=$query->result_array();
         return $x;
+    }
+    public function admin_email_check($email)
+    {
+        $this->db->where('admin_email',$email);
+        $query=$this->db->get('e-commers')->num_rows();
+        if($query > 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public function admin_email_verify($email,$id)
+    {
+        $this->db->where('admin_email',$email);
+        //$this->db->where('user_id',$id);
+        $query=$this->db->get('e-commers')->num_rows();
+        if($query > 0 )
+        {
+            $this->db->where('admin_email',$email);
+            $this->db->where('admin_id',$id);
+            $query=$this->db->get('e-commers')->num_rows();
+            if($query == 1)
+            {
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        else
+        {
+            return 1;
+        }
     }
 }

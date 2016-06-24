@@ -19,6 +19,9 @@ class Adminuser extends CI_Controller
      * apply pagination on table
      * set both side sorting
      * display admin list
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function index()                                           //view user data
     {
@@ -76,6 +79,9 @@ class Adminuser extends CI_Controller
     /**
      * delete signle adminuser form database
      * getting admin id from url
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function delete_user()                       //delete admin_user data
     {
@@ -96,6 +102,9 @@ class Adminuser extends CI_Controller
     /**
      * fetch single admin_user data
      * redirect to update page with admin_user data
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function edit_user()                             //edit_admin_user data
     {
@@ -109,6 +118,9 @@ class Adminuser extends CI_Controller
     /**
      * check validation on update form
      * update admin_user records
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function update()                                        //update admin_user data
     {
@@ -191,6 +203,9 @@ class Adminuser extends CI_Controller
      * @admin_search-trim keyword
      * search admin_user related data using keyword
      * apply sorting to table
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     public function search_admin()                          //search admin_user data
     {
@@ -237,6 +252,9 @@ class Adminuser extends CI_Controller
      * add new admin_user in database
      * validation of inserted data
      * insert validted data in databse
+     * @package CodeIgniter
+     * @subpackage Controller
+     * @author Sumit Desai
      */
     function add()                                                 //insert new admin
     {
@@ -268,6 +286,35 @@ class Adminuser extends CI_Controller
             //falsh msg for successfull registration done
             $this->session->set_flashdata('msg','Registration Successfull');
             redirect('admin/adminuser');
+        }
+    }
+    public function check_email()
+    {
+        $email=$this->input->post('code');
+        $verify=$this->Admin_Insert->admin_email_check($email);
+        if($verify == '0')
+        {
+            echo $verify;
+            return true;
+        }
+        else{
+            // echo "E-mail already Exists";
+            echo $verify;
+        }
+    }
+    public function verify_email()
+    {
+        $a_id=$this->session->userdata('id');
+        $email=$this->input->post('code');
+
+        $verify=$this->Admin_Insert->admin_email_verify($email,$a_id);
+        if($verify == '1')
+        {
+            echo $verify;
+            return true;
+        }
+        else{
+            echo $verify;
         }
     }
 }

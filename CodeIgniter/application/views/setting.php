@@ -64,7 +64,7 @@
             </li>
             <!--      List of Complints      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/reply')?>">
+                <a href="<?php echo site_url('admin/reply')?>">
                     Complints Book</a>
             </li>
             <!--      CMS Details      -->
@@ -74,7 +74,7 @@
             </li>
             <!--      Admin setting      -->
             <li >
-                <a href="<?php echo site_url('admin/dashboard/setting')?>">
+                <a href="<?php echo site_url('admin/setting')?>">
                     Setting</a>
             </li>
 
@@ -166,7 +166,7 @@
             <!-- BEGIN PAGE CONTENT-->
             <div style="margin-left: 50px">
 
-            <form action="<?php echo base_url('admin/dashboard/perpage_change')?>" method="post">
+            <form action="<?php echo base_url('admin/setting/perpage_change')?>" method="post">
 
 
             <div class="row-fluid">
@@ -191,22 +191,22 @@
                                 </select><br>
                                 <select name="perpage">
                                         <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option></select><br>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option></select><br>
                                 <button type="submit" class="btn blue">Apply</button>
                                 <button type="button" class="btn">Cancel</button>
                            </form><br>
 
 
-            <form action="<?php base_url('admin/dashboard/change_email')?>" method="post">
+            <form action="<?php echo base_url('admin/setting/change_email')?>" method="post">
                 <?php $email=$this->session->userdata('email');
                 ?>
 
                                <input style="width:220px;" class="span6 m-wrap"  type="hidden" name="admin_id" readonly value='<?php echo $x?>'><br>                                <BR>
                                <label>Email</label>
-                               <input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_email" value="<?php echo $email ?>">
-        </div><br>
-                        <button type="submit" class="btn blue">Apply</button>
+                               <input style="width:220px;" class="span6 m-wrap"  type="text" name="admin_email" value="<?php echo set_value('admin_email') ?>">
+                            </div><br>
+                        <input type="submit" class="btn blue">
                         <button type="button" class="btn">Cancel</button>
                 </div>
             </div>

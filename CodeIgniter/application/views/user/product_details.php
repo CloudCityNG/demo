@@ -1,4 +1,24 @@
+<script>
+    function carts(i)
+    {
+        var code=i;
+        $.ajax({ url: '<?php echo site_url('cart/add_to_cart/');?>',
+            data: {code: code},
+            type: 'post',
+            success: function(output)
+            {
 
+                document.getElementById('total').innerHTML=output;
+                window.setTimeout(function(){location.reload()},2000)
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+            }
+        });
+    }
+</script>
+<script src="<?php echo base_url('js/jquery-1.12.1.min.js')?>"></script>
+<script src="<?php echo base_url('js/jzoom.js')?>"></script>
+<script src="<?php echo base_url('js/jzoom.min.js')?>"></script>
+<center><?php echo "<h3 id='total' style='color: green'>".$this->session->flashdata('msg2');"<h3>"?></center>
 <section>
     <div class="container">
         <div class="row">
@@ -107,16 +127,16 @@
                             <img src="<?php echo base_url('images/product-details/new.jpg')?>" class="newarrival" alt="" />
                             <h2><?php echo $value['name']?></h2>
                             <p>Web ID: <?php echo $value['product_id']?></p>
-                            <img src="<?php echo base_url('./images/product-details/rating.png')?>" alt="" />
+                            <div class="jzoom"><img src="<?php echo base_url('./images/product-details/rating.png')?>" alt="" /></div>
 								<span>
 									<span>Price<?php echo $value['price']?></span>
+                                    <?php if($value['quntity'] < 10){ echo "Out Of Stock";}else{?>
 									<label>Quantity:</label>
 									<input readonly type="text" value="<?php echo $value['quntity']?>" />
-                                    <br><a href="<?php echo site_url('home/add_to_cart/'.$value['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-
+                                    <br><a onclick="return carts(<?php echo $value['product_id']?>)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a><?php } ?>
 								</span>
-                            <p><b>Availability:</b> In Stock</p>
-                            <p><b>Condition:</b> New</p>
+                            <p><b>Availability:</b> <?php if($value['quntity'] > 10){echo "In Stock";}else{ echo "Out Of Stock";}?></p>
+                            <p><b>Condition:</b> New </p>
                             <p><b>Brand:</b> E-SHOPPER</p>
                             <a href=""><img src="<?php echo base_url('images/product-details/share.png')?>" class="share img-responsive"  alt="" /></a>
                         </div><!--/product-information-->
@@ -199,7 +219,8 @@
                                         <a href="<?php echo site_url('home/product_view/'.$rec['product_id'])?>">  <img src="<?php echo base_url().'/images/'.$rec['image_name'];?>" class="img-responsive" style="width: 200px;height: 200px"></a>
                                         <?php echo $rec['name']?><br>
                                         <?php echo $rec['price']?><br>
-                                        <a href="<?php echo site_url('home/add_to_cart/'.$rec['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <?php if($rec['quntity'] < 10){ echo "Out Of Stock";}else{?>
+                                        <a href="<?php echo site_url('home/add_to_cart/'.$rec['product_id']);?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a><?php }?>
 
                                     </div>
                                 </div>
@@ -225,7 +246,20 @@
     </div>
 </section>
 
+<script>
+    $('.jzoom').jzoom({bgColor: "#222"});
+</script><script type="text/javascript">
 
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 <script src="js/jquery.js"></script>
 <script src="js/price-range.js"></script>
 <script src="js/jquery.scrollUp.min.js"></script>
